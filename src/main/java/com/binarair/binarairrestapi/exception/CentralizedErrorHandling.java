@@ -110,4 +110,14 @@ public class CentralizedErrorHandling {
         return new ResponseEntity<>(webResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
+    @ExceptionHandler(ConversionException.class)
+    public ResponseEntity<WebResponse<String>> handleConversionObjectMapper(ConversionException exception) {
+        WebResponse webResponse = new WebResponse<>(
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                exception.getMessage()
+        );
+        return new ResponseEntity<>(webResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
 }

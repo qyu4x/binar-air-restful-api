@@ -5,6 +5,7 @@ import com.binarair.binarairrestapi.model.request.HeroBannerRequest;
 import com.binarair.binarairrestapi.model.response.HeroBannerResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.HeroBannerService;
+import com.binarair.binarairrestapi.util.MapperHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.slf4j.Logger;
@@ -40,9 +41,7 @@ public class HeroBannerController {
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
     public ResponseEntity<WebResponse<HeroBannerResponse>> upload(@Valid @RequestPart("heroBannerRequest")String heroBannerRequest, @RequestPart("heroBannerImageRequest") MultipartFile heroBannerImageRequest) throws JsonProcessingException {
-        ObjectMapper objectMapper = new ObjectMapper();
-        HeroBannerRequest heroBanner = objectMapper.readValue(heroBannerRequest, HeroBannerRequest.class);
-
+        HeroBannerRequest heroBanner = MapperHelper.mapperToHeroBanner(heroBannerRequest);
         log.info("Calling controller upload - hero banner");
         HeroBannerResponse heroBannerResponse = heroBannerService.save(heroBanner, heroBannerImageRequest);
         WebResponse webResponse = new WebResponse(
