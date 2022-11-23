@@ -100,4 +100,24 @@ public class CentralizedErrorHandling {
         return new ResponseEntity<>(webResponse, new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
 
+    @ExceptionHandler(FileUploadException.class)
+    public ResponseEntity<WebResponse<String>> handleBadCredentials(FileUploadException exception) {
+        WebResponse webResponse = new WebResponse<>(
+                HttpStatus.INTERNAL_SERVER_ERROR.value(),
+                HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+                exception.getMessage()
+        );
+        return new ResponseEntity<>(webResponse, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    @ExceptionHandler(ConversionException.class)
+    public ResponseEntity<WebResponse<String>> handleConversionObjectMapper(ConversionException exception) {
+        WebResponse webResponse = new WebResponse<>(
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                exception.getMessage()
+        );
+        return new ResponseEntity<>(webResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
 }

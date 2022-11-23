@@ -22,6 +22,8 @@ public class HeroBanner {
     @Id
     private String id;
 
+    private String title;
+
     private String imageURL;
 
     private String description;
