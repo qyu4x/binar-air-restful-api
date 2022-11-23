@@ -45,7 +45,9 @@ public class FirebaseStorageFileServiceImpl implements FirebaseStorageFileServic
                 .concat(getExtension(originalFilename));
 
         File file = convertToFile(multipartFile, uniqueFileName);
-        return uploadFile(file, uniqueFileName);
+        String imageURL = uploadFile(file, uniqueFileName);
+        file.delete();
+        return imageURL;
     }
 
     @Override
