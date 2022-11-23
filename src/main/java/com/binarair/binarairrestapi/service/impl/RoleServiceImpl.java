@@ -1,8 +1,12 @@
 package com.binarair.binarairrestapi.service.impl;
 
+import com.binarair.binarairrestapi.config.PasswordEncoderConfiguration;
+import com.binarair.binarairrestapi.exception.DataNotFoundException;
 import com.binarair.binarairrestapi.model.entity.Role;
+import com.binarair.binarairrestapi.model.entity.User;
 import com.binarair.binarairrestapi.model.enums.RoleType;
 import com.binarair.binarairrestapi.repository.RoleRepository;
+import com.binarair.binarairrestapi.repository.UserRepository;
 import com.binarair.binarairrestapi.service.RoleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -11,6 +15,8 @@ import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 public class RoleServiceImpl implements RoleService {
@@ -19,9 +25,16 @@ public class RoleServiceImpl implements RoleService {
 
     private final RoleRepository roleRepository;
 
+    private final UserRepository userRepository;
+
+    private final PasswordEncoderConfiguration passwordEncoderConfiguration;
+
+
     @Autowired
-    public RoleServiceImpl(RoleRepository roleRepository) {
+    public RoleServiceImpl(RoleRepository roleRepository, UserRepository userRepository, PasswordEncoderConfiguration passwordEncoderConfiguration) {
         this.roleRepository = roleRepository;
+        this.userRepository = userRepository;
+        this.passwordEncoderConfiguration = passwordEncoderConfiguration;
     }
 
     @Override
@@ -35,6 +48,12 @@ public class RoleServiceImpl implements RoleService {
             log.info("Successfully entered admin and buyer roles");
         } else {
             log.warn("Buyer and Admin roles are available");
+        }
+
+        Optional<User> adminRole = userRepository.findByRole(RoleType.ADMIN.name());
+        if(!adminRole.isPresent()) {
+            saveInitDataAdmin();
+            log.info("Successfully enter admin data");
         }
 
     }
@@ -51,5 +70,21 @@ public class RoleServiceImpl implements RoleService {
         adminRole.setRole(RoleType.ADMIN);
         adminRole.setCreatedAt(LocalDateTime.now());
         roleRepository.save(adminRole);
+    }
+
+    private void saveInitDataAdmin() {
+        Role adminRole = roleRepository.findById(RoleType.ADMIN)
+                .orElseThrow(() -> new DataNotFoundException("Role buyers are not available"));
+
+        User admin1 = User.builder()
+                .id(String.format("ad-%s", UUID.randomUUID().toString()))
+                .fullName("Binar Air")
+                .email("binarair@gmail.com")
+                .password(passwordEncoderConfiguration.passwordEncoder().encode("kelompok3"))
+                .role(adminRole)
+                .createdAt(LocalDateTime.now())
+                .active(true)
+                .build();
+        userRepository.save(admin1);
     }
 }

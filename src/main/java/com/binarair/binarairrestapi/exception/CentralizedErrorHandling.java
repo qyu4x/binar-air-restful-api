@@ -4,11 +4,14 @@ import com.binarair.binarairrestapi.model.response.WebResponse;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.DisabledException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import java.security.SignatureException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,6 +68,36 @@ public class CentralizedErrorHandling {
                 exception.getMessage()
         );
         return new ResponseEntity<>(webResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(DisabledException.class)
+    public ResponseEntity<WebResponse<String>> handleDisabled(DisabledException exception) {
+        WebResponse webResponse = new WebResponse<>(
+                HttpStatus.BAD_REQUEST.value(),
+                HttpStatus.BAD_REQUEST.getReasonPhrase(),
+                exception.getMessage()
+        );
+        return new ResponseEntity<>(webResponse, new HttpHeaders(), HttpStatus.BAD_REQUEST);
+    }
+
+    @ExceptionHandler(BadCredentialsException.class)
+    public ResponseEntity<WebResponse<String>> handleBadCredentials(BadCredentialsException exception) {
+        WebResponse webResponse = new WebResponse<>(
+                HttpStatus.UNAUTHORIZED.value(),
+                HttpStatus.UNAUTHORIZED.getReasonPhrase(),
+                exception.getMessage()
+        );
+        return new ResponseEntity<>(webResponse, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler(SignatureException.class)
+    public ResponseEntity<WebResponse<String>> handleBadCredentials(SignatureException exception) {
+        WebResponse webResponse = new WebResponse<>(
+                HttpStatus.FORBIDDEN.value(),
+                HttpStatus.FORBIDDEN.getReasonPhrase(),
+                exception.getMessage()
+        );
+        return new ResponseEntity<>(webResponse, new HttpHeaders(), HttpStatus.FORBIDDEN);
     }
 
 }
