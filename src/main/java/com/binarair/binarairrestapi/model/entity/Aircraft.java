@@ -1,12 +1,15 @@
 package com.binarair.binarairrestapi.model.entity;
 
 import lombok.*;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -33,7 +36,7 @@ public class Aircraft {
     private AircraftManufacture aircraftManufacture;
 
     @ManyToOne(cascade = CascadeType.ALL)
-    @JoinColumn(name = "travel_class_manufacture_code_id", referencedColumnName = "id")
+    @JoinColumn(name = "travel_class_code_id", referencedColumnName = "id")
     private TravelClass travelClass;
 
     @OneToMany(mappedBy = "aircraft", fetch = FetchType.LAZY)
@@ -56,7 +59,9 @@ public class Aircraft {
 
     private String seatArrangement;
 
-    private String distanceBetweenSeats;
+    private Integer distanceBetweenSeats;
+
+    private String seatLengthUnit;
 
     private boolean active = Boolean.TRUE;
 

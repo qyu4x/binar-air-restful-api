@@ -24,6 +24,8 @@ public class Benefit {
 
     private String description;
 
+    private boolean status = Boolean.TRUE;
+
     @Column(nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 
