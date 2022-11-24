@@ -3,6 +3,7 @@ package com.binarair.binarairrestapi.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Entity
@@ -29,6 +30,6 @@ public class City {
     private List<Airport> airports;
 
     @Column(nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
-    private  String createdAt;
+    private LocalDateTime createdAt;
 
 }
