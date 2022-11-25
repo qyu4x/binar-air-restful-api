@@ -1,5 +1,6 @@
 package com.binarair.binarairrestapi.service.impl;
 
+import com.binarair.binarairrestapi.exception.DataNotFoundException;
 import com.binarair.binarairrestapi.model.entity.HeroBanner;
 import com.binarair.binarairrestapi.model.request.HeroBannerRequest;
 import com.binarair.binarairrestapi.model.response.HeroBannerResponse;
@@ -32,6 +33,9 @@ public class HeroBannerServiceImpl implements HeroBannerService {
 
     @Override
     public HeroBannerResponse save(HeroBannerRequest heroBannerRequest, MultipartFile multipartFile) {
+        if (multipartFile.isEmpty()) {
+            throw new DataNotFoundException("Opps, please choose a picture first");
+        }
         HeroBanner heroBanner = HeroBanner.builder()
                 .id(String.format("hb-%s", UUID.randomUUID().toString()))
                 .title(heroBannerRequest.getTitle())

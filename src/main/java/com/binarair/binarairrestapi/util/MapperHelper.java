@@ -2,6 +2,7 @@ package com.binarair.binarairrestapi.util;
 
 import com.binarair.binarairrestapi.exception.ConversionException;
 import com.binarair.binarairrestapi.model.entity.HeroBanner;
+import com.binarair.binarairrestapi.model.request.AirlineRequest;
 import com.binarair.binarairrestapi.model.request.HeroBannerRequest;
 import com.binarair.binarairrestapi.model.request.PromoBannerRequest;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -22,6 +23,15 @@ public class MapperHelper {
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             return objectMapper.readValue(promoBannerRequest, PromoBannerRequest.class);
+        } catch (JsonProcessingException exception) {
+            throw new ConversionException("Invalid json data format");
+        }
+    }
+
+    public static AirlineRequest mapperToAirline(String airlineRequest) {
+        ObjectMapper objectMapper = new ObjectMapper();
+        try {
+            return objectMapper.readValue(airlineRequest, AirlineRequest.class);
         } catch (JsonProcessingException exception) {
             throw new ConversionException("Invalid json data format");
         }
