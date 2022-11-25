@@ -3,11 +3,15 @@ package com.binarair.binarairrestapi.service.impl;
 import com.binarair.binarairrestapi.config.PasswordEncoderConfiguration;
 import com.binarair.binarairrestapi.exception.DataAlreadyExistException;
 import com.binarair.binarairrestapi.exception.DataNotFoundException;
+import com.binarair.binarairrestapi.model.entity.City;
 import com.binarair.binarairrestapi.model.entity.Role;
 import com.binarair.binarairrestapi.model.entity.User;
 import com.binarair.binarairrestapi.model.enums.RoleType;
 import com.binarair.binarairrestapi.model.request.UserRegisterRequest;
+import com.binarair.binarairrestapi.model.request.UserUpdateRequest;
 import com.binarair.binarairrestapi.model.response.UserRegisterResponse;
+import com.binarair.binarairrestapi.model.response.UserUpdateResponse;
+import com.binarair.binarairrestapi.repository.CityRepository;
 import com.binarair.binarairrestapi.repository.RoleRepository;
 import com.binarair.binarairrestapi.repository.UserRepository;
 import com.binarair.binarairrestapi.service.UserService;
@@ -28,13 +32,16 @@ public class UserServiceImpl implements UserService {
     private final UserRepository userRepository;
     private final RoleRepository roleRepository;
 
+    private final CityRepository cityRepository;
+
     private final PasswordEncoderConfiguration passwordEncoderConfiguration;
 
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, PasswordEncoderConfiguration passwordEncoderConfiguration) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CityRepository cityRepository, PasswordEncoderConfiguration passwordEncoderConfiguration) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
+        this.cityRepository = cityRepository;
         this.passwordEncoderConfiguration = passwordEncoderConfiguration;
     }
 
@@ -66,4 +73,34 @@ public class UserServiceImpl implements UserService {
                 .createdAt(LocalDateTime.now())
                 .build();
     }
+
+    @Override
+    public UserUpdateResponse update(UserUpdateRequest userUpdateRequest) {
+        User user = userRepository.findById(userUpdateRequest.getUserId())
+                .orElseThrow(() -> new DataNotFoundException(String.format("Account with id %s not found", userUpdateRequest.getUserId())));
+
+        City city = cityRepository.findById(userUpdateRequest.getCityId())
+                        .orElseThrow(() -> new DataNotFoundException(String.format("City with city id %s not found", userUpdateRequest.getCityId())));
+
+        user.setFullName(userUpdateRequest.getFullName());
+        user.setBirthDate(userUpdateRequest.getBirthDate());
+        user.setGender(userUpdateRequest.getGender());
+        user.setCity(city);
+        user.setUpdatedAt(LocalDateTime.now());
+        User userUpdate = userRepository.save(user);
+        log.info("Successful update user account");
+        return UserUpdateResponse.builder()
+                .id(user.getId())
+                .fullName(user.getFullName())
+                .email(user.getEmail())
+                .gender(userUpdate.getGender())
+                .birthdate(userUpdate.getBirthDate())
+                .role(user.getRole().getRole().name())
+                .cityCode(userUpdate.getCity().getCodeId())
+                .city(userUpdate.getCity().getName())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
+                .build();
+    }
+
 }
