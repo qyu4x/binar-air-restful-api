@@ -1,7 +1,9 @@
 package com.binarair.binarairrestapi.controller;
 
 import com.binarair.binarairrestapi.model.request.UserRegisterRequest;
+import com.binarair.binarairrestapi.model.request.UserUpdateRequest;
 import com.binarair.binarairrestapi.model.response.UserRegisterResponse;
+import com.binarair.binarairrestapi.model.response.UserUpdateResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.UserService;
 import org.slf4j.Logger;
@@ -39,4 +41,20 @@ public class UserController {
         log.info("Successful user registration");
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
+
+    @PutMapping
+    @ResponseBody
+    public ResponseEntity<WebResponse<UserUpdateResponse>> update(@Valid @RequestBody UserUpdateRequest userUpdateRequest) {
+        log.info("Call update controller - user");
+        UserUpdateResponse userUpdateResponse = userService.update(userUpdateRequest);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                userUpdateResponse
+        );
+        log.info("Successful update user account");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK  );
+    }
+
+
 }
