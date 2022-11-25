@@ -2,7 +2,6 @@ package com.binarair.binarairrestapi.model.response;
 
 import lombok.*;
 
-import javax.validation.constraints.NotEmpty;
 import java.time.LocalDateTime;
 
 @Getter
@@ -10,11 +9,11 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AgeCategoryResponse {
+public class TitelResponse {
 
     private String id;
 
-    private String categoryName;
+    private String titelName;
 
     private String description;
 
