@@ -55,6 +55,16 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
+    public boolean delete(String cityCode) {
+        boolean isExists = cityRepository.existsById(cityCode);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("City data with code id %s not found", cityCode));
+        }
+        cityRepository.deleteById(cityCode);
+        return true;
+    }
+
+    @Override
     public List<CityResponse> getAll() {
         log.info("do get all data city");
         List<City> cities = cityRepository.findAll();
