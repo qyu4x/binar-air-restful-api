@@ -9,16 +9,19 @@ import com.binarair.binarairrestapi.model.entity.User;
 import com.binarair.binarairrestapi.model.enums.RoleType;
 import com.binarair.binarairrestapi.model.request.UserRegisterRequest;
 import com.binarair.binarairrestapi.model.request.UserUpdateRequest;
+import com.binarair.binarairrestapi.model.response.UserProfileResponse;
 import com.binarair.binarairrestapi.model.response.UserRegisterResponse;
 import com.binarair.binarairrestapi.model.response.UserUpdateResponse;
 import com.binarair.binarairrestapi.repository.CityRepository;
 import com.binarair.binarairrestapi.repository.RoleRepository;
 import com.binarair.binarairrestapi.repository.UserRepository;
+import com.binarair.binarairrestapi.service.FirebaseStorageFileService;
 import com.binarair.binarairrestapi.service.UserService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
 import java.util.Optional;
@@ -34,14 +37,17 @@ public class UserServiceImpl implements UserService {
 
     private final CityRepository cityRepository;
 
+    private final FirebaseStorageFileService firebaseStorageFileService;
+
     private final PasswordEncoderConfiguration passwordEncoderConfiguration;
 
 
     @Autowired
-    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CityRepository cityRepository, PasswordEncoderConfiguration passwordEncoderConfiguration) {
+    public UserServiceImpl(UserRepository userRepository, RoleRepository roleRepository, CityRepository cityRepository, FirebaseStorageFileService firebaseStorageFileService, PasswordEncoderConfiguration passwordEncoderConfiguration) {
         this.userRepository = userRepository;
         this.roleRepository = roleRepository;
         this.cityRepository = cityRepository;
+        this.firebaseStorageFileService = firebaseStorageFileService;
         this.passwordEncoderConfiguration = passwordEncoderConfiguration;
     }
 
@@ -100,6 +106,28 @@ public class UserServiceImpl implements UserService {
                 .city(userUpdate.getCity().getName())
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
+                .build();
+    }
+
+    @Override
+    public UserProfileResponse updateProfile(String userId, MultipartFile multipartFile) {
+        User userResponse = userRepository.findById(userId)
+                .orElseThrow(() -> new DataNotFoundException("User account not found"));
+        if (multipartFile.isEmpty()) {
+            log.warn("image is empty");
+            throw new DataNotFoundException("Please choose a picture first");
+        }
+
+        userResponse.setImageURL(firebaseStorageFileService.doUploadFile(multipartFile));
+        userRepository.save(userResponse);
+        log.info("Successfull update profile image");
+        return UserProfileResponse.builder()
+                .id(userResponse.getId())
+                .imageURL(userResponse.getImageURL())
+                .fullName(userResponse.getFullName())
+                .email(userResponse.getEmail())
+                .createdAt(userResponse.getCreatedAt())
+                .updatedAt(userResponse.getUpdatedAt())
                 .build();
     }
 
