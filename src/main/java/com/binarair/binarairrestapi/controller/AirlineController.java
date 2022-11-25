@@ -1,14 +1,10 @@
 package com.binarair.binarairrestapi.controller;
 
 import com.binarair.binarairrestapi.model.request.AirlineRequest;
-import com.binarair.binarairrestapi.model.request.HeroBannerRequest;
 import com.binarair.binarairrestapi.model.response.AirlineResponse;
-import com.binarair.binarairrestapi.model.response.HeroBannerResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.AirlineService;
-import com.binarair.binarairrestapi.service.HeroBannerService;
 import com.binarair.binarairrestapi.util.MapperHelper;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/airline")
@@ -51,5 +48,19 @@ public class AirlineController {
         );
         log.info("Successful save airline logo and airline data");
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
+    }
+    @ResponseBody
+    @GetMapping("/all")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
+    public ResponseEntity<WebResponse<List<AirlineResponse>>> getAll() {
+        log.info("Calling controller getAll - airline");
+        List<AirlineResponse> airlineResponses = airlineService.getAll();
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                airlineResponses
+        );
+        log.info("Successful get all airlines data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 }

@@ -14,6 +14,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 @Service
@@ -53,5 +55,24 @@ public class AirlineServiceImpl implements AirlineService {
                 .logoURL(airline.getLogoURL())
                 .createdAt(airline.getCreatedAt())
                 .build();
+    }
+
+    @Override
+    public List<AirlineResponse> getAll() {
+        log.info("Do get all data from database");
+        List<Airlines> airlines = airlineRepository.findAll();
+        log.info("Successful get all data from database");
+        List<AirlineResponse> airlineResponses = new ArrayList<>();
+        airlines.stream().forEach(airline -> {
+            AirlineResponse airlineResponse = AirlineResponse.builder()
+                    .id(airline.getId())
+                    .airlineName(airline.getName())
+                    .description(airline.getDescription())
+                    .logoURL(airline.getLogoURL())
+                    .createdAt(airline.getCreatedAt())
+                    .build();
+            airlineResponses.add(airlineResponse);
+        });
+        return airlineResponses;
     }
 }
