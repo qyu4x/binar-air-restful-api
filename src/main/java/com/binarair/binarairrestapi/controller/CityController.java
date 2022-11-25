@@ -12,6 +12,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -30,7 +31,7 @@ public class CityController {
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<WebResponse<CityResponse>> save(@RequestBody CityRequest cityRequest) {
+    public ResponseEntity<WebResponse<CityResponse>> save(@Valid @RequestBody CityRequest cityRequest) {
         log.info("call controller save - city");
         CityResponse cityResponse = cityService.save(cityRequest);
         log.info("successful save city data");
@@ -40,6 +41,21 @@ public class CityController {
                 cityResponse
         );
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
+    }
+
+    @DeleteMapping
+    @ResponseBody
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@RequestParam("code") String code) {
+        log.info("calling controller delete - city");
+        boolean deleteResonse = cityService.delete(code);
+        log.info("successful delete city data");
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteResonse
+        );
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
     @ResponseBody

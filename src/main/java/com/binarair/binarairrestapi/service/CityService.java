@@ -9,6 +9,8 @@ public interface CityService {
 
     CityResponse save(CityRequest cityRequest);
 
+    boolean delete(String cityCode);
+
     List<CityResponse> getAll();
 
 }
