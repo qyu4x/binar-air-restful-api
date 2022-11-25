@@ -1,5 +1,6 @@
 package com.binarair.binarairrestapi.service.impl;
 
+import com.binarair.binarairrestapi.exception.DataNotFoundException;
 import com.binarair.binarairrestapi.model.entity.PromoBanner;
 import com.binarair.binarairrestapi.model.request.PromoBannerRequest;
 import com.binarair.binarairrestapi.model.response.PromoBannerResponse;
@@ -35,6 +36,9 @@ public class PromoBannerServiceImpl implements PromoBannerService {
 
     @Override
     public PromoBannerResponse save(PromoBannerRequest promoBannerRequest, MultipartFile multipartFile) {
+        if (multipartFile.isEmpty()) {
+            throw new DataNotFoundException("Opps, please choose a picture first");
+        }
         PromoBanner promoBanner = PromoBanner.builder()
                 .id(String.format("pb-%s", UUID.randomUUID().toString()))
                 .title(promoBannerRequest.getTitle())
