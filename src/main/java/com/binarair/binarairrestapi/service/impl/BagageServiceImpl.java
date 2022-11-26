@@ -88,7 +88,7 @@ public class BagageServiceImpl implements BagageService {
     public BagageResponse findBagageByAircraftId(String aircraftId) {
         log.info("Do get bagage by id aircraft");
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
-                .orElseThrow(() -> new DataNotFoundException(String.format("Aircraft with id %s not found")));
+                .orElseThrow(() -> new DataNotFoundException(String.format("Aircraft with id %s not found", aircraftId)));
         Bagage bagage = bagageRepository.findByAircraftId(aircraftId);
         return BagageResponse.builder()
                 .id(bagage.getId())
