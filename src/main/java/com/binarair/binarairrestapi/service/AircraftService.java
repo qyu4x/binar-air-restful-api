@@ -1,17 +1,16 @@
 package com.binarair.binarairrestapi.service;
 
 import com.binarair.binarairrestapi.model.request.AircraftRequest;
-import com.binarair.binarairrestapi.model.response.AircraftResponse;
-import com.binarair.binarairrestapi.model.response.AircraftResponseDetail;
+import com.binarair.binarairrestapi.model.response.AircraftDetailResponse;
 
 import java.util.List;
 
 public interface AircraftService {
 
-    AircraftResponseDetail save(AircraftRequest aircraftRequest);
+    AircraftDetailResponse save(AircraftRequest aircraftRequest);
 
-    List<AircraftResponseDetail> getAll();
+    List<AircraftDetailResponse> getAll();
 
-    AircraftResponseDetail findById(String aircraftId);
+    AircraftDetailResponse findById(String aircraftId);
 
 }

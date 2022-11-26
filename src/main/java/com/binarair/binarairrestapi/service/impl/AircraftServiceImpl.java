@@ -46,7 +46,7 @@ public class AircraftServiceImpl implements AircraftService {
     }
 
     @Override
-    public AircraftResponseDetail save(AircraftRequest aircraftRequest) {
+    public AircraftDetailResponse save(AircraftRequest aircraftRequest) {
         AircraftManufacture aircraftManufacture =  aircraftManufactureRepository.findById(aircraftRequest.getAirCraftManufactureId())
                 .orElseThrow(() -> new DataNotFoundException(String.format("Aircraft manufacture with id %s not found", aircraftRequest.getAirCraftManufactureId())));
 
@@ -78,7 +78,7 @@ public class AircraftServiceImpl implements AircraftService {
         log.info("Do save aircraft data");
         aircraftRepository.save(aircraft);
         log.info("Successful save aircraft data");
-        return AircraftResponseDetail.builder()
+        return AircraftDetailResponse.builder()
                 .id(aircraft.getId())
                 .model(aircraft.getModel())
                 .passengerCapacity(aircraft.getPassangerCapacity())
@@ -107,12 +107,12 @@ public class AircraftServiceImpl implements AircraftService {
     }
 
     @Override
-    public List<AircraftResponseDetail> getAll() {
+    public List<AircraftDetailResponse> getAll() {
         log.info("Do get all aircraft data");
         List<Aircraft> aircrafts = aircraftRepository.findAll();
-        List<AircraftResponseDetail> aircraftResponseDetails = new ArrayList<>();
+        List<AircraftDetailResponse> aircraftDetailResponses = new ArrayList<>();
         aircrafts.stream().forEach(aircraft -> {
-            AircraftResponseDetail aircraftResponseDetail =  AircraftResponseDetail.builder()
+            AircraftDetailResponse aircraftDetailResponse =  AircraftDetailResponse.builder()
                     .id(aircraft.getId())
                     .model(aircraft.getModel())
                     .passengerCapacity(aircraft.getPassangerCapacity())
@@ -138,19 +138,19 @@ public class AircraftServiceImpl implements AircraftService {
                             .createdAt(aircraft.getAircraftManufacture().getCreatedAt())
                             .build())
                     .build();
-            aircraftResponseDetails.add(aircraftResponseDetail);
+            aircraftDetailResponses.add(aircraftDetailResponse);
         });
         log.info("Successful get all aircraft data");
-        return aircraftResponseDetails;
+        return aircraftDetailResponses;
     }
 
     @Override
-    public AircraftResponseDetail findById(String aircraftId) {
+    public AircraftDetailResponse findById(String aircraftId) {
         log.info("Do get aircraft data by id");
         Aircraft aircraft = aircraftRepository.findById(aircraftId)
                 .orElseThrow(() -> new DataNotFoundException(String.format("Data aircraft with id %s not found", aircraftId)));
         log.info("Successful get aircraft data by id");
-        return AircraftResponseDetail.builder()
+        return AircraftDetailResponse.builder()
                 .id(aircraft.getId())
                 .model(aircraft.getModel())
                 .passengerCapacity(aircraft.getPassangerCapacity())

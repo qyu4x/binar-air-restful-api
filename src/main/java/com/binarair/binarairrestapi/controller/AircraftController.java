@@ -30,9 +30,9 @@ public class AircraftController {
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<WebResponse<AircraftResponseDetail>> save(@Valid @RequestBody AircraftRequest aircraftRequest) {
+    public ResponseEntity<WebResponse<AircraftDetailResponse>> save(@Valid @RequestBody AircraftRequest aircraftRequest) {
         log.info("call controller save - aircraft");
-        AircraftResponseDetail aircraftResponse = aircraftService.save(aircraftRequest);
+        AircraftDetailResponse aircraftResponse = aircraftService.save(aircraftRequest);
         log.info("successful save aircraft data");
         WebResponse webResponse = new WebResponse(
                 HttpStatus.CREATED.value(),
@@ -45,13 +45,13 @@ public class AircraftController {
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
-    public ResponseEntity<WebResponse<List<AircraftResponseDetail>>> getAll() {
+    public ResponseEntity<WebResponse<List<AircraftDetailResponse>>> getAll() {
         log.info("Calling controller getAll - aircraft");
-        List<AircraftResponseDetail> aircraftResponseDetails = aircraftService.getAll();
+        List<AircraftDetailResponse> aircraftDetailResponses = aircraftService.getAll();
         WebResponse webResponse = new WebResponse(
                 HttpStatus.OK.value(),
                 HttpStatus.OK.getReasonPhrase(),
-                aircraftResponseDetails
+                aircraftDetailResponses
         );
         log.info("Successful get all aircraft data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
@@ -60,13 +60,13 @@ public class AircraftController {
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
-    public ResponseEntity<WebResponse<AircraftResponseDetail>> findById(@RequestParam("id") String id) {
+    public ResponseEntity<WebResponse<AircraftDetailResponse>> findById(@RequestParam("id") String id) {
         log.info("Calling controller find by id - aircraft");
-        AircraftResponseDetail aircraftResponseDetail = aircraftService.findById(id);
+        AircraftDetailResponse aircraftDetailResponse = aircraftService.findById(id);
         WebResponse webResponse = new WebResponse(
                 HttpStatus.OK.value(),
                 HttpStatus.OK.getReasonPhrase(),
-                aircraftResponseDetail
+                aircraftDetailResponse
         );
         log.info("Successful get aircraft data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);

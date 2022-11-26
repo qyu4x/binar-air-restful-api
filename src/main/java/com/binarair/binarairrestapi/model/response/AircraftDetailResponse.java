@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class AircraftResponseDetail {
+public class AircraftDetailResponse {
 
     private String id;
 
