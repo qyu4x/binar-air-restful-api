@@ -11,6 +11,8 @@ import java.time.LocalDateTime;
 @Builder
 public class AircraftResponse {
 
+    private String id;
+
     private String type;
 
     private String seatArrangement;
