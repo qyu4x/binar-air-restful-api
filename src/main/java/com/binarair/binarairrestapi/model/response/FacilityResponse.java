@@ -13,5 +13,7 @@ public class FacilityResponse {
 
     private String description;
 
+    private boolean status;
+
 
 }

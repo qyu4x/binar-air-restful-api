@@ -79,6 +79,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                     .display(convertToDisplayCurrency(departureScheduleOrigin.getPrice()))
                     .build();
             AircraftResponse aircraftResponse = AircraftResponse.builder()
+                    .id(departureScheduleOrigin.getAircraft().getId())
                     .type(departureScheduleOrigin.getAircraft().getModel())
                     .seatArrangement(departureScheduleOrigin.getAircraft().getSeatArrangement())
                     .distanceBetweenSeats(departureScheduleOrigin.getAircraft().getDistanceBetweenSeats())
@@ -90,6 +91,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 FacilityResponse facilityResponse = FacilityResponse.builder()
                         .name(facility.getName())
                         .description(facility.getDescription())
+                        .status(facility.isStatus())
                         .build();
                 facilityResponses.add(facilityResponse);
             });
@@ -151,6 +153,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                     .display(convertToDisplayCurrency(arrivalScheduleDestination.getPrice()))
                     .build();
             AircraftResponse aircraftResponse = AircraftResponse.builder()
+                    .id(arrivalScheduleDestination.getAircraft().getId())
                     .type(arrivalScheduleDestination.getAircraft().getModel())
                     .seatArrangement(arrivalScheduleDestination.getAircraft().getSeatArrangement())
                     .distanceBetweenSeats(arrivalScheduleDestination.getAircraft().getDistanceBetweenSeats())
@@ -162,6 +165,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 FacilityResponse facilityResponse = FacilityResponse.builder()
                         .name(facility.getName())
                         .description(facility.getDescription())
+                        .status(facility.isStatus())
                         .build();
                 facilityResponses.add(facilityResponse);
             });
@@ -244,6 +248,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                     .display(convertToDisplayCurrency(departureScheduleOrigin.getPrice()))
                     .build();
             AircraftResponse aircraftResponse = AircraftResponse.builder()
+                    .id(departureScheduleOrigin.getAircraft().getId())
                     .type(departureScheduleOrigin.getAircraft().getModel())
                     .seatArrangement(departureScheduleOrigin.getAircraft().getSeatArrangement())
                     .distanceBetweenSeats(departureScheduleOrigin.getAircraft().getDistanceBetweenSeats())
@@ -255,6 +260,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                 FacilityResponse facilityResponse = FacilityResponse.builder()
                         .name(facility.getName())
                         .description(facility.getDescription())
+                        .status(facility.isStatus())
                         .build();
                 facilityResponses.add(facilityResponse);
             });
