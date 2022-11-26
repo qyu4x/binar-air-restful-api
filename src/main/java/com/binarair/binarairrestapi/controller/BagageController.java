@@ -1,9 +1,11 @@
 package com.binarair.binarairrestapi.controller;
 
+import com.binarair.binarairrestapi.model.request.BagageRequest;
 import com.binarair.binarairrestapi.model.request.BenefitRequest;
+import com.binarair.binarairrestapi.model.response.BagageResponse;
 import com.binarair.binarairrestapi.model.response.BenefitDetailResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
-import com.binarair.binarairrestapi.service.BenefitService;
+import com.binarair.binarairrestapi.service.BagageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,29 +18,29 @@ import javax.validation.Valid;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1/benefit")
-public class BenefitController {
+@RequestMapping("/api/v1/bagage")
+public class BagageController {
 
-    private final static Logger log = LoggerFactory.getLogger(BenefitController.class);
+    private final static Logger log = LoggerFactory.getLogger(BagageController.class);
 
-    private final BenefitService benefitService;
+    private final BagageService bagageService;
 
     @Autowired
-    public BenefitController(BenefitService benefitService) {
-        this.benefitService = benefitService;
+    public BagageController(BagageService bagageService) {
+        this.bagageService = bagageService;
     }
 
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<WebResponse<BenefitDetailResponse>> save(@Valid @RequestBody BenefitRequest benefitRequest) {
-        log.info("call controller save - benefit");
-        BenefitDetailResponse benefitDetailResponse = benefitService.save(benefitRequest);
-        log.info("successful save benefit data");
+    public ResponseEntity<WebResponse<BagageResponse>> save(@Valid @RequestBody BagageRequest bagageRequest) {
+        log.info("call controller save - bagage");
+        BagageResponse bagageResponse = bagageService.save(bagageRequest);
+        log.info("successful save bagage data");
         WebResponse webResponse = new WebResponse(
                 HttpStatus.CREATED.value(),
                 HttpStatus.CREATED.getReasonPhrase(),
-                benefitDetailResponse
+                bagageResponse
         );
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
@@ -46,30 +48,30 @@ public class BenefitController {
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
-    public ResponseEntity<WebResponse<List<BenefitDetailResponse>>> getAll() {
-        log.info("Calling controller getAll - benefit");
-        List<BenefitDetailResponse> benefitDetailResponses = benefitService.getAll();
+    public ResponseEntity<WebResponse<List<BagageResponse>>> getAll() {
+        log.info("Calling controller getAll - bagage");
+        List<BagageResponse> bagageResponses = bagageService.getAll();
         WebResponse webResponse = new WebResponse(
                 HttpStatus.OK.value(),
                 HttpStatus.OK.getReasonPhrase(),
-                benefitDetailResponses
+                bagageResponses
         );
-        log.info("Successful get all benefit data");
+        log.info("Successful get all bagage data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
-
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
-    public ResponseEntity<WebResponse<List<BenefitDetailResponse>>> findByAircraftId(@RequestParam("aircraftid") String aircraftid) {
-        log.info("Calling controller find by aircraft id - benefit");
-        List<BenefitDetailResponse> benefitDetailResponses = benefitService.findByAircraftId(aircraftid);
+    public ResponseEntity<WebResponse<BagageResponse>> findByAircraftId(@RequestParam("aircraftid") String aircraftid) {
+        log.info("Calling controller find by aircraft id - bagage");
+        BagageResponse bagageResponse = bagageService.findBagageByAircraftId(aircraftid);
         WebResponse webResponse = new WebResponse(
                 HttpStatus.OK.value(),
                 HttpStatus.OK.getReasonPhrase(),
-                benefitDetailResponses
+                bagageResponse
         );
-        log.info("Successful get benefit data based on id aircraft");
+        log.info("Successful get bagage data based on id aircraft");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
+
 }
