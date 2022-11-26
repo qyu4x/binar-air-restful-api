@@ -7,6 +7,9 @@ import org.hibernate.annotations.Where;
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 @Entity
 @Getter
@@ -14,8 +17,6 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@SQLDelete(sql = "UPDATE aircraft_seat SET active = FALSE WHERE id = ?")
-@Where(clause = "active=true")
 public class AircraftSeat {
 
     @Id
@@ -25,9 +26,10 @@ public class AircraftSeat {
     @JoinColumn(name = "aircraft_unique_id", referencedColumnName = "id")
     private Aircraft aircraft;
 
-    private String seatCode;
+    @OneToMany(mappedBy = "aircraftSeat", fetch = FetchType.EAGER)
+    List<SeatScheduleBooking> seatScheduleBookings = new ArrayList<>();
 
-    private boolean seatStatus = Boolean.TRUE;
+    private String seatCode;
 
     private BigDecimal price;
 
