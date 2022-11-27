@@ -1,13 +1,10 @@
 package com.binarair.binarairrestapi.service.impl;
 
 import com.binarair.binarairrestapi.exception.DataNotFoundException;
-import com.binarair.binarairrestapi.model.entity.Benefit;
-import com.binarair.binarairrestapi.model.entity.Facility;
-import com.binarair.binarairrestapi.model.entity.Schedule;
+import com.binarair.binarairrestapi.model.entity.*;
+import com.binarair.binarairrestapi.model.request.ScheduleRequest;
 import com.binarair.binarairrestapi.model.response.*;
-import com.binarair.binarairrestapi.repository.BenefitRepository;
-import com.binarair.binarairrestapi.repository.FacilityRepository;
-import com.binarair.binarairrestapi.repository.ScheduleRepository;
+import com.binarair.binarairrestapi.repository.*;
 import com.binarair.binarairrestapi.service.ScheduleService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,14 +13,9 @@ import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
-import java.time.Duration;
-import java.time.LocalDate;
-import java.time.LocalTime;
+import java.time.*;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.List;
-import java.util.Locale;
+import java.util.*;
 import java.util.regex.Pattern;
 
 @Service
@@ -37,11 +29,17 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     private final BenefitRepository benefitRepository;
 
+    private final AircraftRepository aircraftRepository;
+
+    private final AirportRepository airportRepository;
+
     @Autowired
-    public ScheduleServiceImpl(ScheduleRepository scheduleRepository, FacilityRepository facilityRepository, BenefitRepository benefitRepository) {
+    public ScheduleServiceImpl(ScheduleRepository scheduleRepository, FacilityRepository facilityRepository, BenefitRepository benefitRepository, AircraftRepository aircraftRepository, AirportRepository airportRepository) {
         this.scheduleRepository = scheduleRepository;
         this.facilityRepository = facilityRepository;
         this.benefitRepository = benefitRepository;
+        this.aircraftRepository = aircraftRepository;
+        this.airportRepository = airportRepository;
     }
 
     @Override
@@ -122,7 +120,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                     .departureTime(departureScheduleOrigin.getDepartureTime())
                     .arrivalDate(departureScheduleOrigin.getArrivalDate())
                     .arrivalTime(departureScheduleOrigin.getArrivalTime())
-                    .flightDuration(duration(departureScheduleOrigin.getDepartureTime(), departureScheduleOrigin.getArrivalTime()))
+                    .flightDuration(duration(departureScheduleOrigin.getDepartureTime(), departureScheduleOrigin.getArrivalTime(), departureScheduleOrigin.getDepartureDate(), departureScheduleOrigin.getArrivalDate()))
                     .stock(departureScheduleOrigin.getStock())
                     .sold(departureScheduleOrigin.getSold())
                     .capacity(departureScheduleOrigin.getAircraft().getPassangerCapacity())
@@ -194,7 +192,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                     .departureTime(arrivalScheduleDestination.getDepartureTime())
                     .arrivalDate(arrivalScheduleDestination.getArrivalDate())
                     .arrivalTime(arrivalScheduleDestination.getArrivalTime())
-                    .flightDuration(duration(arrivalScheduleDestination.getDepartureTime(), arrivalScheduleDestination.getArrivalTime()))
+                    .flightDuration(duration(arrivalScheduleDestination.getDepartureTime(), arrivalScheduleDestination.getArrivalTime(), arrivalScheduleDestination.getDepartureDate(), arrivalScheduleDestination.getArrivalDate()))
                     .stock(arrivalScheduleDestination.getStock())
                     .sold(arrivalScheduleDestination.getSold())
                     .capacity(arrivalScheduleDestination.getAircraft().getPassangerCapacity())
@@ -291,7 +289,7 @@ public class ScheduleServiceImpl implements ScheduleService {
                     .departureTime(departureScheduleOrigin.getDepartureTime())
                     .arrivalDate(departureScheduleOrigin.getArrivalDate())
                     .arrivalTime(departureScheduleOrigin.getArrivalTime())
-                    .flightDuration(duration(departureScheduleOrigin.getDepartureTime(), departureScheduleOrigin.getArrivalTime()))
+                    .flightDuration(duration(departureScheduleOrigin.getDepartureTime(), departureScheduleOrigin.getArrivalTime(), departureScheduleOrigin.getDepartureDate(),departureScheduleOrigin.getArrivalDate()))
                     .stock(departureScheduleOrigin.getStock())
                     .sold(departureScheduleOrigin.getSold())
                     .capacity(departureScheduleOrigin.getAircraft().getPassangerCapacity())
@@ -309,6 +307,124 @@ public class ScheduleServiceImpl implements ScheduleService {
         return ticketResponses;
     }
 
+    @Override
+    public ScheduleResponse save(ScheduleRequest scheduleRequest) {
+        Airport originAirport = airportRepository.findById(scheduleRequest.getOriginIataAirportCode())
+                .orElseThrow(() -> new DataNotFoundException(String.format("Airport with iata code %s not found", scheduleRequest.getOriginIataAirportCode())));
+        Airport destinationAirport = airportRepository.findById(scheduleRequest.getDestinationIataAirportCode())
+                .orElseThrow(() -> new DataNotFoundException(String.format("Airport with iata code %s not found", scheduleRequest.getDestinationIataAirportCode())));
+        Aircraft aircraft = aircraftRepository.findById(scheduleRequest.getAircraftId())
+                .orElseThrow(() -> new DataNotFoundException(String.format("Aircraft with id %s not found", scheduleRequest.getAircraftId())));
+
+        Schedule schedule = Schedule.builder()
+                .id(String.format("x-%s", UUID.randomUUID().toString()))
+                .originIataAirportCode(originAirport)
+                .destIataAirportCode(destinationAirport)
+                .aircraft(aircraft)
+                .price(scheduleRequest.getPrice())
+                .departureDate(scheduleRequest.getDepartureDate())
+                .arrivalDate(scheduleRequest.getArrivalDate())
+                .departureTime(scheduleRequest.getDepartureTime())
+                .arrivalTime(scheduleRequest.getArrivalTime())
+                .stock(scheduleRequest.getStock())
+                .active(true)
+                .createdAt(LocalDateTime.now())
+                .build();
+        log.info("Do save schedule data");
+        scheduleRepository.save(schedule);
+        log.info("Successul save schedule data");
+        return ScheduleResponse.builder()
+                .id(schedule.getId())
+                .originAirport(AirportResponse.builder()
+                        .iata(originAirport.getIataAirportCode())
+                        .name(originAirport.getName())
+                        .cityCode(originAirport.getCity().getCodeId())
+                        .countryCode(originAirport.getCity().getCountry().getCountryCode())
+                        .city(originAirport.getCity().getName())
+                        .country(originAirport.getCity().getCountry().getName())
+                        .createdAt(originAirport.getCreatedAt())
+                        .build())
+                .destinationAirport(AirportResponse.builder()
+                        .iata(destinationAirport.getIataAirportCode())
+                        .name(destinationAirport.getName())
+                        .cityCode(destinationAirport.getCity().getCodeId())
+                        .countryCode(destinationAirport.getCity().getCountry().getCountryCode())
+                        .city(destinationAirport.getCity().getName())
+                        .country(destinationAirport.getCity().getCountry().getName())
+                        .createdAt(destinationAirport.getCreatedAt())
+                        .build())
+                .aircraft(AircraftResponse.builder()
+                        .id(aircraft.getId())
+                        .type(aircraft.getModel())
+                        .seatArrangement(aircraft.getSeatArrangement())
+                        .distanceBetweenSeats(aircraft.getDistanceBetweenSeats())
+                        .seatLengthUnit(aircraft.getSeatLengthUnit())
+                        .build())
+                .price(PriceResponse.builder()
+                        .currencyCode(getIndonesiaCurrencyCode())
+                        .display(convertToDisplayCurrency(schedule.getPrice()))
+                        .amount(schedule.getPrice())
+                        .build())
+                .departureDate(schedule.getDepartureDate())
+                .arrivalDate(schedule.getArrivalDate())
+                .departureTime(schedule.getDepartureTime())
+                .arrivalTime(schedule.getArrivalTime())
+                .stock(schedule.getStock())
+                .createdAt(schedule.getCreatedAt())
+                .updatedAt(schedule.getUpdatedAt())
+                .build();
+    }
+
+    @Override
+    public List<ScheduleResponse> getAll() {
+        List<Schedule> schedules = scheduleRepository.findAll();
+        List<ScheduleResponse> scheduleResponses = new ArrayList<>();
+        schedules.stream().forEach(schedule -> {
+            ScheduleResponse scheduleResponse = ScheduleResponse.builder()
+                    .id(schedule.getId())
+                    .originAirport(AirportResponse.builder()
+                            .iata(schedule.getOriginIataAirportCode().getIataAirportCode())
+                            .name(schedule.getOriginIataAirportCode().getName())
+                            .cityCode(schedule.getOriginIataAirportCode().getCity().getCodeId())
+                            .countryCode(schedule.getOriginIataAirportCode().getCity().getCountry().getCountryCode())
+                            .city(schedule.getOriginIataAirportCode().getCity().getName())
+                            .country(schedule.getOriginIataAirportCode().getCity().getCountry().getName())
+                            .createdAt(schedule.getOriginIataAirportCode().getCreatedAt())
+                            .build())
+                    .destinationAirport(AirportResponse.builder()
+                            .iata(schedule.getDestIataAirportCode().getIataAirportCode())
+                            .name(schedule.getDestIataAirportCode().getName())
+                            .cityCode(schedule.getDestIataAirportCode().getCity().getCodeId())
+                            .countryCode(schedule.getDestIataAirportCode().getCity().getCountry().getCountryCode())
+                            .city(schedule.getDestIataAirportCode().getCity().getName())
+                            .country(schedule.getDestIataAirportCode().getCity().getCountry().getName())
+                            .createdAt(schedule.getDestIataAirportCode().getCreatedAt())
+                            .build())
+                    .aircraft(AircraftResponse.builder()
+                            .id(schedule.getAircraft().getId())
+                            .type(schedule.getAircraft().getModel())
+                            .seatArrangement(schedule.getAircraft().getSeatArrangement())
+                            .distanceBetweenSeats(schedule.getAircraft().getDistanceBetweenSeats())
+                            .seatLengthUnit(schedule.getAircraft().getSeatLengthUnit())
+                            .build())
+                    .price(PriceResponse.builder()
+                            .currencyCode(getIndonesiaCurrencyCode())
+                            .display(convertToDisplayCurrency(schedule.getPrice()))
+                            .amount(schedule.getPrice())
+                            .build())
+                    .departureDate(schedule.getDepartureDate())
+                    .arrivalDate(schedule.getArrivalDate())
+                    .departureTime(schedule.getDepartureTime())
+                    .arrivalTime(schedule.getArrivalTime())
+                    .stock(schedule.getStock())
+                    .createdAt(schedule.getCreatedAt())
+                    .updatedAt(schedule.getUpdatedAt())
+                    .build();
+            scheduleResponses.add(scheduleResponse);
+        });
+        return scheduleResponses;
+    }
+
     private String[] splitValue(String value) {
         return value.split(Pattern.quote("."));
     }
@@ -321,12 +437,18 @@ public class ScheduleServiceImpl implements ScheduleService {
         return LocalDate.parse(departureDate, formatter);
     }
 
-    private String duration(LocalTime departure, LocalTime arrival) {
+    private String duration(LocalTime departure, LocalTime arrival, LocalDate departureDate, LocalDate arrivalDate) {
+        LocalDateTime localDepartureDate = departureDate.atStartOfDay(ZoneId.of("Asia/Jakarta")).toLocalDateTime();
+        LocalDateTime localArrivalDate = arrivalDate.atStartOfDay(ZoneId.of("Asia/Jakarta")).toLocalDateTime();
+
+        Duration dateDuration = Duration.between(localDepartureDate, localArrivalDate);
         Duration duration = Duration.between(departure, arrival);
         long totalSecs = duration.getSeconds();
         long hours = totalSecs / 3600;
         long minutes = (totalSecs % 3600) / 60;
-        return String.format("%02dh %02dm", hours, minutes);
+        long days = dateDuration.toDays();
+
+        return String.format("%2dd %02dh %02dm", days, hours, minutes);
     }
 
     private String convertToDisplayCurrency(BigDecimal amount) {
