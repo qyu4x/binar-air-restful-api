@@ -22,10 +22,12 @@ public class Booking {
     @JoinColumn(name = "user_unique_id", referencedColumnName = "id")
     private User user;
 
-    @OneToMany(mappedBy = "booking", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "booking", fetch = FetchType.EAGER)
     private List<BookingDetail> bookingDetails;
 
     private BigDecimal total;
+
+    private String bookingType;
 
     @Column(nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
