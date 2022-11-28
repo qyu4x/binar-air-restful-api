@@ -43,6 +43,8 @@ public class BookingDetail {
 
     private boolean checkInStatus;
 
+    private String status;
+
     @Column(nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
 

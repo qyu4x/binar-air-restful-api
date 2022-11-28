@@ -4,6 +4,7 @@ package com.binarair.binarairrestapi.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Entity
@@ -26,6 +27,8 @@ public class SeatScheduleBooking {
     private AircraftSeat aircraftSeat;
 
     private boolean seatStatus = Boolean.TRUE;
+
+    private LocalDate bookingDate;
 
     @Column(nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")
     private LocalDateTime createdAt;
