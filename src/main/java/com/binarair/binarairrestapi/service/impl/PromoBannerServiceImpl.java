@@ -67,17 +67,6 @@ public class PromoBannerServiceImpl implements PromoBannerService {
         log.info("Is processing get all promo banner data");
         Page<PromoBanner> promoBanners = promoBannerRepository.findAll(pageable);
         Page<PromoBannerPaggableResponse> promoBannerResponses = promoBanners.map(promoBanner -> new PromoBannerPaggableResponse(promoBanner));
-//        List<PromoBannerResponse> promoBannerResponses = new ArrayList<>();
-//        promoBanners.stream().forEach(promo -> {
-//            PromoBannerResponse promoBannerResponse = PromoBannerResponse.builder()
-//                    .id(promo.getId())
-//                    .title(promo.getTitle())
-//                    .description(promo.getDescription())
-//                    .imageURL(promo.getImageURL())
-//                    .createdAt(promo.getCreatedAt())
-//                    .build();
-//            promoBannerResponses.add(promoBannerResponse);
-//        });
         log.info("Success in getting all the promo banner data");
         return promoBannerResponses;
     }
