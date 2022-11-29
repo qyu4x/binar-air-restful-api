@@ -79,7 +79,7 @@ public class UserController {
 
     @DeleteMapping("{userId}")
     @ResponseBody
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
+    @PreAuthorize("hasAnyRole('ROLE_BUYER')")
     public ResponseEntity<WebResponse<Boolean>> delete(@Valid @PathVariable("userId") String userId) {
         log.info("Call delete controller - user");
         Boolean deleteStatus = userService.delete(userId);
