@@ -92,8 +92,11 @@ public class BookingDetailServiceImpl implements BookingDetailService {
     public Booking createBooking(BookingDetailRequest bookingDetailRequest, String userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new DataNotFoundException(String.format("User account not found")));
+        String[] random = UUID.randomUUID().toString().toUpperCase().split("-");
+        String numberBookingReferenceNumber = random[0];
         Booking booking = Booking.builder()
                 .id(String.format("bo-%s", UUID.randomUUID().toString()))
+                .bookingReferenceNumber(numberBookingReferenceNumber)
                 .user(user)
                 .bookingType(bookingDetailRequest.getBookingType())
                 .createdAt(LocalDateTime.now())
@@ -482,6 +485,7 @@ public class BookingDetailServiceImpl implements BookingDetailService {
                         .amount(totalPayment)
                         .build())
                 .bookingId(bookingId)
+                .bookingReferenceNumber(booking.getBookingReferenceNumber())
                 .departure(BookingDetailResponse.builder()
                         .data(departures)
                         .build())
