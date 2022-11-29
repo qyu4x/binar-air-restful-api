@@ -46,7 +46,7 @@ public class UserController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PutMapping("/update")
     @ResponseBody
     public ResponseEntity<WebResponse<UserUpdateResponse>> update(@Valid @RequestBody UserUpdateRequest userUpdateRequest) {
         log.info("Call update controller - user");
