@@ -77,20 +77,5 @@ public class UserController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("{userId}")
-    @ResponseBody
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
-    public ResponseEntity<WebResponse<Boolean>> delete(@Valid @PathVariable("userId") String userId) {
-        log.info("Call delete controller - user");
-        Boolean deleteStatus = userService.delete(userId);
-        WebResponse webResponse = new WebResponse(
-                HttpStatus.OK.value(),
-                HttpStatus.OK.getReasonPhrase(),
-                deleteStatus
-        );
-        log.info("Successful delete user account");
-        return new ResponseEntity<>(webResponse, HttpStatus.OK  );
-    }
-
 
 }
