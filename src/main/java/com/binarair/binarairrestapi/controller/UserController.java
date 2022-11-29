@@ -91,6 +91,4 @@ public class UserController {
         log.info("Successful delete user account");
         return new ResponseEntity<>(webResponse, HttpStatus.OK  );
     }
-
-
 }

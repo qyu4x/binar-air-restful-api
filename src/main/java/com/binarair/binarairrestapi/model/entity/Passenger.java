@@ -4,6 +4,7 @@ package com.binarair.binarairrestapi.model.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Date;
 
@@ -37,7 +38,7 @@ public class Passenger {
 
     private String lastName;
 
-    private Date birthDate;
+    private LocalDate birthDate;
 
     private String passportNumber;
 

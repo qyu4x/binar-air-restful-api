@@ -39,6 +39,9 @@ public class Schedule {
     @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
     private List<BookingDetail> bookingDetails;
 
+    @OneToMany(mappedBy = "schedule", fetch = FetchType.LAZY)
+    private List<SeatScheduleBooking> seatScheduleBookings;
+
     private LocalDate departureDate;
 
     private LocalDate arrivalDate;
