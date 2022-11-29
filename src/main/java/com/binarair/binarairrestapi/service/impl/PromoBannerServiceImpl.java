@@ -3,6 +3,7 @@ package com.binarair.binarairrestapi.service.impl;
 import com.binarair.binarairrestapi.exception.DataNotFoundException;
 import com.binarair.binarairrestapi.model.entity.PromoBanner;
 import com.binarair.binarairrestapi.model.request.PromoBannerRequest;
+import com.binarair.binarairrestapi.model.response.PromoBannerPaggableResponse;
 import com.binarair.binarairrestapi.model.response.PromoBannerResponse;
 import com.binarair.binarairrestapi.repository.PromoBannerRepository;
 import com.binarair.binarairrestapi.service.FirebaseStorageFileService;
@@ -10,6 +11,8 @@ import com.binarair.binarairrestapi.service.PromoBannerService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -60,20 +63,10 @@ public class PromoBannerServiceImpl implements PromoBannerService {
     }
 
     @Override
-    public List<PromoBannerResponse> getAll() {
+    public Page<PromoBannerPaggableResponse> getAll(Pageable pageable) {
         log.info("Is processing get all promo banner data");
-        List<PromoBanner> promoBanners = promoBannerRepository.findAll();
-        List<PromoBannerResponse> promoBannerResponses = new ArrayList<>();
-        promoBanners.stream().forEach(promo -> {
-            PromoBannerResponse promoBannerResponse = PromoBannerResponse.builder()
-                    .id(promo.getId())
-                    .title(promo.getTitle())
-                    .description(promo.getDescription())
-                    .imageURL(promo.getImageURL())
-                    .createdAt(promo.getCreatedAt())
-                    .build();
-            promoBannerResponses.add(promoBannerResponse);
-        });
+        Page<PromoBanner> promoBanners = promoBannerRepository.findAll(pageable);
+        Page<PromoBannerPaggableResponse> promoBannerResponses = promoBanners.map(promoBanner -> new PromoBannerPaggableResponse(promoBanner));
         log.info("Success in getting all the promo banner data");
         return promoBannerResponses;
     }
