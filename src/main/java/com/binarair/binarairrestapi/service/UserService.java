@@ -15,6 +15,8 @@ public interface UserService {
 
     UserProfileResponse updateProfile(String userId, MultipartFile multipartFile);
 
+    Boolean delete(String userId);
+
 
 
 }

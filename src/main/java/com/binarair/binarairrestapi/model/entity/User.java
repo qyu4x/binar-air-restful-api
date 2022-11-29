@@ -41,7 +41,7 @@ public class User {
     @JoinColumn(name = "city_code_id", referencedColumnName = "codeId")
     private City city;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "role_name_id", referencedColumnName = "role")
     private Role role;
 

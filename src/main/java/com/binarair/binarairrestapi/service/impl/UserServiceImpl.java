@@ -131,4 +131,17 @@ public class UserServiceImpl implements UserService {
                 .build();
     }
 
+    @Override
+    public Boolean delete(String userId) {
+        boolean isExists = userRepository.existsById(userId);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("User with id %s not found", userId));
+        }
+        log.info("Do delete user account");
+        userRepository.deleteById(userId);
+        log.info("Successful delete user account");
+        return true;
+    }
+
+
 }
