@@ -79,7 +79,7 @@ public class UserController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
-    @DeleteMapping("{userId}")
+    @DeleteMapping("/{userId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_BUYER')")
     public ResponseEntity<WebResponse<Boolean>> delete(@Valid @PathVariable("userId") String userId) {
