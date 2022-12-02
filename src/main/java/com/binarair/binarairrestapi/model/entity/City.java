@@ -19,7 +19,7 @@ public class City {
 
     private  String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "country_code_id", referencedColumnName = "countryCode")
     private Country country;
 

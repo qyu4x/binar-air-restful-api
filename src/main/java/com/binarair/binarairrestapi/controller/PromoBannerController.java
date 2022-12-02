@@ -1,9 +1,8 @@
 package com.binarair.binarairrestapi.controller;
 
 import com.binarair.binarairrestapi.model.request.PromoBannerRequest;
-import com.binarair.binarairrestapi.model.response.PromoBannerPaggableResponse;
-import com.binarair.binarairrestapi.model.response.PromoBannerResponse;
-import com.binarair.binarairrestapi.model.response.WebResponse;
+import com.binarair.binarairrestapi.model.request.TitelRequest;
+import com.binarair.binarairrestapi.model.response.*;
 import com.binarair.binarairrestapi.service.PromoBannerService;
 import com.binarair.binarairrestapi.util.MapperHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
@@ -55,7 +54,7 @@ public class PromoBannerController {
     }
 
     @ResponseBody
-    @GetMapping
+    @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<Page<PromoBannerPaggableResponse>>> getAll(Pageable pageable) {
         log.info("Calling controller getAll - promo banner");
@@ -68,4 +67,49 @@ public class PromoBannerController {
         log.info("Successful get all data promo banner");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{promoBannerId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("promoBannerId") String promoBannerId) {
+        log.info("Call delete promo banner - promo banner");
+        Boolean deleteStatus = promoBannerService.delete(promoBannerId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteStatus
+        );
+        log.info("Successful delete promo banner data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK  );
+    }
+    @ResponseBody
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
+    public ResponseEntity<WebResponse<PromoBannerResponse>> findPromoBannerById(@RequestParam("id") String id) {
+        log.info("Call controller find promo banner by id - travel class");
+        PromoBannerResponse promoBannerResponse = promoBannerService.findById(id);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                promoBannerResponse
+        );
+        log.info("Successful get promo banner data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
+    @PutMapping("/{promoBannerId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<PromoBannerResponse>> update(@RequestBody @Valid PromoBannerRequest promoBannerRequest, @PathVariable("promoBannerId") String promoBannerId) {
+        log.info("Call update controller - promo banner");
+        PromoBannerResponse promoBannerResponse = promoBannerService.update(promoBannerRequest,promoBannerId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                promoBannerResponse
+        );
+        log.info("Successful update promo banner data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK );
+    }
+
 }

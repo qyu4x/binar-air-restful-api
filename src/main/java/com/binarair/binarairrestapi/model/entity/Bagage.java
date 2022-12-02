@@ -17,7 +17,7 @@ public class Bagage {
     @Id
     private String id;
 
-    @OneToOne(cascade = CascadeType.ALL)
+    @OneToOne
     @JoinColumn(name = "aircraft_unique_id", referencedColumnName = "id")
     private Aircraft aircraft;
 

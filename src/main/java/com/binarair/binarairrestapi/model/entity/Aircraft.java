@@ -27,15 +27,15 @@ public class Aircraft {
     @OneToMany(mappedBy = "aircraft", fetch = FetchType.LAZY)
     private List<Schedule> schedules;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "airlines_code_id", referencedColumnName = "id")
     private Airlines airlines;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "aircraft_manufacture_code_id", referencedColumnName = "id")
     private AircraftManufacture aircraftManufacture;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "travel_class_code_id", referencedColumnName = "id")
     private TravelClass travelClass;
 

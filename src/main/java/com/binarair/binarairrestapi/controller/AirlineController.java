@@ -1,8 +1,8 @@
 package com.binarair.binarairrestapi.controller;
 
 import com.binarair.binarairrestapi.model.request.AirlineRequest;
-import com.binarair.binarairrestapi.model.response.AirlineResponse;
-import com.binarair.binarairrestapi.model.response.WebResponse;
+import com.binarair.binarairrestapi.model.request.BenefitUpdateRequest;
+import com.binarair.binarairrestapi.model.response.*;
 import com.binarair.binarairrestapi.service.AirlineService;
 import com.binarair.binarairrestapi.util.MapperHelper;
 import org.slf4j.Logger;
@@ -63,4 +63,49 @@ public class AirlineController {
         log.info("Successful get all airlines data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{airlineId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("airlineId") String airlineId) {
+        log.info("Calling controlelr delete airline  - airline");
+        Boolean deleteStatus = airlineService.delete(airlineId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteStatus
+        );
+        log.info("Successful delete airline data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK  );
+    }
+    @PutMapping("/{airlineId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<AirlineResponse>> update(@RequestBody @Valid AirlineRequest airlineRequest, @PathVariable("airlineId") String airlineId) {
+        log.info("Call update controller - airline");
+        AirlineResponse airlineResponse = airlineService.update(airlineRequest,airlineId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                airlineResponse
+        );
+        log.info("Successful update airline data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK );
+    }
+
+    @ResponseBody
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
+    public ResponseEntity<WebResponse<AirlineResponse>> findAirlineById(@RequestParam("id") String id) {
+        log.info("Call controller find airline by id - airlines");
+        AirlineResponse airlineResponse = airlineService.findById(id);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                airlineResponse
+        );
+        log.info("Successful get airline data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
 }

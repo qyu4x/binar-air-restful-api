@@ -177,4 +177,16 @@ public class AircraftServiceImpl implements AircraftService {
                         .build())
                 .build();
     }
+
+    @Override
+    public Boolean delete(String aircraftId) {
+        boolean isExists = aircraftRepository.existsById(aircraftId);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("Aircraft with id %s not found", aircraftId));
+        }
+        log.info("Do delete aircraft data");
+        aircraftRepository.deleteById(aircraftId);
+        log.info("Successful delete aircraft data");
+        return true;
+    }
 }

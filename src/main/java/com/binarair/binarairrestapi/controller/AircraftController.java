@@ -71,4 +71,19 @@ public class AircraftController {
         log.info("Successful get aircraft data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{aircraftId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("aircraftId") String aircraftId) {
+        log.info("Calling controlelr delete aircraft  - aircraft");
+        Boolean deleteStatus = aircraftService.delete(aircraftId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteStatus
+        );
+        log.info("Successful delete aircraft data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK  );
+    }
 }

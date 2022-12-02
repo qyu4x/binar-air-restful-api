@@ -1,6 +1,7 @@
 package com.binarair.binarairrestapi.service.impl;
 
 import com.binarair.binarairrestapi.exception.DataAlreadyExistException;
+import com.binarair.binarairrestapi.exception.DataNotFoundException;
 import com.binarair.binarairrestapi.model.entity.Aircraft;
 import com.binarair.binarairrestapi.model.entity.AircraftManufacture;
 import com.binarair.binarairrestapi.model.request.AircraftManufactureRequest;
@@ -65,7 +66,19 @@ public class AircraftManufactureServiceImpl implements AircraftManufactureServic
                     .build();
             aircraftManufactureResponses.add(aircraftManufactureResponse);
         });
-        log.info("Succesful get all data aircraft manufacutes");
+        log.info("Successful get all data aircraft manufacutes");
         return aircraftManufactureResponses;
+    }
+
+    @Override
+    public Boolean delete(String id) {
+        boolean isExists = aircraftManufactureRepository.existsById(id);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("Aircraft manufacture with id %s not found", id));
+        }
+        log.info("Do delete aircraft manufacture data");
+        aircraftManufactureRepository.deleteById(id);
+        log.info("Successful delete aircraft manufacture data");
+        return true;
     }
 }

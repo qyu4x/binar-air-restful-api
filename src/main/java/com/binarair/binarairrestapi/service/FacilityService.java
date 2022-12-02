@@ -13,5 +13,7 @@ public interface FacilityService {
 
     List<FacilityDetailResponse> findByAircraftId(String aircraftId);
 
+    Boolean delete(String facilityId);
+
 
 }

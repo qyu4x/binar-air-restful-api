@@ -88,4 +88,19 @@ public class AircraftSeatController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{seatId}")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("seatId") String seatId) {
+        log.info("calling controller delete - aircraft seat");
+        boolean deleteResponse = aircraftSeatService.delete(seatId);
+        log.info("successful delete seat data");
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteResponse
+        );
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
 }

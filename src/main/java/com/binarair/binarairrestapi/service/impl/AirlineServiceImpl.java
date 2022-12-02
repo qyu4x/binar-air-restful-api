@@ -75,4 +75,49 @@ public class AirlineServiceImpl implements AirlineService {
         });
         return airlineResponses;
     }
+
+    @Override
+    public AirlineResponse update(AirlineRequest airlineRequest, String airlineId) {
+        Airlines airline = airlineRepository.findById(airlineId)
+                .orElseThrow(() -> new DataNotFoundException(String.format("Airline with id %s not found", airlineId)));
+        airline.setName(airlineRequest.getAirlineName());
+        log.info("Do update airline data");
+        airline.setDescription(airlineRequest.getDescription());
+        log.info("Successful update airline data");
+        airlineRepository.save(airline);
+        return AirlineResponse.builder()
+                .id(airline.getId())
+                .airlineName(airline.getName())
+                .description(airline.getDescription())
+                .logoURL(airline.getLogoURL())
+                .createdAt(airline.getCreatedAt())
+                .build();
+    }
+
+    @Override
+    public Boolean delete(String airlineId) {
+        boolean isExists = airlineRepository.existsById(airlineId);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("Airline with id %s not found", airlineId));
+        }
+        log.info("Do delete data aircraft");
+        airlineRepository.deleteById(airlineId);
+        log.info("Successful delete data airline");
+        return true;
+    }
+
+    @Override
+    public AirlineResponse findById(String airlineId) {
+        log.info("Do get data airline by id");
+        Airlines airline = airlineRepository.findById(airlineId)
+                .orElseThrow(() -> new DataNotFoundException(String.format("Airline with id %s not found", airlineId)));
+        log.info("Successful get airline data");
+        return AirlineResponse.builder()
+                .id(airline.getId())
+                .airlineName(airline.getName())
+                .description(airline.getDescription())
+                .logoURL(airline.getLogoURL())
+                .createdAt(airline.getCreatedAt())
+                .build();
+    }
 }

@@ -2,7 +2,9 @@ package com.binarair.binarairrestapi.controller;
 
 
 import com.binarair.binarairrestapi.model.request.TravelClassRequest;
+import com.binarair.binarairrestapi.model.request.TravelClassUpdateRequest;
 import com.binarair.binarairrestapi.model.response.TravelClassResponse;
+import com.binarair.binarairrestapi.model.response.UserResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.TravelClassService;
 import org.slf4j.Logger;
@@ -45,7 +47,7 @@ public class TravelClassController {
     }
 
     @ResponseBody
-    @GetMapping
+    @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<TravelClassResponse>>> getAll() {
         log.info("Calling controller getAll - travel clas");
@@ -57,5 +59,50 @@ public class TravelClassController {
         );
         log.info("Successful get all travel class data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
+    public ResponseEntity<WebResponse<UserResponse>> findTravelClassById(@RequestParam("id") String id) {
+        log.info("Call controller find travel by id - travel class");
+        TravelClassResponse travelClassResponse = travelClassService.findById(id);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                travelClassResponse
+        );
+        log.info("Successful get travel calss data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{travelId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("travelId") String travelId) {
+        log.info("Call delete controller - travel class");
+        Boolean deleteStatus = travelClassService.delete(travelId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteStatus
+        );
+        log.info("Successful delete travel class");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK  );
+    }
+
+    @PutMapping("/{travelId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<TravelClassResponse>> update(@RequestBody @Valid TravelClassUpdateRequest travelClassUpdateRequest, @PathVariable("travelId") String travelId) {
+        log.info("Call update controller - travel class");
+        TravelClassResponse travelClassResponse = travelClassService.update(travelClassUpdateRequest,travelId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                travelClassResponse
+        );
+        log.info("Successful update travel class data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK );
     }
 }

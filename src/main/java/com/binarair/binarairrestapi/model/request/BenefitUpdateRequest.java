@@ -10,12 +10,9 @@ import javax.validation.constraints.NotNull;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class BenefitRequest {
+public class BenefitUpdateRequest {
 
-    @NotEmpty(message = "aircraft id is required.")
-    private String aircraftId;
-
-    @NotEmpty(message = "name is required.")
+    @NotEmpty(message = "name of benefir is required.")
     private String name;
 
     @NotEmpty(message = "description is required.")

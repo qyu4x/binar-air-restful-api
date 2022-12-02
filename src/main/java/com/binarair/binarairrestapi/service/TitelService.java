@@ -11,4 +11,11 @@ public interface TitelService {
 
     List<TitelResponse> getAll();
 
+    TitelResponse findById(String titelId);
+
+    Boolean delete(String titelId);
+
+    TitelResponse update(TitelRequest titelRequest, String titelId);
+
+
 }

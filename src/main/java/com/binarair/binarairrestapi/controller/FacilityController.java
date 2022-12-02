@@ -73,4 +73,19 @@ public class FacilityController {
         log.info("Successful get facility data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{facilityId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("facilityId") String facilityId) {
+        log.info("Call delete facility - facility");
+        Boolean deleteStatus = facilityService.delete(facilityId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteStatus
+        );
+        log.info("Successful delete facility data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK  );
+    }
 }

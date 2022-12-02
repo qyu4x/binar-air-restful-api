@@ -13,4 +13,6 @@ public interface AircraftService {
 
     AircraftDetailResponse findById(String aircraftId);
 
+    Boolean delete(String aircraftId);
+
 }

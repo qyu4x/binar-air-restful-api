@@ -15,4 +15,12 @@ public interface PromoBannerService {
 
     Page<PromoBannerPaggableResponse> getAll(Pageable pageable);
 
+    Boolean delete(String promoBannerId);
+
+    PromoBannerResponse findById(String promoBannerId);
+
+
+    PromoBannerResponse update(PromoBannerRequest promoBannerRequest, String promoBannerId);
+
+
 }

@@ -12,4 +12,6 @@ public interface AirportService {
     AirportResponse findByIata(String iata);
     List<AirportResponse> getAll();
 
+    Boolean delete(String iata);
+
 }

@@ -24,15 +24,15 @@ public class Schedule {
     @Id
     private String id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "origin_iata_airport_code_id", referencedColumnName = "iataAirportCode")
     private Airport originIataAirportCode;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "dest_iata_airport_code_id", referencedColumnName = "iataAirportCode")
     private Airport destIataAirportCode;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "aircraft_code_id")
     private Aircraft aircraft;
 

@@ -3,6 +3,7 @@ package com.binarair.binarairrestapi.controller;
 import com.binarair.binarairrestapi.model.request.AgeCategoryRequest;
 import com.binarair.binarairrestapi.model.request.AirportRequest;
 import com.binarair.binarairrestapi.model.response.AgeCategoryResponse;
+import com.binarair.binarairrestapi.model.response.AircraftDetailResponse;
 import com.binarair.binarairrestapi.model.response.AirportResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.AgeCategoryService;
@@ -58,5 +59,35 @@ public class AgeCategoryController {
         );
         log.info("Successful get all age category data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
+    public ResponseEntity<WebResponse<AircraftDetailResponse>> findById(@RequestParam("id") String id) {
+        log.info("Calling controller find age category by id - aircraft");
+        AgeCategoryResponse ageCategoryResponse = ageCategoryService.findById(id);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                ageCategoryResponse
+        );
+        log.info("Successful get age category  data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{ageCategory}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("ageCategory") String ageCategory) {
+        log.info("Calling controller delete age category  - age category");
+        Boolean deleteStatus = ageCategoryService.delete(ageCategory);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteStatus
+        );
+        log.info("Successful delete age category data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK  );
     }
 }

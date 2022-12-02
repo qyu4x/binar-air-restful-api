@@ -11,4 +11,10 @@ public interface AirlineService {
     AirlineResponse save(AirlineRequest airlineRequest, MultipartFile multipartFile);
     List<AirlineResponse> getAll();
 
+    AirlineResponse update(AirlineRequest airlineRequest, String airlineId);
+
+    Boolean delete(String airlineId);
+
+    AirlineResponse findById(String airlineId);
+
 }
