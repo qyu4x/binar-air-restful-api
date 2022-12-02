@@ -94,15 +94,27 @@ public class BookingDetailServiceImpl implements BookingDetailService {
         }
 
         updateTotalPaidBooking(booking.getId(), bookingDetailRequest.getAmount());
+        log.info("Do push notifications");
+        User userAccount = userRepository.findById(userId)
+                .orElseThrow(() -> new DataNotFoundException("User account not found"));
+        NotificationRequest notification = NotificationRequest.builder()
+                .title(String.format(notificationConfiguration.getTitle()))
+                .description(String.format(notificationConfiguration.getDescription(), userAccount.getFullName().split(" ")[0]))
+                .build();
+        notificationService.pushNotification(notification, userId);
+        log.info("Successull transaction for user id %s {} ", userId);
         return getBookingResponse(booking.getId());
     }
 
     @Override
     public Booking createBooking(BookingDetailRequest bookingDetailRequest, String userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new DataNotFoundException("User account not found"));
+                .orElseThrow(() -> new DataNotFoundException(String.format("User account not found")));
+        String[] random = UUID.randomUUID().toString().toUpperCase().split("-");
+        String numberBookingReferenceNumber = random[0];
         Booking booking = Booking.builder()
                 .id(String.format("bo-%s", UUID.randomUUID().toString()))
+                .bookingReferenceNumber(numberBookingReferenceNumber)
                 .user(user)
                 .bookingType(bookingDetailRequest.getBookingType())
                 .createdAt(LocalDateTime.now())
@@ -491,6 +503,7 @@ public class BookingDetailServiceImpl implements BookingDetailService {
                         .amount(totalPayment)
                         .build())
                 .bookingId(bookingId)
+                .bookingReferenceNumber(booking.getBookingReferenceNumber())
                 .departure(BookingDetailResponse.builder()
                         .data(departures)
                         .build())

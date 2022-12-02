@@ -74,4 +74,16 @@ public class HeroBannerServiceImpl implements HeroBannerService {
         log.info("Success in getting all the hero banner data");
         return heroBannerResponses;
     }
+
+    @Override
+    public Boolean delete(String heroBannerId) {
+        boolean isExists = heroBannerRepository.existsById(heroBannerId);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("Hero banner with id %s not found", heroBannerId));
+        }
+        log.info("Do delete hero banner data");
+        heroBannerRepository.deleteById(heroBannerId);
+        log.info("Successful hero  banner data");
+        return true;
+    }
 }

@@ -1,8 +1,10 @@
 package com.binarair.binarairrestapi.service.impl;
 
 import com.binarair.binarairrestapi.exception.DataAlreadyExistException;
+import com.binarair.binarairrestapi.exception.DataNotFoundException;
 import com.binarair.binarairrestapi.model.entity.TravelClass;
 import com.binarair.binarairrestapi.model.request.TravelClassRequest;
+import com.binarair.binarairrestapi.model.request.TravelClassUpdateRequest;
 import com.binarair.binarairrestapi.model.response.TravelClassResponse;
 import com.binarair.binarairrestapi.repository.TravelClassRepository;
 import com.binarair.binarairrestapi.service.TravelClassService;
@@ -63,5 +65,45 @@ public class TravelClassServiceImpl implements TravelClassService {
         });
         log.info("Successful get all travel data");
         return travelClassResponses;
+    }
+
+    @Override
+    public TravelClassResponse findById(String travelId) {
+        log.info("Do get data travel class");
+        TravelClass travelClass = travelClassRepository.findById(travelId)
+                .orElseThrow(() -> new DataNotFoundException(String.format("Travel class %s not found", travelId)));
+        return TravelClassResponse.builder()
+                .travelClassId(travelClass.getId())
+                .travelClassName(travelClass.getName())
+                .createdAt(travelClass.getCreatedAt())
+                .build();
+    }
+
+    @Override
+    public Boolean delete(String travelId) {
+        boolean isExists = travelClassRepository.existsById(travelId);
+        if (!isExists) {
+            log.info("Travel class not found");
+            throw new DataNotFoundException(String.format("Travel class %s not found", travelId));
+        }
+        log.info("Do delete travel class data");
+        travelClassRepository.deleteById(travelId);
+        log.info("Successful delete travel class data");
+        return true;
+    }
+
+    @Override
+    public TravelClassResponse update(TravelClassUpdateRequest travelClassRequest, String travelId) {
+        TravelClass travelClass =  travelClassRepository.findById(travelId)
+                .orElseThrow(() ->  new DataNotFoundException(String.format("Travel class %s not found", travelId)));
+        travelClass.setName(travelClassRequest.getTravelClassName());
+        log.info("Do update travel class data");
+        travelClassRepository.save(travelClass);
+        log.info("Successful update travel class data");
+        return TravelClassResponse.builder()
+                .travelClassId(travelClass.getId())
+                .travelClassName(travelClass.getName())
+                .createdAt(travelClass.getCreatedAt())
+                .build();
     }
 }

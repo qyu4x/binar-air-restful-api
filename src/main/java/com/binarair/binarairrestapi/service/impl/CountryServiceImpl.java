@@ -93,4 +93,30 @@ public class CountryServiceImpl implements CountryService {
         return true;
     }
 
+    @Override
+    public CountryDetailResponse findByCodeId(String countryCodeId) {
+        log.info("Do get country by id");
+        Country country = countryRepository.findById(countryCodeId)
+                .orElseThrow(() -> new DataNotFoundException(String.format("Country data with code %s not found", countryCodeId)));
+        List<City> cities = cityRepository.findAllByCountry(country.getCountryCode());
+        List<CityResponse> cityResponses = new ArrayList<>();
+        cities.forEach(city -> {
+            CityResponse cityResponse = CityResponse.builder()
+                    .cityId(city.getCodeId())
+                    .cityName(city.getName())
+                    .countryCodeId(city.getCountry().getCountryCode())
+                    .countryName(city.getCountry().getName())
+                    .createdAt(city.getCreatedAt())
+                    .build();
+            cityResponses.add(cityResponse);
+        });
+        log.info("Successful get data country");
+        return CountryDetailResponse.builder()
+                .countryCodeId(country.getCountryCode())
+                .name(country.getName())
+                .cityResponses(cityResponses)
+                .createdAt(country.getCreatedAt())
+                .build();
+    }
+
 }

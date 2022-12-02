@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.validation.Valid;
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/v1/user")
@@ -46,7 +47,7 @@ public class UserController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
-    @PutMapping
+    @PutMapping("/update")
     @ResponseBody
     public ResponseEntity<WebResponse<UserUpdateResponse>> update(@Valid @RequestBody UserUpdateRequest userUpdateRequest) {
         log.info("Call update controller - user");
@@ -60,7 +61,8 @@ public class UserController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK  );
     }
 
-    @PutMapping(consumes = {
+    @PutMapping(path = "/avatar",
+            consumes = {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE})
     @ResponseBody
@@ -77,5 +79,33 @@ public class UserController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+    @DeleteMapping("/{userId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_BUYER')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@Valid @PathVariable("userId") String userId) {
+        log.info("Call delete controller - user");
+        Boolean deleteStatus = userService.delete(userId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteStatus
+        );
+        log.info("Successful delete user account");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK  );
+    }
 
+    @ResponseBody
+    @GetMapping("/{userId}")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
+    public ResponseEntity<WebResponse<UserResponse>> findUserById(@PathVariable("userId") String userId) {
+        log.info("Call controller fund user by id - user");
+        UserResponse userResponse = userService.findById(userId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                userResponse
+        );
+        log.info("Successful user account data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
 }

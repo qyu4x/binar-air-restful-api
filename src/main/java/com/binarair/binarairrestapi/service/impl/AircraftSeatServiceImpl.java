@@ -163,6 +163,18 @@ public class AircraftSeatServiceImpl implements AircraftSeatService {
                 .build();
     }
 
+    @Override
+    public Boolean delete(String id) {
+        boolean isExists = aircraftSeatRepository.existsById(id);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("Data seat with id %s not found", id));
+        }
+        log.info("Do delete data aircraft seat");
+        aircraftSeatRepository .deleteById(id);
+        log.info("Successful delete aircraft seat data");
+        return true;
+    }
+
     private String convertToDisplayCurrency(BigDecimal amount) {
         Locale indonesia = new Locale("id", "ID");
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(indonesia);

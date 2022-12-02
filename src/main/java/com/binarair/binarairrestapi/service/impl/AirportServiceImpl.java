@@ -97,4 +97,16 @@ public class AirportServiceImpl implements AirportService {
         log.info("Successfull get all airport data");
         return airportResponses;
     }
+
+    @Override
+    public Boolean delete(String iata) {
+        boolean isExists = airportRepository.existsById(iata);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("Data airport with iata %s not found", iata));
+        }
+        log.info("Do delete data airport");
+        airportRepository.deleteById(iata);
+        log.info("Successful delete airport data");
+        return true;
+    }
 }

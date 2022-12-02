@@ -75,5 +75,20 @@ public class AirportController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{airportId}")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("airportId") String airportId) {
+        log.info("calling controller delete - airport");
+        boolean deleteResponse = airportService.delete(airportId);
+        log.info("successful delete airport data");
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteResponse
+        );
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
 
 }

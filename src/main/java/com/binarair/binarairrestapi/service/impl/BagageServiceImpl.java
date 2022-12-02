@@ -100,4 +100,16 @@ public class BagageServiceImpl implements BagageService {
                 .aircraftManufacture(aircraft.getAircraftManufacture().getName())
                 .build();
     }
+
+    @Override
+    public Boolean delete(String baggageId) {
+        boolean isExists = bagageRepository.existsById(baggageId);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("Baggage with id %s not found", baggageId));
+        }
+        log.info("Do delete baggage data");
+        bagageRepository.deleteById(baggageId);
+        log.info("Successful delete baggage data");
+        return true;
+    }
 }

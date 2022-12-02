@@ -1,6 +1,7 @@
 package com.binarair.binarairrestapi.service.impl;
 
 import com.binarair.binarairrestapi.exception.DataAlreadyExistException;
+import com.binarair.binarairrestapi.exception.DataNotFoundException;
 import com.binarair.binarairrestapi.model.entity.Titel;
 import com.binarair.binarairrestapi.model.request.TitelRequest;
 import com.binarair.binarairrestapi.model.response.TitelResponse;
@@ -69,5 +70,46 @@ public class TitelServiceImpl implements TitelService {
         });
         log.info("successful get all titel data");
         return titelResponses;
+    }
+
+    @Override
+    public TitelResponse findById(String titelId) {
+        log.info("Do get titel by id");
+        Titel titel =  titelRepository.findById(titelId)
+                .orElseThrow(() -> new DataNotFoundException(String.format("Titel with id %s not found", titelId)));
+        log.info("Successful get titel by id");
+        return TitelResponse.builder()
+                .id(titel.getId())
+                .titelName(titel.getTitelName())
+                .description(titel.getDescription())
+                .createdAt(titel.getCreatedAt())
+                .build();
+    }
+
+    @Override
+    public Boolean delete(String titelId) {
+        boolean isExists = titelRepository.existsById(titelId);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("Titel with id %s not found", titelId));
+        }
+        titelRepository.deleteById(titelId);
+        return true;
+    }
+
+    @Override
+    public TitelResponse update(TitelRequest titelRequest, String titelId) {
+        Titel titel = titelRepository.findById(titelId)
+                .orElseThrow(() -> new DataNotFoundException(String.format("Titel with id %s not found", titelId)));
+        titel.setTitelName(titelRequest.getTitelName());
+        titel.setDescription(titelRequest.getDescription());
+        log.info("Do update titel data");
+        titelRepository.save(titel);
+        log.info("Successful update titel data");
+        return TitelResponse.builder()
+                .id(titel.getId())
+                .titelName(titel.getTitelName())
+                .description(titel.getDescription())
+                .createdAt(titel.getCreatedAt())
+                .build();
     }
 }

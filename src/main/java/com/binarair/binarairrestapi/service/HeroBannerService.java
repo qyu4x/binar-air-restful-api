@@ -12,4 +12,6 @@ public interface HeroBannerService {
 
     List<HeroBannerResponse> getAll();
 
+    Boolean delete(String heroBannerId);
+
 }

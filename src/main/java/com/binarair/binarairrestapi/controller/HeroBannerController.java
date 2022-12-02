@@ -68,4 +68,19 @@ public class HeroBannerController {
         log.info("Successful get all data hero banner");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
+
+    @DeleteMapping("/{heroBannerId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("heroBannerId") String heroBannerId) {
+        log.info("Call delete hero banner - hero banner");
+        Boolean deleteStatus = heroBannerService.delete(heroBannerId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteStatus
+        );
+        log.info("Successful delete hero banner data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK  );
+    }
 }

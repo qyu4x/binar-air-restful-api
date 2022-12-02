@@ -60,5 +60,20 @@ public class AircraftManufactureController {
         log.info("Successful get all aircraft manufacture data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
+    @DeleteMapping("/{manufactureId}")
+    @ResponseBody
+    @PreAuthorize("hasAuthority('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("manufactureId") String manufactureId) {
+        log.info("calling controller delete - aircraft manufacture");
+        boolean deleteResponse = aircraftManufactureService.delete(manufactureId);
+        log.info("successful delete aircraft manufacture data");
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteResponse
+        );
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
 
 }

@@ -11,4 +11,6 @@ public interface AircraftManufactureService {
 
     List<AircraftManufactureResponse> getAll();
 
+    Boolean delete(String id);
+
 }

@@ -11,6 +11,7 @@ import com.binarair.binarairrestapi.model.request.UserRegisterRequest;
 import com.binarair.binarairrestapi.model.request.UserUpdateRequest;
 import com.binarair.binarairrestapi.model.response.UserProfileResponse;
 import com.binarair.binarairrestapi.model.response.UserRegisterResponse;
+import com.binarair.binarairrestapi.model.response.UserResponse;
 import com.binarair.binarairrestapi.model.response.UserUpdateResponse;
 import com.binarair.binarairrestapi.repository.CityRepository;
 import com.binarair.binarairrestapi.repository.RoleRepository;
@@ -128,6 +129,35 @@ public class UserServiceImpl implements UserService {
                 .email(userResponse.getEmail())
                 .createdAt(userResponse.getCreatedAt())
                 .updatedAt(userResponse.getUpdatedAt())
+                .build();
+    }
+
+    @Override
+    public Boolean delete(String userId) {
+        boolean isExists = userRepository.existsById(userId);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("User account with is %s not found", userId));
+        }
+        userRepository.deleteById(userId);
+        return true;
+    }
+
+    @Override
+    public UserResponse findById(String userId) {
+        log.info("Do get user by id");
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new DataNotFoundException(String.format("User account with id %s not found", userId)));
+        log.info("Successful get user by id");
+        return UserResponse.builder()
+                .id(user.getId())
+                .email(user.getEmail())
+                .fullName(user.getFullName())
+                .role(user.getRole().getRole().name())
+                .gender(user.getGender())
+                .birthdate(user.getBirthDate())
+                .imageURL(user.getImageURL())
+                .createdAt(user.getCreatedAt())
+                .updatedAt(user.getUpdatedAt())
                 .build();
     }
 

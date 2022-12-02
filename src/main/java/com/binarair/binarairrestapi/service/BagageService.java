@@ -13,4 +13,6 @@ public interface BagageService {
 
     BagageResponse findBagageByAircraftId(String aircraftId);
 
+    Boolean delete(String baggageId);
+
 }

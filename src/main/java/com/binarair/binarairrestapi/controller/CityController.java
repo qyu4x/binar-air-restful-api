@@ -1,6 +1,7 @@
 package com.binarair.binarairrestapi.controller;
 
 import com.binarair.binarairrestapi.model.request.CityRequest;
+import com.binarair.binarairrestapi.model.response.AircraftDetailResponse;
 import com.binarair.binarairrestapi.model.response.CityResponse;
 import com.binarair.binarairrestapi.model.response.HeroBannerResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
@@ -43,12 +44,12 @@ public class CityController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
-    @DeleteMapping
+    @DeleteMapping("/{codeId}")
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<WebResponse<Boolean>> delete(@RequestParam("code") String code) {
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("codeId") String codeId) {
         log.info("calling controller delete - city");
-        boolean deleteResonse = cityService.delete(code);
+        boolean deleteResonse = cityService.delete(codeId);
         log.info("successful delete city data");
         WebResponse webResponse = new WebResponse(
                 HttpStatus.OK.value(),
@@ -59,7 +60,7 @@ public class CityController {
     }
 
     @ResponseBody
-    @GetMapping
+    @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<CityResponse>>> getAll() {
         log.info("Calling controller getAll - city");
@@ -70,6 +71,21 @@ public class CityController {
                 cityResponses
         );
         log.info("Successful get all city data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
+    public ResponseEntity<WebResponse<CityResponse>> findById(@RequestParam("code") String code) {
+        log.info("Calling controller city  - city");
+        CityResponse cityResponse = cityService.findByCode(code);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                cityResponse
+        );
+        log.info("Successful get city data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 }

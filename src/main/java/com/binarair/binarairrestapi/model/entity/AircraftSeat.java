@@ -22,7 +22,7 @@ public class AircraftSeat {
     @Id
     private String id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "aircraft_unique_id", referencedColumnName = "id")
     private Aircraft aircraft;
 

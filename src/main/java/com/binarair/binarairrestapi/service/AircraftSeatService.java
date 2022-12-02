@@ -16,4 +16,6 @@ public interface AircraftSeatService {
     List<AircraftSeatResponse> getAllByAircraftId(String aircraftId);
 
     AircraftSeatResponse save(AircraftSeatRequest aircraftSeatRequest);
+
+    Boolean delete(String id);
 }

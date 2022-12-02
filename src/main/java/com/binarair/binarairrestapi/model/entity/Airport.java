@@ -19,7 +19,7 @@ public class Airport {
 
     private String name;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "city_code_id", referencedColumnName = "codeId")
     private City city;
 
