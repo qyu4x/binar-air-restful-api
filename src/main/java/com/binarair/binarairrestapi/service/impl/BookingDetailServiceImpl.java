@@ -1,19 +1,23 @@
 package com.binarair.binarairrestapi.service.impl;
 
+import com.binarair.binarairrestapi.config.NotificationConfiguration;
 import com.binarair.binarairrestapi.exception.DataNotFoundException;
 import com.binarair.binarairrestapi.exception.ValidationException;
 import com.binarair.binarairrestapi.model.entity.*;
 import com.binarair.binarairrestapi.model.request.BookingAircraftSeatRequest;
 import com.binarair.binarairrestapi.model.request.BookingDetailRequest;
 import com.binarair.binarairrestapi.model.request.BookingPassengerRequest;
+import com.binarair.binarairrestapi.model.request.NotificationRequest;
 import com.binarair.binarairrestapi.model.response.*;
 import com.binarair.binarairrestapi.repository.*;
 import com.binarair.binarairrestapi.service.BookingDetailService;
+import com.binarair.binarairrestapi.service.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.threeten.bp.LocalDate;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -51,10 +55,14 @@ public class BookingDetailServiceImpl implements BookingDetailService {
 
     private final BagageRepository bagageRepository;
 
+    private final NotificationConfiguration notificationConfiguration;
+
+    private final NotificationService notificationService;
+
 
 
     @Autowired
-    public BookingDetailServiceImpl(BookingDetailRepository bookingDetailRepository, BookingRepository bookingRepository, PassengerRepository passengerRepository, ScheduleRepository scheduleRepository, UserRepository userRepository, AircraftSeatRepository aircraftSeatRepository, SeatScheduleBookingRepository seatScheduleBookingRepository, TitelRepository titelRepository, AgeCategoryRepository ageCategoryRepository, CountryRepository countryRepository, BagageRepository bagageRepository) {
+    public BookingDetailServiceImpl(BookingDetailRepository bookingDetailRepository, BookingRepository bookingRepository, PassengerRepository passengerRepository, ScheduleRepository scheduleRepository, UserRepository userRepository, AircraftSeatRepository aircraftSeatRepository, SeatScheduleBookingRepository seatScheduleBookingRepository, TitelRepository titelRepository, AgeCategoryRepository ageCategoryRepository, CountryRepository countryRepository, BagageRepository bagageRepository, NotificationConfiguration notificationConfiguration, NotificationService notificationService) {
         this.bookingDetailRepository = bookingDetailRepository;
         this.bookingRepository = bookingRepository;
         this.passengerRepository = passengerRepository;
@@ -66,6 +74,8 @@ public class BookingDetailServiceImpl implements BookingDetailService {
         this.ageCategoryRepository = ageCategoryRepository;
         this.countryRepository = countryRepository;
         this.bagageRepository = bagageRepository;
+        this.notificationConfiguration = notificationConfiguration;
+        this.notificationService = notificationService;
     }
 
     @Override
@@ -84,6 +94,14 @@ public class BookingDetailServiceImpl implements BookingDetailService {
         }
 
         updateTotalPaidBooking(booking.getId(), bookingDetailRequest.getAmount());
+        log.info("Do push notifications");
+        User userAccount = userRepository.findById(userId)
+                .orElseThrow(() -> new DataNotFoundException("User account not found"));
+        NotificationRequest notification = NotificationRequest.builder()
+                .title(String.format(notificationConfiguration.getTitle()))
+                .description(String.format(notificationConfiguration.getDescription(), userAccount.getFullName().split(" ")[0]))
+                .build();
+        notificationService.pushNotification(notification, userId);
         log.info("Successull transaction for user id %s {} ", userId);
         return getBookingResponse(booking.getId());
     }
