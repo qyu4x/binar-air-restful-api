@@ -2,6 +2,7 @@ package com.binarair.binarairrestapi.controller;
 
 import com.binarair.binarairrestapi.model.request.ScheduleRequest;
 import com.binarair.binarairrestapi.model.response.ScheduleResponse;
+import com.binarair.binarairrestapi.model.response.UserResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.ScheduleService;
 import org.slf4j.Logger;
@@ -44,7 +45,7 @@ public class ScheduleController {
     }
 
     @ResponseBody
-    @GetMapping
+    @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<ScheduleResponse>>> getAll() {
         log.info("Calling controller getAll - schedule");
@@ -55,6 +56,35 @@ public class ScheduleController {
                 scheduleResponses
         );
         log.info("Successful get all schedule data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+    @DeleteMapping("/{scheduleId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("scheduleId") String scheduleId) {
+        log.info("Call delete schedule - schedule");
+        Boolean deleteStatus = scheduleService.delete(scheduleId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteStatus
+        );
+        log.info("Successful delete schedule data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK  );
+    }
+
+    @ResponseBody
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
+    public ResponseEntity<WebResponse<ScheduleResponse>> findScheduleById(@RequestParam("id") String id) {
+        log.info("Call controller find schedule by id - schedule");
+        ScheduleResponse scheduleResponse = scheduleService.findById(id);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                scheduleResponse
+        );
+        log.info("Successful get schedule data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 

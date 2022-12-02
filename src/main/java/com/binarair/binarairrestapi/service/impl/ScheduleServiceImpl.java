@@ -425,6 +425,66 @@ public class ScheduleServiceImpl implements ScheduleService {
         return scheduleResponses;
     }
 
+    @Override
+    public Boolean delete(String scheduleId) {
+        boolean isExists = scheduleRepository.existsById(scheduleId);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("Schedule with id %s not found", scheduleId));
+        }
+        log.info("Do delete data by id");
+        scheduleRepository.deleteById(scheduleId);
+        log.info("Successful delete data by id");
+        return true;
+    }
+
+    @Override
+    public ScheduleResponse findById(String scheduleId) {
+        log.info("Do get schedule data");
+        Schedule schedule = scheduleRepository.findById(scheduleId)
+                .orElseThrow(() -> new DataNotFoundException(String.format("Schedule with id %s not found", scheduleId)));
+        log.info("Successful get shcedule data");
+        return ScheduleResponse.builder()
+                .id(schedule.getId())
+                .originAirport(AirportResponse.builder()
+                        .iata(schedule.getOriginIataAirportCode().getIataAirportCode())
+                        .name(schedule.getOriginIataAirportCode().getName())
+                        .cityCode(schedule.getOriginIataAirportCode().getCity().getCodeId())
+                        .countryCode(schedule.getOriginIataAirportCode().getCity().getCountry().getCountryCode())
+                        .city(schedule.getOriginIataAirportCode().getCity().getName())
+                        .country(schedule.getOriginIataAirportCode().getCity().getCountry().getName())
+                        .createdAt(schedule.getOriginIataAirportCode().getCreatedAt())
+                        .build())
+                .destinationAirport(AirportResponse.builder()
+                        .iata(schedule.getDestIataAirportCode().getIataAirportCode())
+                        .name(schedule.getDestIataAirportCode().getName())
+                        .cityCode(schedule.getDestIataAirportCode().getCity().getCodeId())
+                        .countryCode(schedule.getDestIataAirportCode().getCity().getCountry().getCountryCode())
+                        .city(schedule.getDestIataAirportCode().getCity().getName())
+                        .country(schedule.getDestIataAirportCode().getCity().getCountry().getName())
+                        .createdAt(schedule.getDestIataAirportCode().getCreatedAt())
+                        .build())
+                .aircraft(AircraftResponse.builder()
+                        .id(schedule.getAircraft().getId())
+                        .type(schedule.getAircraft().getModel())
+                        .seatArrangement(schedule.getAircraft().getSeatArrangement())
+                        .distanceBetweenSeats(schedule.getAircraft().getDistanceBetweenSeats())
+                        .seatLengthUnit(schedule.getAircraft().getSeatLengthUnit())
+                        .build())
+                .price(PriceResponse.builder()
+                        .currencyCode(getIndonesiaCurrencyCode())
+                        .display(convertToDisplayCurrency(schedule.getPrice()))
+                        .amount(schedule.getPrice())
+                        .build())
+                .departureDate(schedule.getDepartureDate())
+                .arrivalDate(schedule.getArrivalDate())
+                .departureTime(schedule.getDepartureTime())
+                .arrivalTime(schedule.getArrivalTime())
+                .stock(schedule.getStock())
+                .createdAt(schedule.getCreatedAt())
+                .updatedAt(schedule.getUpdatedAt())
+                .build();
+    }
+
     private String[] splitValue(String value) {
         return value.split(Pattern.quote("."));
     }

@@ -14,4 +14,6 @@ public interface CountryService {
 
     boolean delete(String countryCodeId);
 
+    CountryDetailResponse findByCodeId(String countryCodeId);
+
 }

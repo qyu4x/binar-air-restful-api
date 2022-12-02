@@ -4,6 +4,7 @@ import com.binarair.binarairrestapi.exception.DataNotFoundException;
 import com.binarair.binarairrestapi.model.entity.Aircraft;
 import com.binarair.binarairrestapi.model.entity.Benefit;
 import com.binarair.binarairrestapi.model.request.BenefitRequest;
+import com.binarair.binarairrestapi.model.request.BenefitUpdateRequest;
 import com.binarair.binarairrestapi.model.response.BenefitDetailResponse;
 import com.binarair.binarairrestapi.repository.AircraftRepository;
 import com.binarair.binarairrestapi.repository.BenefitRepository;
@@ -42,7 +43,7 @@ public class BenefitServiceImpl implements BenefitService {
         Benefit benefit = Benefit.builder()
                 .id(String.format("bt-%s", UUID.randomUUID().toString()))
                 .name(benefitRequest.getName())
-                .description(benefitRequest.getDesription())
+                .description(benefitRequest.getDescription())
                 .status(benefitRequest.getStatus())
                 .aircraft(aircraft.get())
                 .createdAt(LocalDateTime.now())
@@ -103,5 +104,38 @@ public class BenefitServiceImpl implements BenefitService {
         });
 
         return benefitDetailResponses;
+    }
+
+    @Override
+    public Boolean delete(String benefitId) {
+        boolean isExists = benefitRepository.existsById(benefitId);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("Benefit with id %s not found", benefitId));
+        }
+        log.info("Do delete benefit by id");
+        benefitRepository.deleteById(benefitId);
+        log.info("Successful delete benefit by id");
+        return true;
+    }
+
+    @Override
+    public BenefitDetailResponse update(BenefitUpdateRequest benefitUpdateRequest, String benefitId) {
+        Benefit benefit = benefitRepository.findById(benefitId)
+                .orElseThrow(() -> new DataNotFoundException(String.format("Benefit with id %s not found", benefitId)));
+        log.info("Do update data benefit");
+        benefit.setName(benefitUpdateRequest.getName());
+        benefit.setDescription(benefitUpdateRequest.getDescription());
+        benefit.setStatus(benefitUpdateRequest.getStatus());
+        benefitRepository.save(benefit);
+        log.info("Successful update benefit data");
+        return BenefitDetailResponse.builder()
+                .id(benefit.getId())
+                .name(benefit.getName())
+                .desription(benefit.getDescription())
+                .status(benefit.isStatus())
+                .aircraftManufacture(benefit.getAircraft().getAircraftManufacture().getName())
+                .aircraftModel(benefit.getAircraft().getModel())
+                .createdAt(benefit.getCreatedAt())
+                .build();
     }
 }

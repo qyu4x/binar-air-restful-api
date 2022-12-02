@@ -3,9 +3,8 @@ package com.binarair.binarairrestapi.controller;
 
 import com.binarair.binarairrestapi.model.request.AirportRequest;
 import com.binarair.binarairrestapi.model.request.TitelRequest;
-import com.binarair.binarairrestapi.model.response.AirportResponse;
-import com.binarair.binarairrestapi.model.response.TitelResponse;
-import com.binarair.binarairrestapi.model.response.WebResponse;
+import com.binarair.binarairrestapi.model.request.TravelClassUpdateRequest;
+import com.binarair.binarairrestapi.model.response.*;
 import com.binarair.binarairrestapi.service.TitelService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,5 +58,50 @@ public class TitelController {
         );
         log.info("Successful get all titel data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
+    public ResponseEntity<WebResponse<UserResponse>> findTitelById(@RequestParam("id") String id) {
+        log.info("Call controller find titel by id - titel");
+        TitelResponse titelResponse = titelService.findById(id);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                titelResponse
+        );
+        log.info("Successful get titel data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{titelId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("titelId") String titelId) {
+        log.info("Call delete titel - titel class");
+        Boolean deleteStatus = titelService.delete(titelId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteStatus
+        );
+        log.info("Successful delete titel");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK  );
+    }
+
+    @PutMapping("/{titelId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<TravelClassResponse>> update(@RequestBody @Valid TitelRequest titelRequest, @PathVariable("titelId") String titelId) {
+        log.info("Call update controller - titel");
+        TitelResponse titelResponse = titelService.update(titelRequest,titelId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                titelResponse
+        );
+        log.info("Successful update titel data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK );
     }
 }

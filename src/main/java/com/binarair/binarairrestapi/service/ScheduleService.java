@@ -18,4 +18,8 @@ public interface ScheduleService {
 
     List<ScheduleResponse> getAll();
 
+    Boolean delete(String scheduleId);
+
+    ScheduleResponse findById(String scheduleId);
+
 }

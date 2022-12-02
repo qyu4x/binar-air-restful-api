@@ -74,4 +74,19 @@ public class BagageController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+    @DeleteMapping("/{baggageId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("baggageId") String baggageId) {
+        log.info("Call delete baggage - baggage");
+        Boolean deleteStatus = bagageService.delete(baggageId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteStatus
+        );
+        log.info("Successful delete baggage data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
 }

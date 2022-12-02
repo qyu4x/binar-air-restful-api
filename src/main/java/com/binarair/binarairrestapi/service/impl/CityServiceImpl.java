@@ -82,4 +82,19 @@ public class CityServiceImpl implements CityService {
         log.info("successful get all city data");
         return cityResponses;
     }
+
+    @Override
+    public CityResponse findByCode(String cityCode) {
+        log.info("Do get all data city");
+        City city = cityRepository.findById(cityCode)
+                .orElseThrow(() -> new DataNotFoundException(String.format("City data with code id %s not found", cityCode)));
+        log.info("Successful get all data city");
+        return CityResponse.builder()
+                .cityId(city.getCodeId())
+                .cityName(city.getName())
+                .countryCodeId(city.getCountry().getCountryCode())
+                .countryName(city.getCountry().getName())
+                .createdAt(city.getCreatedAt())
+                .build();
+    }
 }

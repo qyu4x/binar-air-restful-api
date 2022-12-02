@@ -11,4 +11,8 @@ public interface AgeCategoryService {
 
     List<AgeCategoryResponse> getAll();
 
+    AgeCategoryResponse findById(String ageCategoryId);
+
+    Boolean delete(String ageCategoryId);
+
 }

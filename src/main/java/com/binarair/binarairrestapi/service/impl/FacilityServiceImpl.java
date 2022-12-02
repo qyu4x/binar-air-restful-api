@@ -107,4 +107,16 @@ public class FacilityServiceImpl implements FacilityService {
 
         return facilityDetailResponses;
     }
+
+    @Override
+    public Boolean delete(String facilityId) {
+        boolean isExists = facilityRepository.existsById(facilityId);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("Facility with id %s not found", facilityId));
+        }
+        log.info("Do delete facility data");
+        facilityRepository.deleteById(facilityId);
+        log.info("Successful delete facility data");
+        return true;
+    }
 }

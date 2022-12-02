@@ -1,6 +1,7 @@
 package com.binarair.binarairrestapi.controller;
 
 import com.binarair.binarairrestapi.model.request.CountryRequest;
+import com.binarair.binarairrestapi.model.response.CityResponse;
 import com.binarair.binarairrestapi.model.response.CountryDetailResponse;
 import com.binarair.binarairrestapi.model.response.CountryResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
@@ -45,12 +46,12 @@ public class CountryController {
     }
 
 
-    @DeleteMapping
+    @DeleteMapping("/{countryCodeId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
-    public ResponseEntity<WebResponse<Boolean>> delete(@RequestParam("code") String code) {
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("countryCodeId") String countryCodeId) {
         log.info("calling controller delete - country");
-        boolean deleteResonse = countryService.delete(code);
+        boolean deleteResonse = countryService.delete(countryCodeId);
         log.info("successful delete country data");
         WebResponse webResponse = new WebResponse(
                 HttpStatus.OK.value(),
@@ -62,7 +63,7 @@ public class CountryController {
     }
 
     @ResponseBody
-    @GetMapping
+    @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<CountryDetailResponse>>> getAll() {
         log.info("Calling controller getAll - country service");
@@ -73,6 +74,21 @@ public class CountryController {
                 countryResponse
         );
         log.info("Successful get all country data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
+    @ResponseBody
+    @GetMapping
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
+    public ResponseEntity<WebResponse<CountryDetailResponse>> findByCountryCodeId(@RequestParam("code") String code) {
+        log.info("Calling controller country  - country");
+        CountryDetailResponse countryDetailResponse = countryService.findByCodeId(code);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                countryDetailResponse
+        );
+        log.info("Successful get country data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 

@@ -1,6 +1,7 @@
 package com.binarair.binarairrestapi.service.impl;
 
 import com.binarair.binarairrestapi.exception.DataAlreadyExistException;
+import com.binarair.binarairrestapi.exception.DataNotFoundException;
 import com.binarair.binarairrestapi.model.entity.AgeCategory;
 import com.binarair.binarairrestapi.model.request.AgeCategoryRequest;
 import com.binarair.binarairrestapi.model.response.AgeCategoryResponse;
@@ -69,5 +70,31 @@ public class AgeCategoryServiceImpl implements AgeCategoryService {
         });
         log.info("Successfull get all age category data");
         return ageCategoryResponses;
+    }
+
+    @Override
+    public AgeCategoryResponse findById(String ageCategoryId) {
+        log.info("Do get data age category by id");
+        AgeCategory ageCategory = ageCategoryRepository.findById(ageCategoryId)
+                .orElseThrow(() -> new DataNotFoundException(String.format("Data age category with id %s not found", ageCategoryId)));
+        log.info("Successful get data age category");
+        return AgeCategoryResponse.builder()
+                .id(ageCategory.getId())
+                .categoryName(ageCategory.getCategoryName())
+                .description(ageCategory.getDescription())
+                .createdAt(ageCategory.getCreatedAt())
+                .build();
+    }
+
+    @Override
+    public Boolean delete(String ageCategoryId) {
+        boolean isExists = ageCategoryRepository.existsById(ageCategoryId);
+        if (!isExists) {
+            throw new DataNotFoundException(String.format("Data age category with id %s not found", ageCategoryId));
+        }
+        log.info("Do delete age category by id");
+        ageCategoryRepository.deleteById(ageCategoryId);
+        log.info("Successful delete age category");
+        return true;
     }
 }

@@ -1,7 +1,11 @@
 package com.binarair.binarairrestapi.controller;
 
 import com.binarair.binarairrestapi.model.request.BenefitRequest;
+import com.binarair.binarairrestapi.model.request.BenefitUpdateRequest;
+import com.binarair.binarairrestapi.model.request.TravelClassUpdateRequest;
 import com.binarair.binarairrestapi.model.response.BenefitDetailResponse;
+import com.binarair.binarairrestapi.model.response.BenefitResponse;
+import com.binarair.binarairrestapi.model.response.TravelClassResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.BenefitService;
 import org.slf4j.Logger;
@@ -71,5 +75,35 @@ public class BenefitController {
         );
         log.info("Successful get benefit data based on id aircraft");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
+    }
+
+    @DeleteMapping("/{benefitId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("benefitId") String benefitId) {
+        log.info("Call delete benefit - benefit");
+        Boolean deleteStatus = benefitService.delete(benefitId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                deleteStatus
+        );
+        log.info("Successful delete benefit data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK  );
+    }
+
+    @PutMapping("/{benefitId}")
+    @ResponseBody
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
+    public ResponseEntity<WebResponse<BenefitDetailResponse>> update(@RequestBody @Valid BenefitUpdateRequest benefitUpdateRequest, @PathVariable("benefitId") String benefitId) {
+        log.info("Call update controller - travel class");
+        BenefitDetailResponse benefitDetailResponse = benefitService.update(benefitUpdateRequest,benefitId);
+        WebResponse webResponse = new WebResponse(
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
+                benefitDetailResponse
+        );
+        log.info("Successful update benefit data");
+        return new ResponseEntity<>(webResponse, HttpStatus.OK );
     }
 }
