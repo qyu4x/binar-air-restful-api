@@ -94,15 +94,6 @@ public class BookingDetailServiceImpl implements BookingDetailService {
         }
 
         updateTotalPaidBooking(booking.getId(), bookingDetailRequest.getAmount());
-        log.info("Do push notifications");
-        User userAccount = userRepository.findById(userId)
-                .orElseThrow(() -> new DataNotFoundException("User account not found"));
-        NotificationRequest notification = NotificationRequest.builder()
-                .title(String.format(notificationConfiguration.getTitle()))
-                .description(String.format(notificationConfiguration.getDescription(), userAccount.getFullName().split(" ")[0]))
-                .build();
-        notificationService.pushNotification(notification, userId);
-        log.info("Successull transaction for user id %s {} ", userId);
         return getBookingResponse(booking.getId());
     }
 
