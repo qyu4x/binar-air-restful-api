@@ -165,7 +165,7 @@ public class BookingDetailServiceImpl implements BookingDetailService {
                     .orElseThrow(() -> new DataNotFoundException("Titel not found"));
             log.info("Do save data seat booking");
             AircraftSeatResponse aircraftSeatResponse = insertSeatBooking(passengersRequest.getAircraftSeat(), passengersRequest.getScheduleId());
-            ProcessBaggageResponse baggage = findBaggageByScheduleId(passengersRequest.getScheduleId());
+            ProcessBaggageResponse baggage = findBaggageByScheduleId(passengersRequest.getScheduleId(), passengersRequest.getBaggage().getTotal());
             baggage.setExtraBagage(passengersRequest.getBaggage().getTotal());
             log.info("Successful save data seat booking");
             Passenger passenger = Passenger.builder()
@@ -244,14 +244,15 @@ public class BookingDetailServiceImpl implements BookingDetailService {
     }
 
     @Override
-    public ProcessBaggageResponse findBaggageByScheduleId(String scheduleId) {
+    public ProcessBaggageResponse findBaggageByScheduleId(String scheduleId, Integer baggageWeight) {
         Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new DataNotFoundException(String.format("Schedule with id %s not found", scheduleId)));
         log.info("Do get bagage by id aircraft");
-        Bagage bagage = bagageRepository.findByAircraftId(schedule.getAircraft().getId());
+        Bagage bagage = bagageRepository.findByAircraftIdAndBaggageWeight(schedule.getAircraft().getId(),baggageWeight);
         return ProcessBaggageResponse.builder()
                 .id(bagage.getId())
-                .bagagePricePer5kg(bagage.getBagagePricePer5kg())
+                .weight(bagage.getWeight())
+                .price(bagage.getPrice())
                 .freeCabinCapacity(bagage.getFreeCabinBagageCapacity())
                 .freeBagageCapacity(bagage.getFreeBagageCapacity())
                 .createdAt(bagage.getCreatedAt())
@@ -296,7 +297,7 @@ public class BookingDetailServiceImpl implements BookingDetailService {
                 .schedule(schedule)
                 .quantity(1)
                 .aircraftPrice(schedule.getPrice())
-                .bagagePricePer5kg(processPassengerResponses.getBaggageResponse().getBagagePricePer5kg())
+                .bagagePrice(processPassengerResponses.getBaggageResponse().getPrice())
                 .checkInStatus(false)
                 .extraBagage(processPassengerResponses.getBaggageResponse().getExtraBagage())
                 .seatCode(processPassengerResponses.getSeatResponse().getSeatCode())
@@ -318,14 +319,11 @@ public class BookingDetailServiceImpl implements BookingDetailService {
             BigDecimal ticketPrice = bookingDetail.getAircraftPrice();
             BigDecimal seatPrice = bookingDetail.getSeatPrice();
 
-            BigDecimal bagagePricePer5kg = bookingDetail.getBagagePricePer5kg();
-            Integer extraBagage = bookingDetail.getExtraBagage();
-
-            BigDecimal totalBagagePrice = BigDecimal.valueOf(((long) (extraBagage / 5) * bagagePricePer5kg.intValue()));
+            BigDecimal bagagePrice = bookingDetail.getBagagePrice();
 
             totalAmount = totalAmount.add(ticketPrice);
             totalAmount = totalAmount.add(seatPrice);
-            totalAmount = totalAmount.add(totalBagagePrice);
+            totalAmount = totalAmount.add(bagagePrice);
 
         }
         return totalAmount;
@@ -343,7 +341,7 @@ public class BookingDetailServiceImpl implements BookingDetailService {
             if (bookingDetail.getStatus().equals("departure")) {
                 Schedule schedule = scheduleRepository.findById(bookingDetail.getSchedule().getId())
                         .orElseThrow(() -> new DataNotFoundException("Schedule not found"));
-                Bagage baggage = bagageRepository.findByAircraftId(schedule.getAircraft().getId());
+                Bagage baggage = bagageRepository.findByAircraftIdAndBaggageWeight(schedule.getAircraft().getId(), bookingDetail.getExtraBagage());
 
                 PassengerBookingResponse departureBookingResponse = PassengerBookingResponse.builder()
                         .passengerId(bookingDetail.getPassenger().getId())
@@ -404,13 +402,18 @@ public class BookingDetailServiceImpl implements BookingDetailService {
                                         .build())
                                 .build())
                         .bagage(BaggageBookingResponse.builder()
-                                .bagagePricePer5kg(baggage.getBagagePricePer5kg())
+                                .extraBagage(bookingDetail.getExtraBagage())
+                                .price(PriceResponse.builder()
+                                        .currencyCode(getIndonesiaCurrencyCode())
+                                        .display(convertToDisplayCurrency(baggage.getPrice()))
+                                        .amount(baggage.getPrice())
+                                        .build())
                                 .freeCabinCapacity(baggage.getFreeCabinBagageCapacity())
                                 .freeBagageCapacity(baggage.getFreeBagageCapacity())
                                 .price(PriceResponse.builder()
                                         .currencyCode(getIndonesiaCurrencyCode())
-                                        .display(convertToDisplayCurrency(bookingDetail.getBagagePricePer5kg()))
-                                        .amount(bookingDetail.getBagagePricePer5kg())
+                                        .display(convertToDisplayCurrency(bookingDetail.getBagagePrice()))
+                                        .amount(bookingDetail.getBagagePrice())
                                         .build())
                                 .build())
                         .createdAt(bookingDetail.getCreatedAt())
@@ -419,7 +422,7 @@ public class BookingDetailServiceImpl implements BookingDetailService {
             }else {
                 Schedule schedule = scheduleRepository.findById(bookingDetail.getSchedule().getId())
                         .orElseThrow(() -> new DataNotFoundException("Schedule not found"));
-                Bagage baggage = bagageRepository.findByAircraftId(schedule.getAircraft().getId());
+                Bagage baggage = bagageRepository.findByAircraftIdAndBaggageWeight(schedule.getAircraft().getId(), bookingDetail.getExtraBagage());
 
                 PassengerBookingResponse returnsBookingResponse = PassengerBookingResponse.builder()
                         .passengerId(bookingDetail.getPassenger().getId())
@@ -480,13 +483,18 @@ public class BookingDetailServiceImpl implements BookingDetailService {
                                         .build())
                                 .build())
                         .bagage(BaggageBookingResponse.builder()
-                                .bagagePricePer5kg(baggage.getBagagePricePer5kg())
+                                .extraBagage(bookingDetail.getExtraBagage())
+                                .price(PriceResponse.builder()
+                                        .currencyCode(getIndonesiaCurrencyCode())
+                                        .display(convertToDisplayCurrency(baggage.getPrice()))
+                                        .amount(baggage.getPrice())
+                                        .build())
                                 .freeCabinCapacity(baggage.getFreeCabinBagageCapacity())
                                 .freeBagageCapacity(baggage.getFreeBagageCapacity())
                                 .price(PriceResponse.builder()
                                         .currencyCode(getIndonesiaCurrencyCode())
-                                        .display(convertToDisplayCurrency(bookingDetail.getBagagePricePer5kg()))
-                                        .amount(bookingDetail.getBagagePricePer5kg())
+                                        .display(convertToDisplayCurrency(bookingDetail.getBagagePrice()))
+                                        .amount(bookingDetail.getBagagePrice())
                                         .build())
                                 .build())
                         .createdAt(bookingDetail.getCreatedAt())

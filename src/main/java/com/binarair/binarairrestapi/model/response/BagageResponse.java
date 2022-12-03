@@ -14,7 +14,9 @@ public class BagageResponse {
 
     private String id;
 
-    private BigDecimal bagagePricePer5kg;
+    private Integer weight;
+
+    private BigDecimal price;
 
     private Integer freeBagageCapacity;
 

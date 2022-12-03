@@ -33,13 +33,16 @@ public class ScheduleServiceImpl implements ScheduleService {
 
     private final AirportRepository airportRepository;
 
+    private final BagageRepository bagageRepository;
+
     @Autowired
-    public ScheduleServiceImpl(ScheduleRepository scheduleRepository, FacilityRepository facilityRepository, BenefitRepository benefitRepository, AircraftRepository aircraftRepository, AirportRepository airportRepository) {
+    public ScheduleServiceImpl(ScheduleRepository scheduleRepository, FacilityRepository facilityRepository, BenefitRepository benefitRepository, AircraftRepository aircraftRepository, AirportRepository airportRepository, BagageRepository bagageRepository) {
         this.scheduleRepository = scheduleRepository;
         this.facilityRepository = facilityRepository;
         this.benefitRepository = benefitRepository;
         this.aircraftRepository = aircraftRepository;
         this.airportRepository = airportRepository;
+        this.bagageRepository = bagageRepository;
     }
 
     @Override
@@ -71,6 +74,13 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
         Integer finalTotalPassengers = totalPassengers;
         schedulesFromOriginResponses.stream().filter(schedule -> schedule.getStock() >= finalTotalPassengers).forEach(departureScheduleOrigin -> {
+            List<Bagage> bagages = bagageRepository.findByAircraftId(departureScheduleOrigin.getAircraft().getId());
+            if (bagages.isEmpty()) {
+                bagages  = Collections.singletonList(Bagage.builder()
+                        .freeBagageCapacity(0).freeCabinBagageCapacity(0)
+                        .build());
+            }
+
             PriceResponse priceResponse = PriceResponse.builder()
                     .amount(departureScheduleOrigin.getPrice())
                     .currencyCode(getIndonesiaCurrencyCode())
@@ -82,6 +92,8 @@ public class ScheduleServiceImpl implements ScheduleService {
                     .seatArrangement(departureScheduleOrigin.getAircraft().getSeatArrangement())
                     .distanceBetweenSeats(departureScheduleOrigin.getAircraft().getDistanceBetweenSeats())
                     .seatLengthUnit(departureScheduleOrigin.getAircraft().getSeatLengthUnit())
+                    .freeBaggage(bagages.get(0).getFreeBagageCapacity())
+                    .freeBaggageCabin(bagages.get(0).getFreeCabinBagageCapacity())
                     .build();
             List<Facility> facilities = facilityRepository.findFacilitiesByAircraftId(departureScheduleOrigin.getAircraft().getId());
             List<FacilityResponse> facilityResponses = new ArrayList<>();
@@ -145,6 +157,13 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
 
         schedulesFromDestinationResponses.stream().filter(schedule -> schedule.getStock() >= finalTotalPassengers).forEach(arrivalScheduleDestination -> {
+            List<Bagage> bagages = bagageRepository.findByAircraftId(arrivalScheduleDestination.getAircraft().getId());
+            if (bagages.isEmpty()) {
+                bagages  = Collections.singletonList(Bagage.builder()
+                        .freeBagageCapacity(0).freeCabinBagageCapacity(0)
+                        .build());
+            }
+
             PriceResponse priceResponse = PriceResponse.builder()
                     .amount(arrivalScheduleDestination.getPrice())
                     .currencyCode(getIndonesiaCurrencyCode())
@@ -156,6 +175,8 @@ public class ScheduleServiceImpl implements ScheduleService {
                     .seatArrangement(arrivalScheduleDestination.getAircraft().getSeatArrangement())
                     .distanceBetweenSeats(arrivalScheduleDestination.getAircraft().getDistanceBetweenSeats())
                     .seatLengthUnit(arrivalScheduleDestination.getAircraft().getSeatLengthUnit())
+                    .freeBaggage(bagages.get(0).getFreeBagageCapacity())
+                    .freeBaggageCabin(bagages.get(0).getFreeCabinBagageCapacity())
                     .build();
             List<Facility> facilities = facilityRepository.findFacilitiesByAircraftId(arrivalScheduleDestination.getAircraft().getId());
             List<FacilityResponse> facilityResponses = new ArrayList<>();
@@ -240,6 +261,13 @@ public class ScheduleServiceImpl implements ScheduleService {
         }
         Integer finalTotalPassengers = totalPassengers;
         schedulesFromOriginResponses.stream().filter(schedule -> schedule.getStock() >= finalTotalPassengers).forEach(departureScheduleOrigin -> {
+            List<Bagage> bagages = bagageRepository.findByAircraftId(departureScheduleOrigin.getAircraft().getId());
+            if (bagages.isEmpty()) {
+                bagages  = Collections.singletonList(Bagage.builder()
+                        .freeBagageCapacity(0).freeCabinBagageCapacity(0)
+                        .build());
+            }
+
             PriceResponse priceResponse = PriceResponse.builder()
                     .amount(departureScheduleOrigin.getPrice())
                     .currencyCode(getIndonesiaCurrencyCode())
@@ -251,6 +279,8 @@ public class ScheduleServiceImpl implements ScheduleService {
                     .seatArrangement(departureScheduleOrigin.getAircraft().getSeatArrangement())
                     .distanceBetweenSeats(departureScheduleOrigin.getAircraft().getDistanceBetweenSeats())
                     .seatLengthUnit(departureScheduleOrigin.getAircraft().getSeatLengthUnit())
+                    .freeBaggage(bagages.get(0).getFreeBagageCapacity())
+                    .freeBaggageCabin(bagages.get(0).getFreeCabinBagageCapacity())
                     .build();
             List<Facility> facilities = facilityRepository.findFacilitiesByAircraftId(departureScheduleOrigin.getAircraft().getId());
             List<FacilityResponse> facilityResponses = new ArrayList<>();
@@ -330,6 +360,14 @@ public class ScheduleServiceImpl implements ScheduleService {
                 .active(true)
                 .createdAt(LocalDateTime.now())
                 .build();
+
+        List<Bagage> bagages = bagageRepository.findByAircraftId(schedule.getAircraft().getId());
+        if (bagages.isEmpty()) {
+            bagages  = Collections.singletonList(Bagage.builder()
+                    .freeBagageCapacity(0).freeCabinBagageCapacity(0)
+                    .build());
+        }
+
         log.info("Do save schedule data");
         scheduleRepository.save(schedule);
         log.info("Successul save schedule data");
@@ -359,6 +397,8 @@ public class ScheduleServiceImpl implements ScheduleService {
                         .seatArrangement(aircraft.getSeatArrangement())
                         .distanceBetweenSeats(aircraft.getDistanceBetweenSeats())
                         .seatLengthUnit(aircraft.getSeatLengthUnit())
+                        .freeBaggage(bagages.get(0).getFreeBagageCapacity())
+                        .freeBaggageCabin(bagages.get(0).getFreeCabinBagageCapacity())
                         .build())
                 .price(PriceResponse.builder()
                         .currencyCode(getIndonesiaCurrencyCode())
@@ -380,6 +420,13 @@ public class ScheduleServiceImpl implements ScheduleService {
         List<Schedule> schedules = scheduleRepository.findAll();
         List<ScheduleResponse> scheduleResponses = new ArrayList<>();
         schedules.stream().forEach(schedule -> {
+            List<Bagage> bagages = bagageRepository.findByAircraftId(schedule.getAircraft().getId());
+            if (bagages.isEmpty()) {
+                bagages  = Collections.singletonList(Bagage.builder()
+                        .freeBagageCapacity(0).freeCabinBagageCapacity(0)
+                        .build());
+            }
+
             ScheduleResponse scheduleResponse = ScheduleResponse.builder()
                     .id(schedule.getId())
                     .originAirport(AirportResponse.builder()
@@ -406,6 +453,8 @@ public class ScheduleServiceImpl implements ScheduleService {
                             .seatArrangement(schedule.getAircraft().getSeatArrangement())
                             .distanceBetweenSeats(schedule.getAircraft().getDistanceBetweenSeats())
                             .seatLengthUnit(schedule.getAircraft().getSeatLengthUnit())
+                            .freeBaggage(bagages.get(0).getFreeBagageCapacity())
+                            .freeBaggageCabin(bagages.get(0).getFreeCabinBagageCapacity())
                             .build())
                     .price(PriceResponse.builder()
                             .currencyCode(getIndonesiaCurrencyCode())
@@ -442,6 +491,12 @@ public class ScheduleServiceImpl implements ScheduleService {
         log.info("Do get schedule data");
         Schedule schedule = scheduleRepository.findById(scheduleId)
                 .orElseThrow(() -> new DataNotFoundException(String.format("Schedule with id %s not found", scheduleId)));
+        List<Bagage> bagages = bagageRepository.findByAircraftId(schedule.getAircraft().getId());
+        if (bagages.isEmpty()) {
+            bagages  = Collections.singletonList(Bagage.builder()
+                    .freeBagageCapacity(0).freeCabinBagageCapacity(0)
+                    .build());
+        }
         log.info("Successful get shcedule data");
         return ScheduleResponse.builder()
                 .id(schedule.getId())
@@ -469,6 +524,8 @@ public class ScheduleServiceImpl implements ScheduleService {
                         .seatArrangement(schedule.getAircraft().getSeatArrangement())
                         .distanceBetweenSeats(schedule.getAircraft().getDistanceBetweenSeats())
                         .seatLengthUnit(schedule.getAircraft().getSeatLengthUnit())
+                        .freeBaggage(bagages.get(0).getFreeBagageCapacity())
+                        .freeBaggageCabin(bagages.get(0).getFreeCabinBagageCapacity())
                         .build())
                 .price(PriceResponse.builder()
                         .currencyCode(getIndonesiaCurrencyCode())

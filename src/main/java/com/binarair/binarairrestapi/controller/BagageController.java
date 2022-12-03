@@ -46,31 +46,17 @@ public class BagageController {
     }
 
     @ResponseBody
-    @GetMapping("/all")
+    @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
-    public ResponseEntity<WebResponse<List<BagageResponse>>> getAll() {
+    public ResponseEntity<WebResponse<List<BagageResponse>>> getAllById(@RequestParam("aircraftId") String aircraftId) {
         log.info("Calling controller getAll - bagage");
-        List<BagageResponse> bagageResponses = bagageService.getAll();
+        List<BagageResponse> bagageResponses = bagageService.findBagageByAircraftId(aircraftId);
         WebResponse webResponse = new WebResponse(
                 HttpStatus.OK.value(),
                 HttpStatus.OK.getReasonPhrase(),
                 bagageResponses
         );
         log.info("Successful get all bagage data");
-        return new ResponseEntity<>(webResponse, HttpStatus.OK);
-    }
-    @ResponseBody
-    @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
-    public ResponseEntity<WebResponse<BagageResponse>> findByAircraftId(@RequestParam("aircraftid") String aircraftid) {
-        log.info("Calling controller find by aircraft id - bagage");
-        BagageResponse bagageResponse = bagageService.findBagageByAircraftId(aircraftid);
-        WebResponse webResponse = new WebResponse(
-                HttpStatus.OK.value(),
-                HttpStatus.OK.getReasonPhrase(),
-                bagageResponse
-        );
-        log.info("Successful get bagage data based on id aircraft");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 

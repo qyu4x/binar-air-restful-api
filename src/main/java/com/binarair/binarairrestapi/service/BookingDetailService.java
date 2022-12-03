@@ -19,7 +19,7 @@ public interface BookingDetailService {
 
     AircraftSeatResponse insertSeatBooking(BookingAircraftSeatRequest bookingAircraftSeatRequest, String ScheduleId);
 
-    ProcessBaggageResponse findBaggageByScheduleId(String scheduleId);
+    ProcessBaggageResponse findBaggageByScheduleId(String scheduleId, Integer weight);
 
     void updateScheduleStock(String scheduleId);
 
