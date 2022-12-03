@@ -16,7 +16,9 @@ public class ProcessBaggageResponse {
 
     private Integer extraBagage;
 
-    private BigDecimal bagagePricePer5kg;
+    private Integer weight;
+
+    private BigDecimal price;
 
     private Integer freeBagageCapacity;
 

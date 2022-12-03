@@ -39,7 +39,7 @@ public class BookingDetail {
 
     private Integer extraBagage;
 
-    private BigDecimal bagagePricePer5kg;
+    private BigDecimal bagagePrice;
 
     private boolean checkInStatus;
 

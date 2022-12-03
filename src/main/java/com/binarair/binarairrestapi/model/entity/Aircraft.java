@@ -42,8 +42,8 @@ public class Aircraft {
     @OneToMany(mappedBy = "aircraft", fetch = FetchType.LAZY)
     private List<AircraftSeat> aircraftSeats;
 
-    @OneToOne(mappedBy = "aircraft")
-    private Bagage bagage;
+    @OneToMany(mappedBy = "aircraft", fetch = FetchType.LAZY)
+    private List<Bagage> bagages;
 
     @OneToMany(mappedBy = "aircraft", fetch = FetchType.LAZY)
     private List<Facility> facilities;

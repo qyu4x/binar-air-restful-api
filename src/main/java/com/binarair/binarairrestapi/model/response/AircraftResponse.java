@@ -21,4 +21,8 @@ public class AircraftResponse {
 
     private String seatLengthUnit;
 
+    private Integer freeBaggage;
+
+    private Integer freeBaggageCabin;
+
 }

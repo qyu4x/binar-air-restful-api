@@ -9,9 +9,8 @@ public interface BagageService {
 
     BagageResponse save(BagageRequest bagageRequest);
 
-    List<BagageResponse> getAll();
+    List<BagageResponse> findBagageByAircraftId(String id);
 
-    BagageResponse findBagageByAircraftId(String aircraftId);
 
     Boolean delete(String baggageId);
 

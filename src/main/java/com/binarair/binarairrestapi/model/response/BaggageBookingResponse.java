@@ -11,7 +11,7 @@ import java.math.BigDecimal;
 @Builder
 public class BaggageBookingResponse {
 
-    private BigDecimal bagagePricePer5kg;
+    private Integer extraBagage;
 
     private Integer freeBagageCapacity;
 

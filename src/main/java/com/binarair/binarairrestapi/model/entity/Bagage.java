@@ -17,11 +17,13 @@ public class Bagage {
     @Id
     private String id;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "aircraft_unique_id", referencedColumnName = "id")
     private Aircraft aircraft;
 
-    private BigDecimal bagagePricePer5kg;
+    private Integer weight;
+
+    private BigDecimal price;
 
     private Integer freeBagageCapacity;
 

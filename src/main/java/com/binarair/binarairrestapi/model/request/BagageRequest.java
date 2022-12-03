@@ -18,8 +18,11 @@ public class BagageRequest {
     @NotEmpty(message = "aircraft id is required.")
     private String aircraftId;
 
+    @Min(value = 5)
+    private Integer weight;
+
     @DecimalMax(value = "9999999999.999", message = "The decimal value can not be more than 9999999999.999")
-    private BigDecimal bagagePricePer5kg;
+    private BigDecimal price;
 
     @NotNull(message = "free bagage capacity is required")
     @Min(value = 0)
