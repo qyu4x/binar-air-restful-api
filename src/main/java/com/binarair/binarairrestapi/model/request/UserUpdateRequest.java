@@ -12,9 +12,6 @@ import java.time.LocalDate;
 @Builder
 public class UserUpdateRequest {
 
-    @NotEmpty(message = "User id is required.")
-    private String userId;
-
     @NotEmpty(message = "Full name is required.")
     private String fullName;
 

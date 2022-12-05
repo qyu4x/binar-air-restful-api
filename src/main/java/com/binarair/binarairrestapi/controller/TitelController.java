@@ -6,6 +6,7 @@ import com.binarair.binarairrestapi.model.request.TitelRequest;
 import com.binarair.binarairrestapi.model.request.TravelClassUpdateRequest;
 import com.binarair.binarairrestapi.model.response.*;
 import com.binarair.binarairrestapi.service.TitelService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class TitelController {
         this.titelService = titelService;
     }
 
+
+    @Operation(summary = "save titel data")
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -45,6 +48,8 @@ public class TitelController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+
+    @Operation(summary = "get all titel data")
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -60,6 +65,8 @@ public class TitelController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "find titel data based on titel id")
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -75,6 +82,8 @@ public class TitelController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "delete titel data based on titel id")
     @DeleteMapping("/{titelId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -90,6 +99,8 @@ public class TitelController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK  );
     }
 
+
+    @Operation(summary = "update titel data based on titel id")
     @PutMapping("/{titelId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

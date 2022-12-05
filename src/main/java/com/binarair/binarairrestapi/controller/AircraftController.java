@@ -3,6 +3,7 @@ package com.binarair.binarairrestapi.controller;
 import com.binarair.binarairrestapi.model.request.AircraftRequest;
 import com.binarair.binarairrestapi.model.response.*;
 import com.binarair.binarairrestapi.service.AircraftService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ public class AircraftController {
         this.aircraftService = aircraftService;
     }
 
+    @Operation(summary = "save aircraft data")
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -42,6 +44,7 @@ public class AircraftController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "get all aircraft data")
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -57,6 +60,7 @@ public class AircraftController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+    @Operation(summary = "get aircraft data based on aircraft id")
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -72,6 +76,7 @@ public class AircraftController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+    @Operation(summary = "delete aircraft data based on aircraft id ")
     @DeleteMapping("/{aircraftId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

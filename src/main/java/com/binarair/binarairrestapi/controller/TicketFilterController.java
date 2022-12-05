@@ -5,6 +5,8 @@ import com.binarair.binarairrestapi.model.response.RoundTripTicketResponse;
 import com.binarair.binarairrestapi.model.response.TicketResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.ScheduleService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +30,15 @@ public class TicketFilterController {
         this.scheduleService = scheduleService;
     }
 
+
+    @Operation(summary = "get filter results for round trip")
     @GetMapping("/fulltwosearch")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
-    public ResponseEntity<WebResponse<RoundTripTicketResponse>> fullTwoSearch(@RequestParam("ap") String ap, @RequestParam("dt") String dt,
-                                                                              @RequestParam("ps") String ps, @RequestParam("sc")String sc) {
+    public ResponseEntity<WebResponse<RoundTripTicketResponse>> fullTwoSearch(@RequestParam("ap") @Parameter(name = "iata", description = "IATA airport origin and destination", example = "CGK.HND") String ap,
+                                                                              @RequestParam("dt") @Parameter(name = "departure", description = "Date of departure and return", example = "26-11-2022.29-11-2022") String dt,
+                                                                              @RequestParam("ps") @Parameter(name = "passenger", description = "Total of adult passengers, children and infants", example = "2.1.1")String ps,
+                                                                              @RequestParam("sc") @Parameter(name = "service class", description = "Selected service class", example = "BUSINESS")String sc) {
         log.info("call contoller fullTwoSearch");
         RoundTripTicketResponse roundTripTicketResponse = scheduleService.filterFullTwoSearch(ap, dt, ps, sc);
         log.info("Successful get all ticket round trip");
@@ -44,11 +50,15 @@ public class TicketFilterController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "get filter results for one way trip")
     @GetMapping("/fullsearch")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
-    public ResponseEntity<WebResponse<List<TicketResponse>>> fullSearch(@RequestParam("ap") String ap, @RequestParam("dt") String dt,
-                                                                        @RequestParam("ps") String ps, @RequestParam("sc")String sc) {
+    public ResponseEntity<WebResponse<List<TicketResponse>>> fullSearch(@RequestParam("ap") @Parameter(name = "iata", description = "IATA airport origin and destination", example = "CGK.HND") String ap,
+                                                                        @RequestParam("dt") @Parameter(name = "departure", description = "Date of departure, return value = NA (Not Available)", example = "26-11-2022.NA") String dt,
+                                                                        @RequestParam("ps") @Parameter(name = "passenger", description = "Total of adult passengers, children and infants", example = "2.1.1")String ps,
+                                                                        @RequestParam("sc") @Parameter(name = "service class", description = "Selected service class", example = "BUSINESS")String sc) {
         log.info("call controller fullSearch");
         List<TicketResponse> ticketResponses = scheduleService.filterFullSearch(ap, dt, ps, sc);
         log.info("Successful get all ticket");

@@ -109,12 +109,9 @@ public class BookingDetailServiceImpl implements BookingDetailService {
     @Override
     public Booking createBooking(BookingDetailRequest bookingDetailRequest, String userId) {
         User user = userRepository.findById(userId)
-                .orElseThrow(() -> new DataNotFoundException(String.format("User account not found")));
-        String[] random = UUID.randomUUID().toString().toUpperCase().split("-");
-        String numberBookingReferenceNumber = random[0];
+                .orElseThrow(() -> new DataNotFoundException("User account not found"));
         Booking booking = Booking.builder()
                 .id(String.format("bo-%s", UUID.randomUUID().toString()))
-                .bookingReferenceNumber(numberBookingReferenceNumber)
                 .user(user)
                 .bookingType(bookingDetailRequest.getBookingType())
                 .createdAt(LocalDateTime.now())
@@ -289,6 +286,9 @@ public class BookingDetailServiceImpl implements BookingDetailService {
         Passenger passenger = passengerRepository.findById(processPassengerResponses.getId())
                 .orElseThrow(() -> new DataNotFoundException(String.format("Passenger with id %s not found", processPassengerResponses.getId())));
 
+        String[] random = UUID.randomUUID().toString().toUpperCase().split("-");
+        String numberBookingReferenceNumber = random[0].substring(0, random[0].length() - 2);
+
         BookingDetail bookingDetail = BookingDetail.builder()
                 .id(String.format("bs-%s", UUID.randomUUID().toString()))
                 .booking(booking)
@@ -299,6 +299,7 @@ public class BookingDetailServiceImpl implements BookingDetailService {
                 .aircraftPrice(schedule.getPrice())
                 .bagagePrice(processPassengerResponses.getBaggageResponse().getPrice())
                 .checkInStatus(false)
+                .bookingReferenceNumber(numberBookingReferenceNumber)
                 .extraBagage(processPassengerResponses.getBaggageResponse().getExtraBagage())
                 .seatCode(processPassengerResponses.getSeatResponse().getSeatCode())
                 .seatPrice(processPassengerResponses.getSeatResponse().getPrice().getAmount())
@@ -349,6 +350,8 @@ public class BookingDetailServiceImpl implements BookingDetailService {
                         .ageCategory(bookingDetail.getPassenger().getAgeCategory().getCategoryName())
                         .firstName(bookingDetail.getPassenger().getFirstName())
                         .lastName(bookingDetail.getPassenger().getLastName())
+                        .bookingReferenceNumber(bookingDetail.getBookingReferenceNumber())
+                        .checkInStatus(bookingDetail.isCheckInStatus())
                         .citizenship(bookingDetail.getPassenger().getCityzenship().getName())
                         .birthDate(bookingDetail.getPassenger().getBirthDate())
                         .passportNumber(bookingDetail.getPassenger().getPassportNumber())
@@ -430,6 +433,8 @@ public class BookingDetailServiceImpl implements BookingDetailService {
                         .ageCategory(bookingDetail.getPassenger().getAgeCategory().getCategoryName())
                         .firstName(bookingDetail.getPassenger().getFirstName())
                         .lastName(bookingDetail.getPassenger().getLastName())
+                        .bookingReferenceNumber(bookingDetail.getBookingReferenceNumber())
+                        .checkInStatus(bookingDetail.isCheckInStatus())
                         .citizenship(bookingDetail.getPassenger().getCityzenship().getName())
                         .birthDate(bookingDetail.getPassenger().getBirthDate())
                         .passportNumber(bookingDetail.getPassenger().getPassportNumber())
@@ -511,7 +516,6 @@ public class BookingDetailServiceImpl implements BookingDetailService {
                         .amount(totalPayment)
                         .build())
                 .bookingId(bookingId)
-                .bookingReferenceNumber(booking.getBookingReferenceNumber())
                 .departure(BookingDetailResponse.builder()
                         .data(departures)
                         .build())

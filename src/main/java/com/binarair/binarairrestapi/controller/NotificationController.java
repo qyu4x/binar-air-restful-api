@@ -4,6 +4,7 @@ import com.binarair.binarairrestapi.model.response.NotificationDetailResponse;
 import com.binarair.binarairrestapi.model.response.NotificationResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.NotificationService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,12 +21,12 @@ public class NotificationController {
     private final static Logger log = LoggerFactory.getLogger(NotificationController.class);
 
     private final NotificationService notificationService;
-
     @Autowired
     public NotificationController(NotificationService notificationService) {
         this.notificationService = notificationService;
     }
 
+    @Operation(summary = "get all notification data based on user id")
     @ResponseBody
     @GetMapping("/{id}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -42,6 +43,7 @@ public class NotificationController {
     }
 
 
+    @Operation(summary = "update notification read status based on user id and notification id")
     @ResponseBody
     @PutMapping("/{userid}/{notificationid}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

@@ -82,9 +82,9 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public UserUpdateResponse update(UserUpdateRequest userUpdateRequest) {
-        User user = userRepository.findById(userUpdateRequest.getUserId())
-                .orElseThrow(() -> new DataNotFoundException(String.format("Account with id %s not found", userUpdateRequest.getUserId())));
+    public UserUpdateResponse update(UserUpdateRequest userUpdateRequest, String userId) {
+        User user = userRepository.findById(userId)
+                .orElseThrow(() -> new DataNotFoundException(String.format("Account with id %s not found", userId)));
 
         City city = cityRepository.findById(userUpdateRequest.getCityId())
                         .orElseThrow(() -> new DataNotFoundException(String.format("City with city id %s not found", userUpdateRequest.getCityId())));

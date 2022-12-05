@@ -8,6 +8,7 @@ import com.binarair.binarairrestapi.service.HeroBannerService;
 import com.binarair.binarairrestapi.util.MapperHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ public class HeroBannerController {
         this.heroBannerService = heroBannerService;
     }
 
+
+    @Operation(summary = "save hero banner data using form data")
     @PostMapping(consumes = {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -54,8 +57,9 @@ public class HeroBannerController {
     }
 
 
+    @Operation(summary = "get all hero banner data")
     @ResponseBody
-    @GetMapping
+    @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<HeroBannerResponse>>> getAll() {
         log.info("Calling controller getAll - hero banner");
@@ -69,6 +73,8 @@ public class HeroBannerController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "delete hero banner data based on hero banner id")
     @DeleteMapping("/{heroBannerId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

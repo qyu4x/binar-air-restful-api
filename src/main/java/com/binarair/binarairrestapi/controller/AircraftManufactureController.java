@@ -7,6 +7,7 @@ import com.binarair.binarairrestapi.model.response.AirportResponse;
 import com.binarair.binarairrestapi.model.response.CityResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.AircraftManufactureService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,7 @@ public class AircraftManufactureController {
         this.aircraftManufactureService = aircraftManufactureService;
     }
 
+    @Operation(summary = "save aircraft manufacture data")
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -46,6 +48,7 @@ public class AircraftManufactureController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "get all aircraft manufacture data")
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -60,6 +63,8 @@ public class AircraftManufactureController {
         log.info("Successful get all aircraft manufacture data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
+
+    @Operation(summary = "delete data aircraft manufacture based on aircraft manufacture id")
     @DeleteMapping("/{manufactureId}")
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")

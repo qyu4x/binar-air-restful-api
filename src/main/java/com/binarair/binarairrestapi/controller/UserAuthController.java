@@ -8,6 +8,7 @@ import com.binarair.binarairrestapi.model.response.UserAuthResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.impl.JwtTokenAuthService;
 import com.binarair.binarairrestapi.util.JwtTokenUtil;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,6 +50,8 @@ public class UserAuthController {
         this.authenticationManager = authenticationManager;
     }
 
+
+    @Operation(summary = "carry out the sign-in process")
     @PostMapping("/signin")
     public ResponseEntity<WebResponse<UserAuthResponse>> createJwtToken(@RequestBody @Valid UserAuthRequest userAuthRequest) {
         log.info("Calling login role");

@@ -6,6 +6,7 @@ import com.binarair.binarairrestapi.model.response.CityResponse;
 import com.binarair.binarairrestapi.model.response.HeroBannerResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.CityService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -29,6 +30,7 @@ public class CityController {
     }
 
 
+    @Operation(summary = "save city data")
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -44,6 +46,8 @@ public class CityController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+
+    @Operation(summary = "delete city data based on city code id")
     @DeleteMapping("/{codeId}")
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -59,6 +63,8 @@ public class CityController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "get all city data")
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -74,6 +80,8 @@ public class CityController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "find city data based on city code id")
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")

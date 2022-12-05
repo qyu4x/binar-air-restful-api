@@ -4,6 +4,7 @@ import com.binarair.binarairrestapi.model.request.AircraftSeatRequest;
 import com.binarair.binarairrestapi.model.response.AircraftSeatResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.AircraftSeatService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,7 @@ public class AircraftSeatController {
         this.aircraftSeatService = aircraftSeatService;
     }
 
+    @Operation(summary = "get all available data seats based on aircraft id")
     @ResponseBody
     @GetMapping("/available")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -43,6 +45,7 @@ public class AircraftSeatController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+    @Operation(summary = "get all reversed data seats based on aircraft id")
     @ResponseBody
     @GetMapping("/reserved")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -58,6 +61,7 @@ public class AircraftSeatController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+    @Operation(summary = "get all aircraft data based on aircraft id")
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -73,6 +77,7 @@ public class AircraftSeatController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+    @Operation(summary = "save aircraft data")
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -88,6 +93,7 @@ public class AircraftSeatController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "delete aircraft seat based on seat id")
     @DeleteMapping("/{seatId}")
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")

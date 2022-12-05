@@ -6,6 +6,7 @@ import com.binarair.binarairrestapi.model.response.AirportResponse;
 import com.binarair.binarairrestapi.model.response.CityResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.AirportService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ public class AirportController {
         this.airportService = airportService;
     }
 
+    @Operation(summary = "save airport data")
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -45,6 +47,8 @@ public class AirportController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+
+    @Operation(summary = "get all airport data")
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -60,6 +64,8 @@ public class AirportController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "get airport data by iata code")
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -75,12 +81,14 @@ public class AirportController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
-    @DeleteMapping("/{airportId}")
+
+    @Operation(summary = "delete airport data based on iata code")
+    @DeleteMapping("/{iataCode}")
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("airportId") String airportId) {
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("iataCode") String iataCode) {
         log.info("calling controller delete - airport");
-        boolean deleteResponse = airportService.delete(airportId);
+        boolean deleteResponse = airportService.delete(iataCode);
         log.info("successful delete airport data");
         WebResponse webResponse = new WebResponse(
                 HttpStatus.OK.value(),

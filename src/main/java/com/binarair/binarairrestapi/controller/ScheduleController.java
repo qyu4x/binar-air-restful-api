@@ -5,6 +5,7 @@ import com.binarair.binarairrestapi.model.response.ScheduleResponse;
 import com.binarair.binarairrestapi.model.response.UserResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.ScheduleService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class ScheduleController {
         this.scheduleService = scheduleService;
     }
 
+
+    @Operation(summary = "save schedule data")
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -44,6 +47,8 @@ public class ScheduleController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+
+    @Operation(summary = "get all schedule data")
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -58,6 +63,8 @@ public class ScheduleController {
         log.info("Successful get all schedule data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
+
+    @Operation(summary = "delete schedule data based on schedule id")
     @DeleteMapping("/{scheduleId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -73,6 +80,7 @@ public class ScheduleController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK  );
     }
 
+    @Operation(summary = "get schedule data based on schedule id")
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")

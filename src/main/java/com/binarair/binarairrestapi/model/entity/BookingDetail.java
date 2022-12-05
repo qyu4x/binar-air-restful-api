@@ -41,6 +41,8 @@ public class BookingDetail {
 
     private BigDecimal bagagePrice;
 
+    private String bookingReferenceNumber;
+
     private boolean checkInStatus;
 
     private String status;
