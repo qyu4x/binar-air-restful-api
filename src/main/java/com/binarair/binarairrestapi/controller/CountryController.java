@@ -69,7 +69,6 @@ public class CountryController {
     @Operation(summary = "get all country data")
     @ResponseBody
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<CountryDetailResponse>>> getAll() {
         log.info("Calling controller getAll - country service");
         List<CountryDetailResponse> countryResponse = countryService.getAll();
@@ -86,7 +85,6 @@ public class CountryController {
     @Operation(summary = "get country data based on country code id")
     @ResponseBody
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<CountryDetailResponse>> findByCountryCodeId(@RequestParam("code") String code) {
         log.info("Calling controller country  - country");
         CountryDetailResponse countryDetailResponse = countryService.findByCodeId(code);

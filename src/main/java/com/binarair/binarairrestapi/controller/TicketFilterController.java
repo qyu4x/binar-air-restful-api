@@ -34,7 +34,6 @@ public class TicketFilterController {
     @Operation(summary = "get filter results for round trip")
     @GetMapping("/fulltwosearch")
     @ResponseBody
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<RoundTripTicketResponse>> fullTwoSearch(@RequestParam("ap") @Parameter(name = "iata", description = "IATA airport origin and destination", example = "CGK.HND") String ap,
                                                                               @RequestParam("dt") @Parameter(name = "departure", description = "Date of departure and return", example = "26-11-2022.29-11-2022") String dt,
                                                                               @RequestParam("ps") @Parameter(name = "passenger", description = "Total of adult passengers, children and infants", example = "2.1.1")String ps,
@@ -54,7 +53,6 @@ public class TicketFilterController {
     @Operation(summary = "get filter results for one way trip")
     @GetMapping("/fullsearch")
     @ResponseBody
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<TicketResponse>>> fullSearch(@RequestParam("ap") @Parameter(name = "iata", description = "IATA airport origin and destination", example = "CGK.HND") String ap,
                                                                         @RequestParam("dt") @Parameter(name = "departure", description = "Date of departure, return value = NA (Not Available)", example = "26-11-2022.NA") String dt,
                                                                         @RequestParam("ps") @Parameter(name = "passenger", description = "Total of adult passengers, children and infants", example = "2.1.1")String ps,
