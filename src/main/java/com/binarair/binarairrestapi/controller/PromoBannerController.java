@@ -6,6 +6,7 @@ import com.binarair.binarairrestapi.model.response.*;
 import com.binarair.binarairrestapi.service.PromoBannerService;
 import com.binarair.binarairrestapi.util.MapperHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,6 +36,8 @@ public class PromoBannerController {
         this.promoBannerService = promoBannerService;
     }
 
+
+    @Operation(summary = "save promo banner data using form data")
     @PostMapping(consumes = {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -53,6 +56,8 @@ public class PromoBannerController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+
+    @Operation(summary = "get all promo banner data")
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -68,6 +73,8 @@ public class PromoBannerController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "delete promo banner data based on promo banner id")
     @DeleteMapping("/{promoBannerId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -82,6 +89,8 @@ public class PromoBannerController {
         log.info("Successful delete promo banner data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK  );
     }
+
+    @Operation(summary = "get promo banner data based on promo banner id")
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -97,6 +106,8 @@ public class PromoBannerController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "update promo banner data based on promo banner id")
     @PutMapping("/{promoBannerId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

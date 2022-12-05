@@ -6,6 +6,7 @@ import com.binarair.binarairrestapi.model.response.BagageResponse;
 import com.binarair.binarairrestapi.model.response.BenefitDetailResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.BagageService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class BagageController {
         this.bagageService = bagageService;
     }
 
+
+    @Operation(summary = "save baggage data")
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -45,6 +48,8 @@ public class BagageController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+
+    @Operation(summary = "get all baggage data based on aircraft id")
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -60,6 +65,8 @@ public class BagageController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "delete baggage data based on baggage id")
     @DeleteMapping("/{baggageId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

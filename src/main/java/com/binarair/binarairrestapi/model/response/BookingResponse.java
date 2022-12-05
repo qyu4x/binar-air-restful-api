@@ -11,8 +11,6 @@ public class BookingResponse {
 
     private String bookingId;
 
-    private String bookingReferenceNumber;
-
     private PriceResponse totalAmount;
 
     private BookingDetailResponse departure;

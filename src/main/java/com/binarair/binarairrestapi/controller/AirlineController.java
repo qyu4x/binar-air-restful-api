@@ -5,6 +5,8 @@ import com.binarair.binarairrestapi.model.request.BenefitUpdateRequest;
 import com.binarair.binarairrestapi.model.response.*;
 import com.binarair.binarairrestapi.service.AirlineService;
 import com.binarair.binarairrestapi.util.MapperHelper;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameters;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +34,7 @@ public class AirlineController {
     }
 
 
+    @Operation(summary = "save airline data using form data")
     @PostMapping(consumes = {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -49,6 +52,8 @@ public class AirlineController {
         log.info("Successful save airline logo and airline data");
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
+
+    @Operation(summary = "get all airline data")
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -64,6 +69,7 @@ public class AirlineController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+    @Operation(summary = "delete airline data based on airline id")
     @DeleteMapping("/{airlineId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -78,6 +84,8 @@ public class AirlineController {
         log.info("Successful delete airline data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK  );
     }
+
+    @Operation(summary = "update airline data based on airline id")
     @PutMapping("/{airlineId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -93,6 +101,8 @@ public class AirlineController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK );
     }
 
+
+    @Operation(summary = "get airline data based on airline id")
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")

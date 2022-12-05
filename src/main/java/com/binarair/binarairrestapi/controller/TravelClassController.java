@@ -7,6 +7,7 @@ import com.binarair.binarairrestapi.model.response.TravelClassResponse;
 import com.binarair.binarairrestapi.model.response.UserResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.TravelClassService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,8 @@ public class TravelClassController {
         this.travelClassService = travelClassService;
     }
 
+
+    @Operation(summary = "save travel class data")
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -46,6 +49,8 @@ public class TravelClassController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+
+    @Operation(summary = "get all travel class data")
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -61,6 +66,8 @@ public class TravelClassController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "get travel class data based on travel class id")
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -76,6 +83,8 @@ public class TravelClassController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "delete travel class data based on travel class id")
     @DeleteMapping("/{travelId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -91,6 +100,8 @@ public class TravelClassController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK  );
     }
 
+
+    @Operation(summary = "update travel class data based on travel class id")
     @PutMapping("/{travelId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

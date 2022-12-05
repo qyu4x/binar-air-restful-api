@@ -15,6 +15,7 @@ import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.*;
 import java.time.format.DateTimeFormatter;
+import java.time.temporal.ChronoUnit;
 import java.util.*;
 import java.util.regex.Pattern;
 
@@ -555,17 +556,17 @@ public class ScheduleServiceImpl implements ScheduleService {
     }
 
     private String duration(LocalTime departure, LocalTime arrival, LocalDate departureDate, LocalDate arrivalDate) {
-        LocalDateTime localDepartureDate = departureDate.atStartOfDay(ZoneId.of("Asia/Jakarta")).toLocalDateTime();
-        LocalDateTime localArrivalDate = arrivalDate.atStartOfDay(ZoneId.of("Asia/Jakarta")).toLocalDateTime();
+        LocalDateTime localDepartureDate = LocalDateTime.of(departureDate, departure);
+        LocalDateTime localArrivalDate = LocalDateTime.of(arrivalDate, arrival);
 
-        Duration dateDuration = Duration.between(localDepartureDate, localArrivalDate);
-        Duration duration = Duration.between(departure, arrival);
-        long totalSecs = duration.getSeconds();
-        long hours = totalSecs / 3600;
-        long minutes = (totalSecs % 3600) / 60;
-        long days = dateDuration.toDays();
+        LocalDateTime tempDateTime = LocalDateTime.from( localDepartureDate );
 
-        return String.format("%2dd %02dh %02dm", days, hours, minutes);
+        long hours = tempDateTime.until( localArrivalDate, ChronoUnit.HOURS );
+        tempDateTime = tempDateTime.plusHours( hours );
+
+        long minutes = tempDateTime.until( localArrivalDate, ChronoUnit.MINUTES );
+
+        return String.format("%02dh %02dm", hours, minutes);
     }
 
     private String convertToDisplayCurrency(BigDecimal amount) {

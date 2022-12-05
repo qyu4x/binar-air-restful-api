@@ -103,7 +103,7 @@ public class AircraftSeatServiceImpl implements AircraftSeatService {
         List<AircraftSeatResponse> aircraftSeatResponses = new ArrayList<>();
         aircrafts.stream().forEach(aircraftSeat -> {
             boolean status = false;
-            if (!aircraftSeat.getSeatScheduleBookings().isEmpty()) {
+            if (aircraftSeat.getSeatScheduleBookings().isEmpty()) {
                 status = true;
             }
             AircraftSeatResponse aircraftSeatResponse = AircraftSeatResponse.builder()
@@ -152,7 +152,7 @@ public class AircraftSeatServiceImpl implements AircraftSeatService {
                 .aircraftId(airCraftSeat.getAircraft().getId())
                 .aircraftManufacture(airCraftSeat.getAircraft().getAircraftManufacture().getName())
                 .aircraftModel(airCraftSeat.getAircraft().getModel())
-                .status(false)
+                .status(true)
                 .price(PriceResponse.builder()
                         .amount(airCraftSeat.getPrice())
                         .display(convertToDisplayCurrency(airCraftSeat.getPrice()))

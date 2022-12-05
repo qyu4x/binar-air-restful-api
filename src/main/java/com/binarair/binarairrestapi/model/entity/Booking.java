@@ -27,8 +27,6 @@ public class Booking {
 
     private BigDecimal total;
 
-    private String bookingReferenceNumber;
-
     private String bookingType;
 
     @Column(nullable = false, updatable = false, insertable = false, columnDefinition = "TIMESTAMP DEFAULT CURRENT_TIMESTAMP")

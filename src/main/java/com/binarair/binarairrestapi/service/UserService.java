@@ -12,7 +12,7 @@ public interface UserService {
 
     UserRegisterResponse save(UserRegisterRequest userRegisterRequest);
 
-    UserUpdateResponse update(UserUpdateRequest userUpdateRequest);
+    UserUpdateResponse update(UserUpdateRequest userUpdateRequest, String userId);
 
     UserProfileResponse updateProfile(String userId, MultipartFile multipartFile);
 

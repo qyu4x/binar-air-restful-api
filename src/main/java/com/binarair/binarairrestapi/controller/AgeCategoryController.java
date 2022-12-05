@@ -7,6 +7,9 @@ import com.binarair.binarairrestapi.model.response.AircraftDetailResponse;
 import com.binarair.binarairrestapi.model.response.AirportResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.AgeCategoryService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +34,7 @@ public class AgeCategoryController {
         this.ageCategoryService = ageCategoryService;
     }
 
+    @Operation(summary = "save age category data")
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -46,6 +50,7 @@ public class AgeCategoryController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+    @Operation(summary = "get all age category data")
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -60,7 +65,7 @@ public class AgeCategoryController {
         log.info("Successful get all age category data");
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
-
+    @Operation(summary = "get age category data based on age category id")
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -76,6 +81,7 @@ public class AgeCategoryController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+    @Operation(summary = "delete age category data based on age category id")
     @DeleteMapping("/{ageCategory}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

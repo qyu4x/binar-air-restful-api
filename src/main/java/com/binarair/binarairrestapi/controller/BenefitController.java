@@ -8,6 +8,7 @@ import com.binarair.binarairrestapi.model.response.BenefitResponse;
 import com.binarair.binarairrestapi.model.response.TravelClassResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.BenefitService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,6 +33,8 @@ public class BenefitController {
         this.benefitService = benefitService;
     }
 
+
+    @Operation(summary = "save benefit data")
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -47,6 +50,8 @@ public class BenefitController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+
+    @Operation(summary = "get all benefit data")
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -62,6 +67,8 @@ public class BenefitController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "get all benefit data based on aircraft id")
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -77,6 +84,8 @@ public class BenefitController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "delete benefit data based on benefit id")
     @DeleteMapping("/{benefitId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -92,6 +101,7 @@ public class BenefitController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK  );
     }
 
+    @Operation(summary = "update benefit data based on benefit id")
     @PutMapping("/{benefitId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")

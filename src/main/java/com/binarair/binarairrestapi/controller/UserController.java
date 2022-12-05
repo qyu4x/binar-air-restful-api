@@ -7,6 +7,7 @@ import com.binarair.binarairrestapi.model.response.*;
 import com.binarair.binarairrestapi.service.UserService;
 import com.binarair.binarairrestapi.util.MapperHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,6 +34,8 @@ public class UserController {
         this.userService = userService;
     }
 
+
+    @Operation(summary = "carry out the account registration process")
     @PostMapping("/signup")
     @ResponseBody
     public ResponseEntity<WebResponse<UserRegisterResponse>> signup(@RequestBody @Valid UserRegisterRequest userRegisterRequest) {
@@ -47,11 +50,13 @@ public class UserController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
-    @PutMapping("/update")
+    @Operation(summary = "update user profile")
+    @PutMapping("/update/{userId}")
     @ResponseBody
-    public ResponseEntity<WebResponse<UserUpdateResponse>> update(@Valid @RequestBody UserUpdateRequest userUpdateRequest) {
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
+    public ResponseEntity<WebResponse<UserUpdateResponse>> update(@Valid @RequestBody UserUpdateRequest userUpdateRequest, @PathVariable("userId") String userId) {
         log.info("Call update controller - user");
-        UserUpdateResponse userUpdateResponse = userService.update(userUpdateRequest);
+        UserUpdateResponse userUpdateResponse = userService.update(userUpdateRequest, userId);
         WebResponse webResponse = new WebResponse(
                 HttpStatus.OK.value(),
                 HttpStatus.OK.getReasonPhrase(),
@@ -61,6 +66,8 @@ public class UserController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK  );
     }
 
+
+    @Operation(summary = "update avatar based on the user id and using form data")
     @PutMapping(path = "/avatar",
             consumes = {
             MediaType.APPLICATION_JSON_VALUE,
@@ -79,6 +86,8 @@ public class UserController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+
+    @Operation(summary = "delete user account data based on user id")
     @DeleteMapping("/{userId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_BUYER')")
@@ -94,6 +103,8 @@ public class UserController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK  );
     }
 
+
+    @Operation(summary = "get user account data based on user id")
     @ResponseBody
     @GetMapping("/{userId}")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")

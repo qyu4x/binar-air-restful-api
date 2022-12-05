@@ -6,6 +6,7 @@ import com.binarair.binarairrestapi.model.response.CountryDetailResponse;
 import com.binarair.binarairrestapi.model.response.CountryResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.CountryService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,8 @@ public class CountryController {
         this.countryService = countryService;
     }
 
+
+    @Operation(summary = "save country data")
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -46,6 +49,7 @@ public class CountryController {
     }
 
 
+    @Operation(summary = "delete country data based on country code id")
     @DeleteMapping("/{countryCodeId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -62,6 +66,7 @@ public class CountryController {
 
     }
 
+    @Operation(summary = "get all country data")
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -77,6 +82,8 @@ public class CountryController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "get country data based on country code id")
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")

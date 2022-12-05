@@ -6,6 +6,7 @@ import com.binarair.binarairrestapi.model.response.BookingResponse;
 import com.binarair.binarairrestapi.model.response.CityResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.BookingDetailService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class BookingController {
         this.bookingDetailService = bookingDetailService;
     }
 
+
+    @Operation(summary = "process transactions based on the user id that wants ordered the ticket")
     @PostMapping("/{userId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")

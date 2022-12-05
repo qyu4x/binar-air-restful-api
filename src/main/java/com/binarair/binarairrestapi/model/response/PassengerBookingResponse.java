@@ -30,6 +30,10 @@ public class PassengerBookingResponse {
 
     private String issuingCountry;
 
+    private String bookingReferenceNumber;
+
+    private boolean checkInStatus;
+
     private ScheduleResponse schedule;
 
     private AircraftSeatResponse aircraftSeat;

@@ -5,6 +5,7 @@ import com.binarair.binarairrestapi.model.response.AircraftDetailResponse;
 import com.binarair.binarairrestapi.model.response.FacilityDetailResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.FacilityService;
+import io.swagger.v3.oas.annotations.Operation;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,8 @@ public class FacilityController {
         this.facilityService = facilityService;
     }
 
+
+    @Operation(summary = "save facility data")
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -44,6 +47,8 @@ public class FacilityController {
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
     }
 
+
+    @Operation(summary = "get all facility data")
     @ResponseBody
     @GetMapping("/all")
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
@@ -59,10 +64,12 @@ public class FacilityController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "get facility data based on aircraft id")
     @ResponseBody
     @GetMapping
     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
-    public ResponseEntity<WebResponse<AircraftDetailResponse>> findByAircraftId(@RequestParam("aircraftid") String aircraftid) {
+    public ResponseEntity<WebResponse<List<FacilityDetailResponse>>> findByAircraftId(@RequestParam("aircraftid") String aircraftid) {
         log.info("Calling controller find by aircraht id - facility");
         List<FacilityDetailResponse> facilityDetailResponses = facilityService.findByAircraftId(aircraftid);
         WebResponse webResponse = new WebResponse(
@@ -74,6 +81,8 @@ public class FacilityController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
+
+    @Operation(summary = "delete facility data based on facility id")
     @DeleteMapping("/{facilityId}")
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
