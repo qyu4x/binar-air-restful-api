@@ -53,7 +53,6 @@ public class AgeCategoryController {
     @Operation(summary = "get all age category data")
     @ResponseBody
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<AgeCategoryResponse>>> getAll() {
         log.info("Calling controller getAll - age category");
         List<AgeCategoryResponse> ageCategoryResponses = ageCategoryService.getAll();
@@ -68,7 +67,6 @@ public class AgeCategoryController {
     @Operation(summary = "get age category data based on age category id")
     @ResponseBody
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<AircraftDetailResponse>> findById(@RequestParam("id") String id) {
         log.info("Calling controller find age category by id - aircraft");
         AgeCategoryResponse ageCategoryResponse = ageCategoryService.findById(id);
