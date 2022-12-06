@@ -52,7 +52,6 @@ public class TitelController {
     @Operation(summary = "get all titel data")
     @ResponseBody
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<TitelResponse>>> getAll() {
         log.info("Calling controller getAll - titel");
         List<TitelResponse> titelResponses = titelService.getAll();
@@ -69,7 +68,6 @@ public class TitelController {
     @Operation(summary = "find titel data based on titel id")
     @ResponseBody
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<UserResponse>> findTitelById(@RequestParam("id") String id) {
         log.info("Call controller find titel by id - titel");
         TitelResponse titelResponse = titelService.findById(id);

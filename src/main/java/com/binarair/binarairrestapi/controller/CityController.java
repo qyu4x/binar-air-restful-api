@@ -67,7 +67,6 @@ public class CityController {
     @Operation(summary = "get all city data")
     @ResponseBody
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<CityResponse>>> getAll() {
         log.info("Calling controller getAll - city");
         List<CityResponse> cityResponses = cityService.getAll();
@@ -84,7 +83,6 @@ public class CityController {
     @Operation(summary = "find city data based on city code id")
     @ResponseBody
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<CityResponse>> findById(@RequestParam("code") String code) {
         log.info("Calling controller city  - city");
         CityResponse cityResponse = cityService.findByCode(code);

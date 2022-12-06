@@ -60,7 +60,6 @@ public class HeroBannerController {
     @Operation(summary = "get all hero banner data")
     @ResponseBody
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<HeroBannerResponse>>> getAll() {
         log.info("Calling controller getAll - hero banner");
         List<HeroBannerResponse> heroBannerRespones = heroBannerService.getAll();

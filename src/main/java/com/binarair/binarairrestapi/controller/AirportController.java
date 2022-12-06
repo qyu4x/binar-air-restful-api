@@ -51,7 +51,6 @@ public class AirportController {
     @Operation(summary = "get all airport data")
     @ResponseBody
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<AirportResponse>>> getAll() {
         log.info("Calling controller getAll - airport");
         List<AirportResponse> airportResponses = airportService.getAll();
@@ -68,7 +67,6 @@ public class AirportController {
     @Operation(summary = "get airport data by iata code")
     @ResponseBody
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<AirportResponse>> findByIata(@RequestParam("iata") String iata) {
         log.info("Calling controller find by id - airport");
         AirportResponse airportResponse = airportService.findByIata(iata);

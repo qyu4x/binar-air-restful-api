@@ -35,7 +35,6 @@ public class CheckInController {
     @Operation(summary = "carry out the check-in process")
     @PutMapping
     @ResponseBody
-    @PreAuthorize("hasAnyRole('ROLE_BUYER','ROLE_ADMIN')")
     public ResponseEntity<WebResponse<CheckInResponse>> checkIn(@Valid @RequestBody CheckInRequest checkInRequest) {
         log.info("calling controller checkin - checkin");
         CheckInResponse checkInResponse = checkInService.checkIn(checkInRequest);
@@ -51,7 +50,6 @@ public class CheckInController {
     @Operation(summary = "carry out the cancel check-in process")
     @PutMapping("/cancel")
     @ResponseBody
-    @PreAuthorize("hasAnyRole('ROLE_BUYER','ROLE_ADMIN')")
     public ResponseEntity<WebResponse<CancelCheckInResponse>> cancelCheckIn(@Valid @RequestBody CancelCheckInRequest cancelCheckInRequest) {
         log.info("calling controller cancel checkin - checkin");
         CancelCheckInResponse cancelCheckInResponse = checkInService.cancelCheckIn(cancelCheckInRequest);

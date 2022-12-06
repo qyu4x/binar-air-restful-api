@@ -60,7 +60,6 @@ public class PromoBannerController {
     @Operation(summary = "get all promo banner data")
     @ResponseBody
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<Page<PromoBannerPaggableResponse>>> getAll(Pageable pageable) {
         log.info("Calling controller getAll - promo banner");
         Page<PromoBannerPaggableResponse> promoBannerResponses = promoBannerService.getAll(pageable);
@@ -93,7 +92,6 @@ public class PromoBannerController {
     @Operation(summary = "get promo banner data based on promo banner id")
     @ResponseBody
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<PromoBannerResponse>> findPromoBannerById(@RequestParam("id") String id) {
         log.info("Call controller find promo banner by id - travel class");
         PromoBannerResponse promoBannerResponse = promoBannerService.findById(id);
