@@ -7,6 +7,7 @@ import com.binarair.binarairrestapi.model.request.TravelClassUpdateRequest;
 import com.binarair.binarairrestapi.model.response.*;
 import com.binarair.binarairrestapi.service.TitelService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class TitelController {
     }
 
 
-    @Operation(summary = "save titel data")
+    @Operation(summary = "save titel data", responses = @ApiResponse(responseCode = "201"))
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")

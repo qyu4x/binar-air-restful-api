@@ -34,7 +34,7 @@ public class AgeCategoryController {
         this.ageCategoryService = ageCategoryService;
     }
 
-    @Operation(summary = "save age category data")
+    @Operation(summary = "save age category data", responses = @ApiResponse(responseCode = "201"))
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")

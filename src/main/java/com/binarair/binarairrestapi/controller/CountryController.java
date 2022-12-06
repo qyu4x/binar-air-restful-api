@@ -7,6 +7,7 @@ import com.binarair.binarairrestapi.model.response.CountryResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.CountryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class CountryController {
     }
 
 
-    @Operation(summary = "save country data")
+    @Operation(summary = "save country data", responses = @ApiResponse(responseCode = "201"))
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
