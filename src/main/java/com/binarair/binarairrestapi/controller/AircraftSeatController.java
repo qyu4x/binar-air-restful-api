@@ -97,7 +97,7 @@ public class AircraftSeatController {
     @DeleteMapping("/{seatId}")
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
-    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("seatId") String seatId) {
+    public ResponseEntity<WebResponse<Boolean>> delete(@PathVariable("seatid") String seatId) {
         log.info("calling controller delete - aircraft seat");
         boolean deleteResponse = aircraftSeatService.delete(seatId);
         log.info("successful delete seat data");

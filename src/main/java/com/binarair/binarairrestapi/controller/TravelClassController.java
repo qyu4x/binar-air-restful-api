@@ -53,7 +53,6 @@ public class TravelClassController {
     @Operation(summary = "get all travel class data")
     @ResponseBody
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<TravelClassResponse>>> getAll() {
         log.info("Calling controller getAll - travel clas");
         List<TravelClassResponse> travelClassResponses = travelClassService.getAll();
@@ -70,7 +69,6 @@ public class TravelClassController {
     @Operation(summary = "get travel class data based on travel class id")
     @ResponseBody
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<UserResponse>> findTravelClassById(@RequestParam("id") String id) {
         log.info("Call controller find travel by id - travel class");
         TravelClassResponse travelClassResponse = travelClassService.findById(id);
