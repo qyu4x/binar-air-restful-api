@@ -26,7 +26,7 @@ public class SwaggerConfiguration {
                                 new Contact()
                                         .name("BE Kelompok 3")
                                         .email("qq.khoiri@gmail.com")
-                                        .url("github.com/qyu4x")
+                                        .url("https://github.com/qyu4x")
                         )
                         .license(new License().name("Apache 2.0").url("http://springdoc.org")))
                 .externalDocs(new ExternalDocumentation()
@@ -43,6 +43,10 @@ public class SwaggerConfiguration {
         Server serverDevelopment = new Server();
         serverDevelopment.setUrl("http://localhost:8080/");
         serverDevelopment.setDescription("Main server for Development");
+
+        Server serverProduction = new Server();
+        serverProduction.setUrl("https://binar-air-rest-api-production.up.railway.app/");
+        serverProduction.setDescription("Main server for Production");
 
         servers.add(serverDevelopment);
         return servers;
