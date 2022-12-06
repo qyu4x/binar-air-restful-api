@@ -5,6 +5,7 @@ import com.binarair.binarairrestapi.model.response.AircraftSeatResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.AircraftSeatService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -77,7 +78,7 @@ public class AircraftSeatController {
         return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
-    @Operation(summary = "save aircraft data")
+    @Operation(summary = "save aircraft data", responses = @ApiResponse(responseCode = "201"))
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")

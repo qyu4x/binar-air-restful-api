@@ -7,6 +7,7 @@ import com.binarair.binarairrestapi.service.AirlineService;
 import com.binarair.binarairrestapi.util.MapperHelper;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameters;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -34,7 +35,7 @@ public class AirlineController {
     }
 
 
-    @Operation(summary = "save airline data using form data")
+    @Operation(summary = "save airline data using form data", responses = @ApiResponse(responseCode = "201"))
     @PostMapping(consumes = {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE})

@@ -8,6 +8,7 @@ import com.binarair.binarairrestapi.service.UserService;
 import com.binarair.binarairrestapi.util.MapperHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -35,7 +36,7 @@ public class UserController {
     }
 
 
-    @Operation(summary = "carry out the account registration process")
+    @Operation(summary = "carry out the account registration process", responses = @ApiResponse(responseCode = "201"))
     @PostMapping("/signup")
     @ResponseBody
     public ResponseEntity<WebResponse<UserRegisterResponse>> signup(@RequestBody @Valid UserRegisterRequest userRegisterRequest) {
@@ -78,12 +79,12 @@ public class UserController {
         log.info("Calling controller upload - hero banner");
         UserProfileResponse userProfileResponse = userService.updateProfile(userId, userProfileImage);
         WebResponse webResponse = new WebResponse(
-                HttpStatus.CREATED.value(),
-                HttpStatus.CREATED.getReasonPhrase(),
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
                 userProfileResponse
         );
         log.info("Successful upload hero banner");
-        return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 
 
