@@ -7,6 +7,7 @@ import com.binarair.binarairrestapi.model.response.CountryResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.CountryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class CountryController {
     }
 
 
-    @Operation(summary = "save country data")
+    @Operation(summary = "save country data", responses = @ApiResponse(responseCode = "201"))
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
@@ -69,7 +70,6 @@ public class CountryController {
     @Operation(summary = "get all country data")
     @ResponseBody
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<CountryDetailResponse>>> getAll() {
         log.info("Calling controller getAll - country service");
         List<CountryDetailResponse> countryResponse = countryService.getAll();
@@ -86,7 +86,6 @@ public class CountryController {
     @Operation(summary = "get country data based on country code id")
     @ResponseBody
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<CountryDetailResponse>> findByCountryCodeId(@RequestParam("code") String code) {
         log.info("Calling controller country  - country");
         CountryDetailResponse countryDetailResponse = countryService.findByCodeId(code);

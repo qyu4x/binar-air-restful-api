@@ -7,6 +7,7 @@ import com.binarair.binarairrestapi.service.PromoBannerService;
 import com.binarair.binarairrestapi.util.MapperHelper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +38,7 @@ public class PromoBannerController {
     }
 
 
-    @Operation(summary = "save promo banner data using form data")
+    @Operation(summary = "save promo banner data using form data", responses = @ApiResponse(responseCode = "201"))
     @PostMapping(consumes = {
             MediaType.APPLICATION_JSON_VALUE,
             MediaType.MULTIPART_FORM_DATA_VALUE})
@@ -60,7 +61,6 @@ public class PromoBannerController {
     @Operation(summary = "get all promo banner data")
     @ResponseBody
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<Page<PromoBannerPaggableResponse>>> getAll(Pageable pageable) {
         log.info("Calling controller getAll - promo banner");
         Page<PromoBannerPaggableResponse> promoBannerResponses = promoBannerService.getAll(pageable);
@@ -93,7 +93,6 @@ public class PromoBannerController {
     @Operation(summary = "get promo banner data based on promo banner id")
     @ResponseBody
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<PromoBannerResponse>> findPromoBannerById(@RequestParam("id") String id) {
         log.info("Call controller find promo banner by id - travel class");
         PromoBannerResponse promoBannerResponse = promoBannerService.findById(id);

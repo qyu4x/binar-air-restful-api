@@ -8,6 +8,7 @@ import com.binarair.binarairrestapi.model.response.UserResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.TravelClassService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +34,7 @@ public class TravelClassController {
     }
 
 
-    @Operation(summary = "save travel class data")
+    @Operation(summary = "save travel class data", responses = @ApiResponse(responseCode = "201"))
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -53,7 +54,6 @@ public class TravelClassController {
     @Operation(summary = "get all travel class data")
     @ResponseBody
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<TravelClassResponse>>> getAll() {
         log.info("Calling controller getAll - travel clas");
         List<TravelClassResponse> travelClassResponses = travelClassService.getAll();
@@ -70,7 +70,6 @@ public class TravelClassController {
     @Operation(summary = "get travel class data based on travel class id")
     @ResponseBody
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<UserResponse>> findTravelClassById(@RequestParam("id") String id) {
         log.info("Call controller find travel by id - travel class");
         TravelClassResponse travelClassResponse = travelClassService.findById(id);

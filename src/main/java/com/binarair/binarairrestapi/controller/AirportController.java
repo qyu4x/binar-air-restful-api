@@ -7,6 +7,7 @@ import com.binarair.binarairrestapi.model.response.CityResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
 import com.binarair.binarairrestapi.service.AirportService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,7 +32,7 @@ public class AirportController {
         this.airportService = airportService;
     }
 
-    @Operation(summary = "save airport data")
+    @Operation(summary = "save airport data", responses = @ApiResponse(responseCode = "201"))
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -51,7 +52,6 @@ public class AirportController {
     @Operation(summary = "get all airport data")
     @ResponseBody
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<AirportResponse>>> getAll() {
         log.info("Calling controller getAll - airport");
         List<AirportResponse> airportResponses = airportService.getAll();
@@ -68,7 +68,6 @@ public class AirportController {
     @Operation(summary = "get airport data by iata code")
     @ResponseBody
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<AirportResponse>> findByIata(@RequestParam("iata") String iata) {
         log.info("Calling controller find by id - airport");
         AirportResponse airportResponse = airportService.findByIata(iata);

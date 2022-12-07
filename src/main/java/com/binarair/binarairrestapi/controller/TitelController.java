@@ -7,6 +7,7 @@ import com.binarair.binarairrestapi.model.request.TravelClassUpdateRequest;
 import com.binarair.binarairrestapi.model.response.*;
 import com.binarair.binarairrestapi.service.TitelService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,7 +33,7 @@ public class TitelController {
     }
 
 
-    @Operation(summary = "save titel data")
+    @Operation(summary = "save titel data", responses = @ApiResponse(responseCode = "201"))
     @PostMapping
     @ResponseBody
     @PreAuthorize("hasAuthority('ROLE_ADMIN')")
@@ -52,7 +53,6 @@ public class TitelController {
     @Operation(summary = "get all titel data")
     @ResponseBody
     @GetMapping("/all")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<List<TitelResponse>>> getAll() {
         log.info("Calling controller getAll - titel");
         List<TitelResponse> titelResponses = titelService.getAll();
@@ -69,7 +69,6 @@ public class TitelController {
     @Operation(summary = "find titel data based on titel id")
     @ResponseBody
     @GetMapping
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
     public ResponseEntity<WebResponse<UserResponse>> findTitelById(@RequestParam("id") String id) {
         log.info("Call controller find titel by id - titel");
         TitelResponse titelResponse = titelService.findById(id);
