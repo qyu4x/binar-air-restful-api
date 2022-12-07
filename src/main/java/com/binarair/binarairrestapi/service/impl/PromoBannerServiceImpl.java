@@ -12,7 +12,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -65,7 +67,8 @@ public class PromoBannerServiceImpl implements PromoBannerService {
     @Override
     public Page<PromoBannerPaggableResponse> getAll(Pageable pageable) {
         log.info("Is processing get all promo banner data");
-        Page<PromoBanner> promoBanners = promoBannerRepository.findAll(pageable);
+        String field = "createdAt";
+        Page<PromoBanner> promoBanners = promoBannerRepository.findAll(PageRequest.of(pageable.getPageNumber(), pageable.getPageSize()).withSort(Sort.Direction.DESC, field));
         Page<PromoBannerPaggableResponse> promoBannerResponses = promoBanners.map(promoBanner -> new PromoBannerPaggableResponse(promoBanner));
         log.info("Success in getting all the promo banner data");
         return promoBannerResponses;

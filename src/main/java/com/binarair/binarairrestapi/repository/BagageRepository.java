@@ -12,7 +12,7 @@ public interface BagageRepository extends JpaRepository<Bagage, String> {
 
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM bagage WHERE aircraft_unique_id = :aircraftId")
+            value = "SELECT * FROM bagage WHERE aircraft_unique_id = :aircraftId ORDER BY weight ASC")
     List<Bagage> findByAircraftId(@Param("aircraftId") String aircraftId);
 
     @Query(
