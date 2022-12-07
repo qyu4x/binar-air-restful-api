@@ -1,2 +1,14 @@
-package com.binarair.binarairrestapi.service;public class TicketJasperService {
+package com.binarair.binarairrestapi.service;
+
+import com.binarair.binarairrestapi.model.request.TicketJasperRequest;
+import com.binarair.binarairrestapi.model.response.BookingDetailResponse;
+import com.binarair.binarairrestapi.model.response.TicketJasperResponse;
+import net.sf.jasperreports.engine.JRException;
+
+import java.io.FileNotFoundException;
+
+public interface TicketJasperService {
+
+
+    byte[] createpdf(TicketJasperRequest ticketJasperRequest) throws JRException, FileNotFoundException;
 }

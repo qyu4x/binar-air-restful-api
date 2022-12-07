@@ -10,11 +10,8 @@ import javax.validation.constraints.NotEmpty;
 @NoArgsConstructor
 @Builder
 public class CheckInRequest {
-
     @NotEmpty(message = "last name is required.")
     private String lastName;
-
     @NotEmpty(message = "booking reference number is required.")
     private String bookingReferenceNumber;
-
 }
