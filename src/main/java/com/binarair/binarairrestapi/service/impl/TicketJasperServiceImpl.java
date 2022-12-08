@@ -57,6 +57,7 @@ public class TicketJasperServiceImpl implements TicketJasperService {
                     .titel(pdfBookingDetail.getPassenger().getTitel().getTitelName())
                     .firstName(pdfBookingDetail.getPassenger().getFirstName())
                     .FromCity(schedule.getOriginIataAirportCode().getCity().getName())
+                    .classType(schedule.getAircraft().getTravelClass().getName())
                     .DestinationCity(schedule.getDestIataAirportCode().getCity().getName())
                     .seatCode(pdfBookingDetail.getSeatCode())
                     .departureDate(schedule.getDepartureDate())
@@ -64,14 +65,6 @@ public class TicketJasperServiceImpl implements TicketJasperService {
                     .createdAt(schedule.getCreatedAt())
                     .updatedAt(schedule.getUpdatedAt())
                     .build();
-        log.info("the id is {}",jasperInformation.getId());
-        log.info("the title is {}",jasperInformation.getTitel());
-        log.info("the first name is {}",jasperInformation.getFirstName());
-        log.info("the city origin is {}",jasperInformation.getFromCity());
-        log.info("the city Destination is {}",jasperInformation.getDestinationCity());
-        log.info("the seat code is {}",jasperInformation.getSeatCode());
-        log.info("the departureDate is {}",jasperInformation.getDepartureDate());
-        log.info("the departureTime is {}",jasperInformation.getDepartureTime());
 
         List<TicketJasperResponse> ticketJasperResponseList = new ArrayList<>();
         ticketJasperResponseList.add(jasperInformation);

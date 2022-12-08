@@ -2,15 +2,15 @@
 <!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Final" pageWidth="842" pageHeight="340" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="1e07301a-bc09-49fc-aaf2-492a180a0f90">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
-	<parameter name="titel" class="java.lang.String"/>
-	<parameter name="firstName" class="java.lang.String"/>
-	<parameter name="dateOfFlight" class="java.time.LocalDate"/>
-	<parameter name="FromCity" class="java.lang.String"/>
-	<parameter name="DestinationCity" class="java.lang.String"/>
-	<parameter name="classType" class="java.lang.String"/>
-	<parameter name="BoardingTime" class="java.time.LocalTime"/>
-	<parameter name="seatCode" class="java.lang.String"/>
-	<parameter name="QR" class="java.lang.String"/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<field name="titel" class="java.lang.String"/>
+	<field name="firstName" class="java.lang.String"/>
+	<field name="departureDate" class="java.time.LocalDate"/>
+	<field name="fromCity" class="java.lang.String"/>
+	<field name="destinationCity" class="java.lang.String"/>
+	<field name="classType" class="java.lang.String"/>
+	<field name="departureTime" class="java.time.LocalTime"/>
+	<field name="seatCode" class="java.lang.String"/>
 	<title>
 		<band height="292" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout"/>
@@ -48,10 +48,10 @@
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="20" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{firstName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{firstName}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="282" y="57" width="120" height="19" forecolor="#004AAD" uuid="e174fdae-11ba-458a-ba5c-1fd8178ad766"/>
+				<reportElement x="282" y="52" width="171" height="24" forecolor="#004AAD" uuid="e174fdae-11ba-458a-ba5c-1fd8178ad766"/>
 				<box>
 					<pen lineWidth="0.0"/>
 				</box>
@@ -65,7 +65,7 @@
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="20" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{dateOfFlight}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{departureDate}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="52" y="131" width="58" height="30" forecolor="#004AAD" uuid="fcee6995-6623-4148-97b0-a89f99c7fba4"/>
@@ -92,14 +92,14 @@
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="18" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{FromCity}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fromCity}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="110" y="167" width="138" height="30" isPrintWhenDetailOverflows="true" forecolor="#46B3E6" uuid="76d648b0-4608-4b6e-85b7-8fb298b50ef8"/>
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="18" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{DestinationCity}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{destinationCity}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="282" y="133" width="120" height="19" forecolor="#004AAD" uuid="05c112e6-75ee-4e9b-8a5d-6a8cf732cb50"/>
@@ -116,7 +116,7 @@
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="25" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{classType}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{classType}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="34" y="208" width="420" height="1" forecolor="#46B3E6" uuid="3004b0fc-7290-445f-82b2-096c95edaa92"/>
@@ -136,7 +136,7 @@
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="25" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{BoardingTime}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{departureTime}]]></textFieldExpression>
 			</textField>
 			<line direction="BottomUp">
 				<reportElement x="256" y="218" width="1" height="61" forecolor="#46B3E6" uuid="faea917c-abcd-41e0-beff-6cd11cdbd70f"/>
@@ -156,7 +156,7 @@
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="25" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{seatCode}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{seatCode}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement x="470" y="0" width="340" height="291" forecolor="#46B3E6" backcolor="#46B3E6" uuid="b84be2c0-a586-4358-ba21-343c69376871"/>
@@ -182,11 +182,11 @@
 				<text><![CDATA[BOARDING PASS]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="581" y="57" width="119" height="30" forecolor="#FFFFFF" uuid="27249073-e58f-4207-bca1-e75dacddc4f0"/>
+				<reportElement x="597" y="57" width="119" height="30" forecolor="#FFFFFF" uuid="27249073-e58f-4207-bca1-e75dacddc4f0"/>
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="16" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{classType}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{classType}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="480" y="87" width="120" height="19" forecolor="#FFFFFF" uuid="3578c55b-77d6-436b-b877-b61d8892b85b"/>
@@ -203,7 +203,7 @@
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="14" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{firstName}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{firstName}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="660" y="88" width="120" height="19" forecolor="#FFFFFF" uuid="281e5046-bd1d-45a1-93ff-001c208a46ae"/>
@@ -220,7 +220,7 @@
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="20" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{BoardingTime}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{departureTime}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement x="492" y="161" width="297" height="56" forecolor="#FFFFFF" backcolor="#46B3E6" uuid="95247bad-b3d4-47b4-9f69-3afcb62ee886"/>
@@ -240,7 +240,7 @@
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="15" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{FromCity}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{fromCity}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="660" y="167" width="42" height="19" forecolor="#FFFFFF" uuid="9cf55cdc-0e87-4cdf-8e31-47b9dc56ee67"/>
@@ -257,24 +257,24 @@
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="15" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{DestinationCity}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{destinationCity}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="481" y="227" width="80" height="19" forecolor="#FFFFFF" uuid="ecfd1128-5f3b-40d8-8d98-77ac6b62307c"/>
+				<reportElement x="481" y="218" width="179" height="28" forecolor="#FFFFFF" uuid="ecfd1128-5f3b-40d8-8d98-77ac6b62307c"/>
 				<box>
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="9" isBold="true"/>
+					<font fontName="Montserrat ExtraBold" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DATE OF FLIGHT :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="480" y="245" width="169" height="28" forecolor="#FFFFFF" uuid="f52f12a5-c8d6-471a-b05c-9ab067027d5b"/>
+				<reportElement x="480" y="249" width="169" height="34" forecolor="#FFFFFF" uuid="f52f12a5-c8d6-471a-b05c-9ab067027d5b"/>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="14" isBold="false"/>
+					<font fontName="Montserrat ExtraBold" size="20" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{dateOfFlight}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{departureDate}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement positionType="FixRelativeToBottom" x="33" y="290" width="420" height="1" forecolor="#46B3E6" uuid="10710a82-a04f-4a37-9247-302c7c44234f"/>
@@ -287,7 +287,7 @@
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="20"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{titel}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$F{titel}]]></textFieldExpression>
 			</textField>
 		</band>
 	</title>
