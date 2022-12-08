@@ -1,5 +1,6 @@
 package com.binarair.binarairrestapi.controller;
 
+import com.binarair.binarairrestapi.exception.DataNotFoundException;
 import com.binarair.binarairrestapi.model.request.TicketJasperRequest;
 import com.binarair.binarairrestapi.model.response.TicketJasperResponse;
 import com.binarair.binarairrestapi.model.response.WebResponse;
@@ -34,20 +35,26 @@ public class TicketJasperController {
         this.ticketJasperService = ticketJasperService;
     }
      @Operation(summary = "Print Jasper Report")
-     @GetMapping(value = "/pdf",produces = MediaType.APPLICATION_PDF_VALUE)
-//     @ResponseBody
-//     @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
+     @ResponseBody
+     @GetMapping(value = "/pdf",
+             produces = MediaType.APPLICATION_PDF_VALUE)
+
      public void generateReport( HttpServletResponse response,@Valid @RequestBody TicketJasperRequest ticketJasperRequest) throws JRException, FileNotFoundException {
         log.info("Calling controller TicketJasper - TicketJasper");
          byte[] ticketJasperResponse = ticketJasperService.createpdf(ticketJasperRequest);
          try {
+             log.info("Initialization on the controller");
              ByteArrayInputStream invoice = new ByteArrayInputStream(ticketJasperResponse);
+             if (invoice == null) {
+                 log.info("Invoice is null");
+                 throw new DataNotFoundException("fail to find the response");
+             }
              response.addHeader("Content-Disposition", "attachment; filename=" + UUID.randomUUID() +".pdf");
              response.setContentType("application/octet-stream");
-
+             log.info("successfully added header and content type");
              IOUtils.copy(invoice, response.getOutputStream());
              response.flushBuffer();
-             log.info("success create file pdf for user id {} ",ticketJasperRequest.getBookingReferenceNumber() );
+             log.info("success create file pdf for booking id {} ",ticketJasperRequest.getBookingReferenceNumber() );
 
          } catch (Exception exception) {
              log.error("PDF generation failed due to {} ", exception.getMessage());

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Final" pageWidth="842" pageHeight="340" orientation="Landscape" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="1e07301a-bc09-49fc-aaf2-492a180a0f90">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Final" pageWidth="842" pageHeight="340" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="1e07301a-bc09-49fc-aaf2-492a180a0f90">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<parameter name="titel" class="java.lang.String"/>
 	<parameter name="firstName" class="java.lang.String"/>
@@ -11,7 +11,6 @@
 	<parameter name="BoardingTime" class="java.time.LocalTime"/>
 	<parameter name="SeatCode" class="java.lang.String"/>
 	<parameter name="QR" class="java.lang.String"/>
-
 	<title>
 		<band height="292" splitType="Stretch">
 			<property name="com.jaspersoft.studio.layout"/>
@@ -45,7 +44,7 @@
 				<text><![CDATA[NAME OF PASSENGER :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="100" y="77" width="182" height="40" forecolor="#46B3E6" uuid="ef23d66c-4846-4803-8362-c8b150ac5c5a"/>
+				<reportElement x="100" y="77" width="182" height="40" isPrintWhenDetailOverflows="true" forecolor="#46B3E6" uuid="ef23d66c-4846-4803-8362-c8b150ac5c5a"/>
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="20" isBold="false"/>
 				</textElement>
@@ -89,14 +88,14 @@
 				<text><![CDATA[TO       :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="110" y="131" width="100" height="30" forecolor="#46B3E6" uuid="a0d970fa-9a5e-43cf-8221-214b1ea2e06a"/>
+				<reportElement x="110" y="131" width="100" height="30" isPrintWhenDetailOverflows="true" forecolor="#46B3E6" uuid="a0d970fa-9a5e-43cf-8221-214b1ea2e06a"/>
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="18" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$P{FromCity}]]></textFieldExpression>
 			</textField>
 			<textField>
-				<reportElement x="110" y="167" width="138" height="30" forecolor="#46B3E6" uuid="76d648b0-4608-4b6e-85b7-8fb298b50ef8"/>
+				<reportElement x="110" y="167" width="138" height="30" isPrintWhenDetailOverflows="true" forecolor="#46B3E6" uuid="76d648b0-4608-4b6e-85b7-8fb298b50ef8"/>
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="18" isBold="false"/>
 				</textElement>
@@ -284,7 +283,7 @@
 				<reportElement x="34" y="0" width="420" height="1" forecolor="#46B3E6" uuid="550bd5a3-897e-47a8-acbd-590dd14de2d0"/>
 			</line>
 			<textField>
-				<reportElement x="56" y="77" width="50" height="40" forecolor="#46B3E6" uuid="0012d26d-40be-4cdf-8b06-3f7bb4d663cb"/>
+				<reportElement x="56" y="77" width="50" height="40" isPrintWhenDetailOverflows="true" forecolor="#46B3E6" uuid="0012d26d-40be-4cdf-8b06-3f7bb4d663cb"/>
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="20"/>
 				</textElement>

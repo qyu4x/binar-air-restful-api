@@ -56,30 +56,34 @@ public class TicketJasperServiceImpl implements TicketJasperService {
                     .id(pdfBookingDetail.getPassenger().getId())
                     .titel(pdfBookingDetail.getPassenger().getTitel().getTitelName())
                     .firstName(pdfBookingDetail.getPassenger().getFirstName())
-                    .cityOrigin(schedule.getOriginIataAirportCode().getCity().getName())
-                    .cityDestination(schedule.getDestIataAirportCode().getCity().getName())
+                    .FromCity(schedule.getOriginIataAirportCode().getCity().getName())
+                    .DestinationCity(schedule.getDestIataAirportCode().getCity().getName())
                     .seatCode(pdfBookingDetail.getSeatCode())
                     .departureDate(schedule.getDepartureDate())
                     .departureTime(schedule.getDepartureTime())
                     .createdAt(schedule.getCreatedAt())
                     .updatedAt(schedule.getUpdatedAt())
                     .build();
-        log.info("the id is {}",pdfBookingDetail.getPassenger().getId());
-        log.info("the title is {}",pdfBookingDetail.getPassenger().getTitel().getTitelName());
-        log.info("the first name is {}",pdfBookingDetail.getPassenger().getFirstName());
-        log.info("the city origin is {}",schedule.getOriginIataAirportCode().getCity().getName());
-        log.info("the city Destination is {}",schedule.getDestIataAirportCode().getCity().getName());
-        log.info("the seat code is {}",pdfBookingDetail.getSeatCode());
-        log.info("the departureDate is {}",schedule.getDepartureDate());
-        log.info("the departureTime is {}",schedule.getDepartureTime());
+        log.info("the id is {}",jasperInformation.getId());
+        log.info("the title is {}",jasperInformation.getTitel());
+        log.info("the first name is {}",jasperInformation.getFirstName());
+        log.info("the city origin is {}",jasperInformation.getFromCity());
+        log.info("the city Destination is {}",jasperInformation.getDestinationCity());
+        log.info("the seat code is {}",jasperInformation.getSeatCode());
+        log.info("the departureDate is {}",jasperInformation.getDepartureDate());
+        log.info("the departureTime is {}",jasperInformation.getDepartureTime());
 
-
-
+        List<TicketJasperResponse> ticketJasperResponseList = new ArrayList<>();
+        ticketJasperResponseList.add(jasperInformation);
         log.info("Building of the jasperInformation success");
         try {
             File file = ResourceUtils.getFile("classpath:jasper/Final.jrxml");
+            if (file == null) {
+                log.info("Jasper is not readable");
+                throw new DataNotFoundException("No JRXML has been detected");
+            }
             JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, buildParametersMap(), new JRBeanCollectionDataSource(Collections.singleton(jasperInformation)));
+            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, buildParametersMap(), new JRBeanCollectionDataSource(ticketJasperResponseList));
             log.info("Successfully export report to pdf");
             return JasperExportManager.exportReportToPdf(jasperPrint);
         } catch (IOException | JRException exception) {

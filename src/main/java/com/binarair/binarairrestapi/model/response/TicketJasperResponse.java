@@ -19,10 +19,9 @@ public class TicketJasperResponse {
     private String lastName;
     private String dateOfFlight;
     private String classType;
-    private String boardingTime;
-    private String cityOrigin;
+    private String FromCity;
     private String seatCode;
-    private String cityDestination;
+    private String DestinationCity;
 
     private LocalDate departureDate;
 

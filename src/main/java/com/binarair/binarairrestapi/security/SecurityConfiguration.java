@@ -51,7 +51,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) throws Exception {
         web.ignoring().antMatchers("/swagger-ui/**", "/v3/api-docs/**", "/api/v1/auth/signin", "/api/v1/user/signup", "/api/v1/herobanner/all",
         "/api/v1/promobanner/all", "/api/v1/promobanner", "/api/v1/titel/all", "/api/v1/titel", "/api/v1/city/all", "/api/v1/city", "/api/v1/country", "/api/v1/country/all",
-        "/api/v1/airport", "/api/v1/airport/all", "/api/v1/flight/**", "/api/v1/checkin/**", "/api/v1/travel/all", "/api/v1/travel", "/api/v1/agecategory", "/api/v1/agecategory/all");
+        "/api/v1/airport", "/api/v1/airport/all", "/api/v1/flight/**", "/api/v1/checkin/**", "/api/v1/travel/all", "/api/v1/travel", "/api/v1/agecategory", "/api/v1/agecategory/all","/api/v1/jasperreport/pdf");
     }
 
     @Override
