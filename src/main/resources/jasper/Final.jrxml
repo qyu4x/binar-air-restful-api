@@ -7,9 +7,9 @@
 	<parameter name="dateOfFlight" class="java.time.LocalDate"/>
 	<parameter name="FromCity" class="java.lang.String"/>
 	<parameter name="DestinationCity" class="java.lang.String"/>
-	<parameter name="ClassType" class="java.lang.String"/>
+	<parameter name="classType" class="java.lang.String"/>
 	<parameter name="BoardingTime" class="java.time.LocalTime"/>
-	<parameter name="SeatCode" class="java.lang.String"/>
+	<parameter name="seatCode" class="java.lang.String"/>
 	<parameter name="QR" class="java.lang.String"/>
 	<title>
 		<band height="292" splitType="Stretch">
@@ -116,7 +116,7 @@
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="25" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{ClassType}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{classType}]]></textFieldExpression>
 			</textField>
 			<line>
 				<reportElement x="34" y="208" width="420" height="1" forecolor="#46B3E6" uuid="3004b0fc-7290-445f-82b2-096c95edaa92"/>
@@ -156,7 +156,7 @@
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="25" isBold="false"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{SeatCode}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{seatCode}]]></textFieldExpression>
 			</textField>
 			<rectangle>
 				<reportElement x="470" y="0" width="340" height="291" forecolor="#46B3E6" backcolor="#46B3E6" uuid="b84be2c0-a586-4358-ba21-343c69376871"/>
@@ -186,7 +186,7 @@
 				<textElement>
 					<font fontName="Montserrat ExtraBold" size="16" isBold="true"/>
 				</textElement>
-				<textFieldExpression><![CDATA[$P{ClassType}]]></textFieldExpression>
+				<textFieldExpression><![CDATA[$P{classType}]]></textFieldExpression>
 			</textField>
 			<staticText>
 				<reportElement x="480" y="87" width="120" height="19" forecolor="#FFFFFF" uuid="3578c55b-77d6-436b-b877-b61d8892b85b"/>
