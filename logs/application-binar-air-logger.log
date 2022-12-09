@@ -1,0 +1,7 @@
+2022-12-09 16:00:27,917 INFO org.springframework.boot.StartupInfoLogger [main] Starting BinarAirRestApiApplication using Java 17.0.2 on hikaru with PID 14996 (D:\project\code\binar-air-rest-api\target\classes started by MiyukiKoishiro in D:\project\code\binar-air-rest-api)
+2022-12-09 16:00:27,918 DEBUG org.springframework.boot.StartupInfoLogger [main] Running with Spring Boot v2.7.5, Spring v5.3.23
+2022-12-09 16:00:27,918 INFO org.springframework.boot.SpringApplication [main] No active profile set, falling back to 1 default profile: "default"
+2022-12-09 16:00:32,603 DEBUG org.springframework.web.filter.GenericFilterBean [main] Filter 'jwtTokenAuthRequestFilter' configured for use
+2022-12-09 16:00:33,491 WARN com.binarair.binarairrestapi.service.impl.RoleServiceImpl [main] Buyer and Admin roles are available
+
+
