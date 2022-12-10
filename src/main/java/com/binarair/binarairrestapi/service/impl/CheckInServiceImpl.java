@@ -35,7 +35,7 @@ public class CheckInServiceImpl implements CheckInService {
     @Override
     public CheckInResponse checkIn(CheckInRequest checkInRequest) {
         log.info("carry out the check-in process");
-        BookingDetail checkInBookingDetail = bookingDetailRepository.findCheckInBookingDetail(checkInRequest.getBookingReferenceNumber(), false, checkInRequest.getLastName());
+        BookingDetail checkInBookingDetail = bookingDetailRepository.findCheckInBookingDetail(checkInRequest.getBookingReferenceNumber(), false, checkInRequest.getLastName().toUpperCase());
         if (checkInBookingDetail == null) {
             throw new DataNotFoundException("No booking has been retrieved. Please check your identification details.");
         }
@@ -43,6 +43,12 @@ public class CheckInServiceImpl implements CheckInService {
         bookingDetailRepository.save(checkInBookingDetail);
         log.info("successful check-in process");
         List<Bagage> baggages = bagageRepository.findByAircraftId(checkInBookingDetail.getSchedule().getAircraft().getId());
+
+        String firstName = checkInBookingDetail.getPassenger().getFirstName();
+        firstName = firstName.substring(0,1).toUpperCase() + firstName.substring(1).toLowerCase();
+        String lastName = checkInBookingDetail.getPassenger().getLastName();
+        lastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1).toLowerCase();
+
         return CheckInResponse.builder()
                 .id(checkInBookingDetail.getId())
                 .cityOrigin(checkInBookingDetail.getSchedule().getOriginIataAirportCode().getCity().getName())
@@ -55,8 +61,8 @@ public class CheckInServiceImpl implements CheckInService {
                 .arrivalDate(checkInBookingDetail.getSchedule().getArrivalDate())
                 .departureTime(checkInBookingDetail.getSchedule().getDepartureTime())
                 .arrivalTime(checkInBookingDetail.getSchedule().getArrivalTime())
-                .firstName(checkInBookingDetail.getPassenger().getFirstName())
-                .lastName(checkInBookingDetail.getPassenger().getLastName())
+                .firstName(firstName)
+                .lastName(lastName)
                 .titel(checkInBookingDetail.getPassenger().getTitel().getTitelName())
                 .bookingReferenceNumber(checkInBookingDetail.getBookingReferenceNumber())
                 .baggageAllowance(baggages.get(0).getFreeBagageCapacity())
@@ -72,7 +78,7 @@ public class CheckInServiceImpl implements CheckInService {
     @Override
     public CancelCheckInResponse cancelCheckIn(CancelCheckInRequest cancelCheckInRequest) {
         log.info("carry out cancel check-in process");
-        BookingDetail checkInBookingDetail = bookingDetailRepository.findCheckInBookingDetail(cancelCheckInRequest.getBookingReferenceNumber(), true, cancelCheckInRequest.getLastName());
+        BookingDetail checkInBookingDetail = bookingDetailRepository.findCheckInBookingDetail(cancelCheckInRequest.getBookingReferenceNumber(), true, cancelCheckInRequest.getLastName().toUpperCase());
         if (checkInBookingDetail == null) {
             throw new DataNotFoundException("No booking has been retrieved. Please check your identification details.");
         }
@@ -80,6 +86,12 @@ public class CheckInServiceImpl implements CheckInService {
         bookingDetailRepository.save(checkInBookingDetail);
         log.info("successful cancel check-in process");
         List<Bagage> baggages = bagageRepository.findByAircraftId(checkInBookingDetail.getSchedule().getAircraft().getId());
+
+        String firstName = checkInBookingDetail.getPassenger().getFirstName();
+        firstName = firstName.substring(0,1).toUpperCase() + firstName.substring(1).toLowerCase();
+        String lastName = checkInBookingDetail.getPassenger().getLastName();
+        lastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1).toLowerCase();
+
         return CancelCheckInResponse.builder()
                 .id(checkInBookingDetail.getId())
                 .cityOrigin(checkInBookingDetail.getSchedule().getOriginIataAirportCode().getCity().getName())
@@ -92,8 +104,8 @@ public class CheckInServiceImpl implements CheckInService {
                 .arrivalDate(checkInBookingDetail.getSchedule().getArrivalDate())
                 .departureTime(checkInBookingDetail.getSchedule().getDepartureTime())
                 .arrivalTime(checkInBookingDetail.getSchedule().getArrivalTime())
-                .firstName(checkInBookingDetail.getPassenger().getFirstName())
-                .lastName(checkInBookingDetail.getPassenger().getLastName())
+                .firstName(firstName)
+                .lastName(lastName)
                 .titel(checkInBookingDetail.getPassenger().getTitel().getTitelName())
                 .bookingReferenceNumber(checkInBookingDetail.getBookingReferenceNumber())
                 .baggageAllowance(baggages.get(0).getFreeBagageCapacity())
