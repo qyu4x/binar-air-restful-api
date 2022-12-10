@@ -110,8 +110,10 @@ public class BookingDetailServiceImpl implements BookingDetailService {
     public Booking createBooking(BookingDetailRequest bookingDetailRequest, String userId) {
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new DataNotFoundException("User account not found"));
+        String[] random = UUID.randomUUID().toString().toUpperCase().split("-");
+        String bookingId = random[0].toUpperCase();
         Booking booking = Booking.builder()
-                .id(String.format("bo-%s", UUID.randomUUID().toString()))
+                .id(bookingId)
                 .user(user)
                 .bookingType(bookingDetailRequest.getBookingType())
                 .createdAt(LocalDateTime.now())
@@ -172,8 +174,8 @@ public class BookingDetailServiceImpl implements BookingDetailService {
                     .issuingCountry(issuingCountry)
                     .titel(titel)
                     .ageCategory(ageCategory)
-                    .firstName(passengersRequest.getFirstName())
-                    .lastName(passengersRequest.getLastName())
+                    .firstName(passengersRequest.getFirstName().toUpperCase())
+                    .lastName(passengersRequest.getLastName().toUpperCase())
                     .birthDate(passengersRequest.getBirthDate())
                     .passportNumber(passengersRequest.getPassportNumber())
                     .build();
@@ -344,12 +346,18 @@ public class BookingDetailServiceImpl implements BookingDetailService {
                         .orElseThrow(() -> new DataNotFoundException("Schedule not found"));
                 Bagage baggage = bagageRepository.findByAircraftIdAndBaggageWeight(schedule.getAircraft().getId(), bookingDetail.getExtraBagage());
 
+                String firstName = bookingDetail.getPassenger().getFirstName();
+                firstName = firstName.substring(0,1).toUpperCase() + firstName.substring(1).toLowerCase();
+
+                String lastName = bookingDetail.getPassenger().getLastName();
+                lastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1).toLowerCase();
+
                 PassengerBookingResponse departureBookingResponse = PassengerBookingResponse.builder()
                         .passengerId(bookingDetail.getPassenger().getId())
                         .titel(bookingDetail.getPassenger().getTitel().getTitelName())
                         .ageCategory(bookingDetail.getPassenger().getAgeCategory().getCategoryName())
-                        .firstName(bookingDetail.getPassenger().getFirstName())
-                        .lastName(bookingDetail.getPassenger().getLastName())
+                        .firstName(firstName)
+                        .lastName(lastName)
                         .bookingReferenceNumber(bookingDetail.getBookingReferenceNumber())
                         .checkInStatus(bookingDetail.isCheckInStatus())
                         .citizenship(bookingDetail.getPassenger().getCityzenship().getName())
