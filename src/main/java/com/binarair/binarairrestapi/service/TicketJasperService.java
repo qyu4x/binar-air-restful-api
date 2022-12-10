@@ -10,5 +10,5 @@ import java.io.FileNotFoundException;
 public interface TicketJasperService {
 
 
-    byte[] createpdf(TicketJasperRequest ticketJasperRequest) throws JRException, FileNotFoundException;
+    byte[] createpdf(String lastName, String bookingReferenceNumber) throws JRException, FileNotFoundException;
 }

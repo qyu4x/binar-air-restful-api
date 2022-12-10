@@ -27,7 +27,7 @@ import java.util.UUID;
 @RequestMapping("/api/v1/jasperreport")
 public class TicketJasperController {
 
-    private final static Logger log = LoggerFactory.getLogger(AirportController.class);
+    private final static Logger log = LoggerFactory.getLogger(TicketJasperController.class);
 
     private final TicketJasperService ticketJasperService;
 
@@ -36,12 +36,12 @@ public class TicketJasperController {
     }
      @Operation(summary = "Print Jasper Report")
      @ResponseBody
-     @GetMapping(value = "/pdf",
+     @GetMapping(value = "/boardingpass/{lastName}/{bookingReferenceNumber}",
              produces = MediaType.APPLICATION_PDF_VALUE)
 
-     public void generateReport( HttpServletResponse response,@Valid @RequestBody TicketJasperRequest ticketJasperRequest) throws JRException, FileNotFoundException {
+     public void generateReport( HttpServletResponse response,@PathVariable("lastName")String lastName,@PathVariable("bookingReferenceNumber") String bookingReferenceNumber ) throws JRException, FileNotFoundException {
         log.info("Calling controller TicketJasper - TicketJasper");
-         byte[] ticketJasperResponse = ticketJasperService.createpdf(ticketJasperRequest);
+         byte[] ticketJasperResponse = ticketJasperService.createpdf(lastName,bookingReferenceNumber);
          try {
              log.info("Initialization on the controller");
              ByteArrayInputStream invoice = new ByteArrayInputStream(ticketJasperResponse);
@@ -54,7 +54,7 @@ public class TicketJasperController {
              log.info("successfully added header and content type");
              IOUtils.copy(invoice, response.getOutputStream());
              response.flushBuffer();
-             log.info("success create file pdf for booking id {} ",ticketJasperRequest.getBookingReferenceNumber() );
+             log.info("success create file pdf for booking id {} ",bookingReferenceNumber);
 
          } catch (Exception exception) {
              log.error("PDF generation failed due to {} ", exception.getMessage());
