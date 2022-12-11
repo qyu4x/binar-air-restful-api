@@ -85,41 +85,6 @@ public class TicketJasperServiceImpl implements TicketJasperService {
         return null;
     }
 
-//    @Override
-//    public byte[] createpdf(TicketJasperRequest ticketJasperRequest) {
-//        log.info("Creating PDF Ticket");
-//       BookingDetail jasperBookingDetail = bookingDetailRepository.findCheckInBookingDetail(ticketJasperRequest.getBookingReferenceNumber(), true, ticketJasperRequest.getLastName());
-//        if (jasperBookingDetail == null) {
-//            log.info("Booking Detail not secured");
-//            throw new DataNotFoundException("No booking has been retrieved. Please check your input details.");
-//        }
-//        log.info("Booking Detail Secured");
-//
-//            Schedule schedule = scheduleRepository.findById(jasperBookingDetail.getSchedule().getId())
-//                    .orElseThrow(() -> new DataNotFoundException("Schedule not found"));
-//            TicketJasperResponse jasperInformation = TicketJasperResponse.builder()
-//                    .id(jasperBookingDetail.getPassenger().getId())
-//                    .titel(jasperBookingDetail.getPassenger().getTitel().getTitelName())
-//                    .firstName(jasperBookingDetail.getPassenger().getFirstName())
-//                    .cityOrigin(schedule.getOriginIataAirportCode().getCity().getName())
-//                    .cityDestination(schedule.getDestIataAirportCode().getCity().getName())
-//                    .seatCode(jasperBookingDetail.getSeatCode())
-//                    .departureDate(schedule.getDepartureDate())
-//                    .departureTime(schedule.getDepartureTime())
-//                    .createdAt(schedule.getCreatedAt())
-//                    .updatedAt(schedule.getUpdatedAt())
-//                    .build();
-//        try {
-//            File file = ResourceUtils.getFile("classpath:/Final.jrxml");
-//            JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
-//            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, buildParametersMap(), new JRBeanCollectionDataSource(Collections.singleton(jasperInformation)));
-//            return JasperExportManager.exportReportToPdf(jasperPrint);
-//        } catch (IOException | JRException exception) {
-//            log.error("Unfortunately an error has occured at {}", exception.getMessage());
-//        }
-//        return null;
-//    }
-
 
 
 

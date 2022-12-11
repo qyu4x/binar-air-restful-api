@@ -18,15 +18,19 @@ public class ETicketResponse {
     private String titel;
     private String fullName;
     private AgeCategory ageCategory;
-    private String baggage;
-    private String dateOfFlight;
-    private String FromCity;
-    private String DestinationCity;
+    private Integer baggage;
+    private String fromCity;
+    private String destinationCity;
     private LocalDate departureDate;
+    private String departureAirport;
+    private String arrivalAirport;
+    private LocalTime arrivalTime;
     private LocalTime departureTime;
     private BookingDetailResponse departure;
+    private String classType;
     private String bookingReferenceNumber;
-
+    private String bookingId;
+    private String aircraftType;
     private LocalDateTime createdAt;
 
     private LocalDateTime updatedAt;

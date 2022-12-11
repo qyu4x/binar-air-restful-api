@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ETicket" pageWidth="500" pageHeight="500" columnWidth="460" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d1108ec4-0c33-4b4b-8d0c-bfed554cfbc6">
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
+	<parameter name="bookingCode" class="java.lang.String"/>
+	<field name="bookingId" class="java.lang.String"/>
+	<field name="aircraftType" class="java.lang.String"/>
+	<field name="departureDate" class="java.time.LocalDate"/>
+	<field name="fromCity" class="java.lang.String"/>
+	<field name="departureAirport" class="java.lang.String"/>
+	<field name="departureTime" class="java.time.LocalTime"/>
+	<field name="destinationCity" class="java.lang.String"/>
+	<field name="arrivalAirport" class="java.lang.String"/>
+	<field name="arrivalTime" class="java.time.LocalTime"/>
+	<field name="titel" class="java.lang.String"/>
+	<field name="fullName" class="java.lang.String"/>
+	<field name="classType" class="java.lang.String"/>
+	<field name="baggage" class="java.lang.Integer"/>
+	<field name="bookingReferenceNumber" class="java.lang.String"/>
+	<detail>
+		<band height="372" splitType="Stretch">
+			<staticText>
+				<reportElement x="-1" y="10" width="56" height="18" uuid="7b20cc2b-c376-4c63-9610-973d48814e63"/>
+				<textElement>
+					<font fontName="Montserrat ExtraBold"/>
+				</textElement>
+				<text><![CDATA[E-Ticket]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="10" y="94" width="100" height="20" uuid="5a369904-5446-45e8-8c8e-0da4207a274d"/>
+				<text><![CDATA[Booking Code ]]></text>
+			</staticText>
+			<line>
+				<reportElement x="130" y="74" width="310" height="1" uuid="3f58822a-2f6f-4f1c-afc3-3df41357f371"/>
+			</line>
+			<staticText>
+				<reportElement x="10" y="52" width="120" height="32" uuid="6d8e7865-502f-4097-8941-3f08750a8d94"/>
+				<textElement>
+					<font fontName="Montserrat ExtraBold" size="20" isBold="true" isItalic="true" isUnderline="false"/>
+				</textElement>
+				<text><![CDATA[BINAR AIR]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="10" y="114" width="100" height="30" uuid="76e5339d-ab91-4388-ae58-25516a69b2d9"/>
+				<textElement markup="styled"/>
+				<textFieldExpression><![CDATA[$F{bookingId}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="0" y="43" width="460" height="1" uuid="dc1f3d81-99c8-4e0b-972a-5005a068e381"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="164" width="459" height="1" uuid="031fa298-6f6e-4102-814f-119b8ad74c7e"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="459" y="44" width="1" height="120" uuid="2d1d48e1-cfae-4218-a38e-483dbf6114f4"/>
+				<graphicElement>
+					<pen lineWidth="0.5"/>
+				</graphicElement>
+			</line>
+			<line>
+				<reportElement x="0" y="44" width="1" height="121" forecolor="#46B3E6" uuid="f44b0c66-76f9-4ecc-a7df-d863a452fe02"/>
+				<graphicElement>
+					<pen lineWidth="3.0"/>
+				</graphicElement>
+			</line>
+			<textField>
+				<reportElement x="160" y="79" width="100" height="14" uuid="c09d7687-235e-423e-bd30-da7fefa8ef09"/>
+				<textFieldExpression><![CDATA[$F{departureDate}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="130" y="58" width="100" height="16" uuid="6945cabe-ed61-4fa3-b384-1e5c9d23da59"/>
+				<textFieldExpression><![CDATA[$F{aircraftType}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="94" width="100" height="20" uuid="faffa473-c67f-4091-8371-1b7c89687a23"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fromCity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="114" width="100" height="20" uuid="f10e94fb-58b0-4705-972e-802f5bcf7292"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{departureAirport}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="170" y="134" width="100" height="20" uuid="2861aa54-97e8-488d-ba46-e8a78032cdcb"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{departureTime}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="94" width="100" height="20" uuid="396b6bbf-6d07-4f53-8381-2370cc54c325"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{destinationCity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="114" width="100" height="20" uuid="0f67836c-40d5-4a48-b5eb-252db72d30e9"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{arrivalAirport}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="280" y="134" width="100" height="20" uuid="dab6ee17-701c-47e1-aae6-497276809919"/>
+				<textElement>
+					<font size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{arrivalTime}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="-1" y="180" width="52" height="20" uuid="cb0ff674-04e7-46a0-bfa3-57a6734a3301"/>
+				<text><![CDATA[DO NOTE :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="200" width="290" height="36" uuid="e4a8df23-4649-4459-8e7d-06d2690dd70a"/>
+				<text><![CDATA[1. All the time dated are dated according to the origin airport
+2. Please check-in 1(ONE) hour before the flight time]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="0" y="260" width="100" height="30" uuid="db3e7d43-8ce8-4bdd-9a4b-9a19275cc766"/>
+				<text><![CDATA[Passanger Details]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="25" y="300" width="30" height="20" uuid="ba5d8a28-3801-4622-9caf-bcab353e94f6"/>
+				<text><![CDATA[Titel]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="70" y="300" width="80" height="20" uuid="bec76dba-3c21-4bcd-8c3f-0945dab6dbd3"/>
+				<text><![CDATA[Passenger Name]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="180" y="300" width="60" height="20" uuid="1e41a127-97b0-49fb-9aa9-7d55c7c71cbd"/>
+				<text><![CDATA[Class Type]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="250" y="300" width="100" height="20" uuid="02235071-4240-40d6-bfd8-8b2e13564bd9"/>
+				<text><![CDATA[Listed Baggage Cap]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="370" y="300" width="70" height="20" uuid="629db519-224e-45c4-a30b-49c7d45491b3"/>
+				<text><![CDATA[Ticket Number]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="25" y="326" width="30" height="30" uuid="6666cea9-86f9-42d9-87ad-bd24a8370c5a"/>
+				<textFieldExpression><![CDATA[$F{titel}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="70" y="326" width="80" height="30" uuid="4c2730d2-5ee9-403a-bf12-0056de8c0e3a"/>
+				<textFieldExpression><![CDATA[$F{fullName}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="180" y="326" width="60" height="30" uuid="1659850f-5789-45bd-8c4d-24618f609b67"/>
+				<textFieldExpression><![CDATA[$F{classType}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="250" y="326" width="100" height="30" uuid="18721f7e-d0ea-47f7-ab28-50c296df53ef"/>
+				<textFieldExpression><![CDATA[$F{baggage}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="370" y="326" width="100" height="30" uuid="bddf8521-a041-42e1-8efb-d8d5302a60cc"/>
+				<textFieldExpression><![CDATA[$F{bookingReferenceNumber}]]></textFieldExpression>
+			</textField>
+		</band>
+	</detail>
+</jasperReport>
