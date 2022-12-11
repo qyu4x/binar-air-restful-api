@@ -77,10 +77,10 @@ public class HistoryServiceImpl implements HistoryService {
                         Bagage baggage = bagageRepository.findByAircraftIdAndBaggageWeight(schedule.getAircraft().getId(), bookingDetail.getExtraBagage());
 
                         String firstName = bookingDetail.getPassenger().getFirstName();
-                        firstName = firstName.substring(0,1).toUpperCase() + firstName.substring(1).toLowerCase();
+                        firstName = firstName.substring(0, 1).toUpperCase() + firstName.substring(1).toLowerCase();
 
                         String lastName = bookingDetail.getPassenger().getLastName();
-                        lastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1).toLowerCase();
+                        lastName = lastName.substring(0, 1).toUpperCase() + lastName.substring(1).toLowerCase();
 
                         PassengerBookingResponse departureBookingResponse = PassengerBookingResponse.builder()
                                 .passengerId(bookingDetail.getPassenger().getId())
@@ -160,7 +160,7 @@ public class HistoryServiceImpl implements HistoryService {
                                 .createdAt(bookingDetail.getCreatedAt())
                                 .build();
                         departures.add(departureBookingResponse);
-                    }else {
+                    } else {
                         Schedule schedule = scheduleRepository.findById(bookingDetail.getSchedule().getId())
                                 .orElseThrow(() -> new DataNotFoundException("Schedule not found"));
                         Bagage baggage = bagageRepository.findByAircraftIdAndBaggageWeight(schedule.getAircraft().getId(), bookingDetail.getExtraBagage());
