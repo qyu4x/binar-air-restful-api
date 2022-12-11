@@ -25,6 +25,12 @@ public class Booking {
     @OneToMany(mappedBy = "booking", fetch = FetchType.EAGER)
     private List<BookingDetail> bookingDetails;
 
+    private Integer adult;
+
+    private Integer child;
+
+    private Integer infant;
+
     private BigDecimal total;
 
     private String bookingType;
