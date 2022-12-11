@@ -48,7 +48,7 @@ public class User {
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
     private List<Passenger> passengers;
 
-    @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)
+    @OneToMany(mappedBy = "user", fetch = FetchType.EAGER)
     private List<Booking> bookings;
 
     @OneToMany(mappedBy = "user", fetch = FetchType.LAZY)

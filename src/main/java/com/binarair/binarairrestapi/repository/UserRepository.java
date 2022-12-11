@@ -2,8 +2,12 @@ package com.binarair.binarairrestapi.repository;
 
 import com.binarair.binarairrestapi.model.entity.User;
 import com.binarair.binarairrestapi.model.enums.RoleType;
+import com.binarair.binarairrestapi.model.response.HistoryResponse;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import java.util.Optional;
 
