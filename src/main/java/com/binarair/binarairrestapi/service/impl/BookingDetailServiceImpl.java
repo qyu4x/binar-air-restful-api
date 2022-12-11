@@ -108,12 +108,29 @@ public class BookingDetailServiceImpl implements BookingDetailService {
 
     @Override
     public Booking createBooking(BookingDetailRequest bookingDetailRequest, String userId) {
+        Integer sizePassenger = bookingDetailRequest.getAdult() + bookingDetailRequest.getChild() + bookingDetailRequest.getInfant();
+        Integer sizeDeparture = bookingDetailRequest.getDepartures().getData().size();
+        Integer sizeReturn = bookingDetailRequest.getReturns() == null ? 0 : bookingDetailRequest.getReturns().getData().size();
+        if (sizeReturn == 0) {
+            log.info("check once trip");
+            if (!sizeDeparture.equals(sizePassenger)){
+                throw new ValidationException(String.format("Invalid number of passengers, expected %s but received %s", sizePassenger, sizeDeparture));
+            }
+        } else {
+            if (!sizeDeparture.equals(sizePassenger) || !sizeReturn.equals(sizeDeparture)){
+                log.info("check round trip");
+                throw new ValidationException(String.format("Invalid number of passengers, expected %s but received %s", sizePassenger, sizeDeparture));
+            }
+        }
         User user = userRepository.findById(userId)
                 .orElseThrow(() -> new DataNotFoundException("User account not found"));
         String[] random = UUID.randomUUID().toString().toUpperCase().split("-");
         String bookingId = random[0].toUpperCase();
         Booking booking = Booking.builder()
                 .id(bookingId)
+                .adult(bookingDetailRequest.getAdult())
+                .child(bookingDetailRequest.getChild())
+                .infant(bookingDetailRequest.getInfant())
                 .user(user)
                 .bookingType(bookingDetailRequest.getBookingType())
                 .createdAt(LocalDateTime.now())
