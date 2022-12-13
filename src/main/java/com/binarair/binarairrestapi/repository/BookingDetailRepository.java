@@ -18,5 +18,4 @@ public interface BookingDetailRepository extends JpaRepository<BookingDetail, St
     BookingDetail findCheckInBookingDetail(@Param("bookingReferenceNumber") String bookingReferenceNumber,
                               @Param("checkInStatus") boolean checkInStatus,
                               @Param("lastName") String lastName);
-
 }
