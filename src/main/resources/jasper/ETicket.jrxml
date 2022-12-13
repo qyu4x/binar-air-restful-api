@@ -3,7 +3,10 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="ETicket" pageWidth="500" pageHeight="500" columnWidth="460" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="d1108ec4-0c33-4b4b-8d0c-bfed554cfbc6">
 	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
 	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Sample DB"/>
-	<parameter name="bookingCode" class="java.lang.String"/>
+
+
+
+
 	<field name="bookingId" class="java.lang.String"/>
 	<field name="aircraftType" class="java.lang.String"/>
 	<field name="departureDate" class="java.time.LocalDate"/>

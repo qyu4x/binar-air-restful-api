@@ -82,7 +82,6 @@ public class TicketJasperController {
         }
 
     }
-//    public void generateReport(HttpServletResponse response, TicketJasperResponse ticketJasperResponse) {
 
 
 

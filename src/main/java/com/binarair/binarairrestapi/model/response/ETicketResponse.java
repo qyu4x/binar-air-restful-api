@@ -17,6 +17,9 @@ public class ETicketResponse {
     private String id;
     private String titel;
     private String fullName;
+    private String firstName;
+    private String lastName;
+    private String passportNumber;
     private AgeCategory ageCategory;
     private Integer baggage;
     private String fromCity;

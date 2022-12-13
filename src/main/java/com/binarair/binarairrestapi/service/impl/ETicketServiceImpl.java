@@ -18,10 +18,7 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Service
 public class ETicketServiceImpl implements ETicketService {
@@ -77,32 +74,33 @@ public class ETicketServiceImpl implements ETicketService {
 
         pdfBookingDetail.getBookingDetails().stream().forEach(bookingDetail -> {
             ETicketResponse eTicketResponse = ETicketResponse.builder()
-                    .bookingId(bookingDetail.getId())
+                    .bookingId(pdfBookingDetail.getId())
                     .destinationCity(bookingDetail.getSchedule().getDestIataAirportCode().getCity().getName())
                     .departureDate(bookingDetail.getSchedule().getDepartureDate())
                     .arrivalTime(bookingDetail.getSchedule().getArrivalTime())
                     .departureTime(bookingDetail.getSchedule().getDepartureTime())
                     .fromCity(bookingDetail.getSchedule().getOriginIataAirportCode().getCity().getName())
-                    .titel(bookingDetail.getPassenger().getTitel().getTitelName())
-                    .fullName(bookingDetail.getPassenger().getUser().getFullName().toUpperCase())
                     .bookingReferenceNumber(bookingDetail.getBookingReferenceNumber())
-                    .ageCategory(bookingDetail.getPassenger().getAgeCategory())
-                    .aircraftType(bookingDetail.getSchedule().getAircraft().getModel())
                     .departureAirport(bookingDetail.getSchedule().getOriginIataAirportCode().getName())
                     .arrivalAirport(bookingDetail.getSchedule().getDestIataAirportCode().getName())
-                    .classType(bookingDetail.getBooking().getBookingType())
+                    .firstName(bookingDetail.getPassenger().getFirstName().toUpperCase())
+                    .lastName(bookingDetail.getPassenger().getLastName().toUpperCase())
+                    .passportNumber(bookingDetail.getPassenger().getPassportNumber())
                     .baggage(bookingDetail.getExtraBagage())
                     .build();
             eTicketResponseList.add(eTicketResponse);
+            log.info("Booking id nya adalah {}",bookingDetail.getId());
         });
+
         log.info("Total data EticketResponseList : {}",eTicketResponseList.size());
         log.info("successful input to the jasper");
         try {
-            File files = ResourceUtils.getFile("classpath:jasper/ETicket.jrxml");
+            File files = ResourceUtils.getFile("classpath:jasper/ETicket2.jrxml");
             if (files == null) {
                 log.info("Jasper is not readable");
                 throw new DataNotFoundException("No JRXML has been detected");
             }
+            log.info("Jasper information get");
             JasperReport jasperReport = JasperCompileManager.compileReport(files.getAbsolutePath());
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, buildParametersMap(), new JRBeanCollectionDataSource(eTicketResponseList));
             log.info("Successfully export report to pdf");
