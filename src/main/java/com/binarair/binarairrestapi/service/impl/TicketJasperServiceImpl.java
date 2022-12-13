@@ -70,7 +70,7 @@ public class TicketJasperServiceImpl implements TicketJasperService {
         ticketJasperResponseList.add(jasperInformation);
         log.info("Building of the jasperInformation success");
         try {
-            File file = ResourceUtils.getFile("classpath:jasper/Final.jrxml");
+            File file = ResourceUtils.getFile("classpath:jasper/BoardingPass.jrxml");
             if (file == null) {
                 log.info("Jasper is not readable");
                 throw new DataNotFoundException("No JRXML has been detected");

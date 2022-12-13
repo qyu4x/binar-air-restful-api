@@ -95,7 +95,7 @@ public class ETicketServiceImpl implements ETicketService {
         log.info("Total data EticketResponseList : {}",eTicketResponseList.size());
         log.info("successful input to the jasper");
         try {
-            File files = ResourceUtils.getFile("classpath:jasper/ETicket2.jrxml");
+            File files = ResourceUtils.getFile("classpath:jasper/ETicket.jrxml");
             if (files == null) {
                 log.info("Jasper is not readable");
                 throw new DataNotFoundException("No JRXML has been detected");
@@ -113,56 +113,6 @@ public class ETicketServiceImpl implements ETicketService {
     }
 
 
-    //    @Override
-//    public byte[] createticket(String bookingId) throws JRException, FileNotFoundException {
-//        log.info("Started creation of E-Ticket");
-//       Booking pdfBookingDetail = bookingRepository.findBookingDetailsById(bookingId);
-//        if (pdfBookingDetail == null) {
-//            log.info("Booking Detail not secured");
-//            throw new DataNotFoundException("No booking has been retrieved. Please check your input details.");
-//        }
-//        log.info("Created E-Ticket with user name {}",pdfBookingDetail.getUser().getFullName());
-//        List<BookingDetail> bookingDetails = pdfBookingDetail.getBookingDetails();
-//        List<ETicketResponse> eTicketResponses = new ArrayList<>();
-//        bookingDetails.stream().forEach(bookingDetail -> {
-//        ETicketResponse eTicketResponse = ETicketResponse.builder()
-//                .bookingId(bookingDetail.getId())
-//                .DestinationCity(bookingDetail.getSchedule().getDestIataAirportCode().getCity().getName())
-//                .departureDate(bookingDetail.getSchedule().getDepartureDate())
-//                .arrivalTime(bookingDetail.getSchedule().getArrivalTime())
-//                .departureTime(bookingDetail.getSchedule().getDepartureTime())
-//                .FromCity(bookingDetail.getSchedule().getOriginIataAirportCode().getCity().getName())
-//                .titel(bookingDetail.getPassenger().getTitel().getTitelName())
-//                .fullName(bookingDetail.getPassenger().getUser().getFullName().toUpperCase())
-//                .bookingReferenceNumber(bookingDetail.getBookingReferenceNumber())
-//                .ageCategory(bookingDetail.getPassenger().getAgeCategory())
-//                .aircraftType(bookingDetail.getSchedule().getAircraft().getModel())
-//                .departureAirport(bookingDetail.getSchedule().getOriginIataAirportCode().getName())
-//                .arrivalAirport(bookingDetail.getSchedule().getDestIataAirportCode().getName())
-//                .classType(bookingDetail.getBooking().getBookingType())
-//                .baggage(bookingDetail.getExtraBagage())
-//                .build();
-//        log.info("Departure city name is {}",bookingDetail.getSchedule().getOriginIataAirportCode().getCity().getName());
-//        log.info("arrival city name is {}",bookingDetail.getSchedule().getDestIataAirportCode().getCity().getName());
-//        eTicketResponses.add(eTicketResponse);
-//
-//    });
-//        log.info("Building of the jasper success");
-//        try {
-//            File files = ResourceUtils.getFile("classpath:jasper/ETicket.jrxml");
-//            if (files == null) {
-//                log.info("Jasper is not readable");
-//                throw new DataNotFoundException("No JRXML has been detected");
-//            }
-//            JasperReport jasperReport = JasperCompileManager.compileReport(files.getAbsolutePath());
-//            JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, buildParametersMap(), new JRBeanCollectionDataSource(eTicketResponses));
-//            log.info("Successfully export report to pdf");
-//            return JasperExportManager.exportReportToPdf(jasperPrint);
-//        } catch (IOException | JRException exception) {
-//            log.error("Unfortunately an error has been occurred at {}", exception.getMessage());
-//        }
-//        return null;
-//    }
     private Map<String, Object> buildParametersMap() {
         Map<String, Object> pdfInvoiceParams = new HashMap<>();
         pdfInvoiceParams.put("poweredby", "BEJ For The Win");
