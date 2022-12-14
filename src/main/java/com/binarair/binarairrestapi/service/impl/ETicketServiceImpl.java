@@ -37,28 +37,6 @@ public class ETicketServiceImpl implements ETicketService {
     }
 
 
-//    @Override
-//    public byte[] createticketinfo(String bookingId) throws JRException, FileNotFoundException {
-//        log.info("Started creation of E-Ticket");
-//        Booking pdfBookingDetail = bookingRepository.findBookingDetailsById(bookingId);
-//        if (pdfBookingDetail == null) {
-//            log.info("Booking Detail not secured");
-//            throw new DataNotFoundException("No booking has been retrieved. Please check your input details.");
-//        }
-//        log.info("Created E-Ticket with user name {}",pdfBookingDetail.getUser().getFullName());
-//        List<BookingDetail> bookingDetails = pdfBookingDetail.getBookingDetails();
-//        List<ETicketResponse> eTicketResponses = new ArrayList<>();
-//        bookingDetails.stream().forEach(bookingDetail -> {
-//            ETicketResponse eTicketResponse = ETicketResponse.builder();
-//        .DestinationCity(bookingDetail.getSchedule().getDestIataAirportCode().getCity().getName())
-//        .departureDate(bookingDetail.getSchedule().getDepartureDate())
-//        .arrivalTime(bookingDetail.getSchedule().getArrivalTime())
-//        .departureTime(bookingDetail.getSchedule().getDepartureTime())
-//        .FromCity(bookingDetail.getSchedule().getOriginIataAirportCode().getCity().getName())
-//            return null;
-//    }
-
-
     @Override
     public byte[] createticket(String bookingId) throws JRException, FileNotFoundException {
 
