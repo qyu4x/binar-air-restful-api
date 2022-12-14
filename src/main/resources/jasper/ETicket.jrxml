@@ -47,30 +47,51 @@
             <property name="com.jaspersoft.studio.unit.height" value="px"/>
             <textField>
                 <reportElement x="256" y="40" width="100" height="30" uuid="6d93f1a4-43c0-4055-bb5e-b65e40003af4"/>
+                <textElement>
+                    <font fontName="Montserrat ExtraBold"/>
+                </textElement>
                 <textFieldExpression><![CDATA[$F{departureDate}]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement x="180" y="100" width="100" height="30" uuid="03d955c9-05a8-432c-b7f0-6fc6fe8b85ba"/>
+                <textElement>
+                    <font fontName="Montserrat ExtraBold"/>
+                </textElement>
                 <textFieldExpression><![CDATA[$F{departureTime}]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement x="380" y="100" width="100" height="30" uuid="8de2a186-81a9-49fc-b001-53df51825e8d"/>
+                <textElement>
+                    <font fontName="Montserrat ExtraBold"/>
+                </textElement>
                 <textFieldExpression><![CDATA[$F{arrivalTime}]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement x="380" y="130" width="100" height="30" uuid="d5f7b30b-5fea-41e3-ad6a-8aaa25d7a378"/>
+                <textElement>
+                    <font fontName="Montserrat ExtraBold"/>
+                </textElement>
                 <textFieldExpression><![CDATA[$F{arrivalAirport}]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement x="180" y="70" width="100" height="30" uuid="3d2f2ec6-f957-4511-b447-8062177d238e"/>
+                <textElement>
+                    <font fontName="Montserrat ExtraBold"/>
+                </textElement>
                 <textFieldExpression><![CDATA[$F{fromCity}]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement x="380" y="70" width="100" height="30" uuid="14a75c5d-80ad-4dfa-91be-9633f40c08db"/>
+                <textElement>
+                    <font fontName="Montserrat ExtraBold"/>
+                </textElement>
                 <textFieldExpression><![CDATA[$F{destinationCity}]]></textFieldExpression>
             </textField>
             <textField>
                 <reportElement x="180" y="130" width="100" height="30" uuid="a9b89a44-b2e9-49e1-aaad-0d5e014a2262"/>
+                <textElement>
+                    <font fontName="Montserrat ExtraBold"/>
+                </textElement>
                 <textFieldExpression><![CDATA[$F{departureAirport}]]></textFieldExpression>
             </textField>
             <line>
@@ -90,17 +111,23 @@
             </line>
             <staticText>
                 <reportElement x="10" y="91" width="100" height="30" uuid="d584635e-2725-4cbc-b2f3-7154c0e33a0a"/>
+                <textElement>
+                    <font fontName="Montserrat ExtraBold"/>
+                </textElement>
                 <text><![CDATA[Booking Code]]></text>
             </staticText>
             <staticText>
                 <reportElement x="10" y="40" width="140" height="40" uuid="53cbd71c-0685-4ac5-b078-9ce355afd5bd"/>
                 <textElement>
-                    <font size="25"/>
+                    <font fontName="Montserrat ExtraBold" size="25"/>
                 </textElement>
                 <text><![CDATA[BINAR AIR]]></text>
             </staticText>
             <staticText>
                 <reportElement x="156" y="40" width="100" height="30" uuid="0f3997ad-143c-4c3f-8ae1-a66c914a7d81"/>
+                <textElement>
+                    <font fontName="Montserrat ExtraBold"/>
+                </textElement>
                 <text><![CDATA[Departure Date]]></text>
             </staticText>
         </band>
@@ -125,30 +152,45 @@
                 <reportElement style="Column header" x="110" y="1" width="111" height="15" forecolor="#736343" uuid="4fadb048-91fb-4f72-9c9a-ebca1f11c8f7">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="61d00d1a-c739-4821-9484-acdcac08b563"/>
                 </reportElement>
-                <text><![CDATA[booking number]]></text>
+                <textElement>
+                    <font fontName="Montserrat Black"/>
+                </textElement>
+                <text><![CDATA[Booking number]]></text>
             </staticText>
             <staticText>
-                <reportElement style="Column header" x="230" y="0" width="111" height="15" forecolor="#736343" uuid="ccd5090b-8712-463c-9ba0-5b540cdec00a">
-                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f59513ef-1538-4c87-95e1-15d9e5f828db"/>
+                <reportElement style="Column header" x="100" y="1" width="130" height="15" forecolor="#736343" uuid="4fadb048-91fb-4f72-9c9a-ebca1f11c8f7">
+                    <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="61d00d1a-c739-4821-9484-acdcac08b563"/>
                 </reportElement>
-                <text><![CDATA[Total Baggage]]></text>
+                <textElement>
+                    <font fontName="Montserrat Black"/>
+                </textElement>
+                <text><![CDATA[booking number]]></text>
             </staticText>
             <staticText>
                 <reportElement style="Column header" x="351" y="0" width="88" height="15" forecolor="#736343" uuid="8cb4902d-42b5-4e0b-bee9-a0bd8e2f1997">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3b361d7b-4d46-4f76-a891-45b52ff7f224"/>
                 </reportElement>
+                <textElement>
+                    <font fontName="Montserrat Black"/>
+                </textElement>
                 <text><![CDATA[Last Name]]></text>
             </staticText>
             <staticText>
                 <reportElement style="Column header" x="0" y="1" width="111" height="15" forecolor="#736343" uuid="e5191dc2-f26d-498a-86e4-560befcf902e">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="61d00d1a-c739-4821-9484-acdcac08b563"/>
                 </reportElement>
+                <textElement>
+                    <font fontName="Montserrat Black"/>
+                </textElement>
                 <text><![CDATA[Passport Number]]></text>
             </staticText>
             <staticText>
                 <reportElement style="Column header" x="439" y="0" width="88" height="15" forecolor="#736343" uuid="4fefaf50-9d06-422c-ba7d-f160d27cca5f">
                     <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3b361d7b-4d46-4f76-a891-45b52ff7f224"/>
                 </reportElement>
+                <textElement>
+                    <font fontName="Montserrat Black"/>
+                </textElement>
                 <text><![CDATA[First Name]]></text>
             </staticText>
         </band>
@@ -162,12 +204,18 @@
                     <reportElement style="Detail" x="240" y="2" width="111" height="15" uuid="00570b6e-74c8-4cba-9a39-42ea8b2001f6">
                         <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="f59513ef-1538-4c87-95e1-15d9e5f828db"/>
                     </reportElement>
+                    <textElement>
+                        <font fontName="Montserrat ExtraBold"/>
+                    </textElement>
                     <textFieldExpression><![CDATA[$F{baggage}]]></textFieldExpression>
                 </textField>
                 <textField textAdjust="StretchHeight">
                     <reportElement style="Detail" x="440" y="2" width="82" height="15" uuid="7ee7bfbb-865c-4762-8f03-f62fbad0b566">
                         <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="3b361d7b-4d46-4f76-a891-45b52ff7f224"/>
                     </reportElement>
+                    <textElement>
+                        <font fontName="Montserrat ExtraBold"/>
+                    </textElement>
                     <textFieldExpression><![CDATA[$F{firstName}]]></textFieldExpression>
                 </textField>
                 <textField>
@@ -175,7 +223,7 @@
                         <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="c0195cc7-639b-406c-999e-d018aea7729f"/>
                     </reportElement>
                     <textElement>
-                        <font size="14"/>
+                        <font fontName="Montserrat ExtraBold" size="14"/>
                     </textElement>
                     <textFieldExpression><![CDATA[$F{bookingId}]]></textFieldExpression>
                 </textField>
@@ -184,7 +232,7 @@
                         <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="21d53d4d-4eda-475d-b19b-eaecf24b8038"/>
                     </reportElement>
                     <textElement>
-                        <font size="12"/>
+                        <font fontName="Montserrat ExtraBold" size="12"/>
                     </textElement>
                     <textFieldExpression><![CDATA[$F{bookingReferenceNumber}]]></textFieldExpression>
                 </textField>
@@ -193,7 +241,7 @@
                         <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="d2909cde-f0fd-4e3b-b299-0db47dee1a20"/>
                     </reportElement>
                     <textElement>
-                        <font size="12"/>
+                        <font fontName="Montserrat ExtraBold" size="12"/>
                     </textElement>
                     <textFieldExpression><![CDATA[$F{lastName}]]></textFieldExpression>
                 </textField>
@@ -202,7 +250,7 @@
                         <property name="com.jaspersoft.studio.spreadsheet.connectionID" value="1eb5cbf2-7f6a-4ba7-b2be-491666d7de81"/>
                     </reportElement>
                     <textElement>
-                        <font size="12"/>
+                        <font fontName="Montserrat ExtraBold" size="12"/>
                     </textElement>
                     <textFieldExpression><![CDATA[$F{passportNumber}]]></textFieldExpression>
                 </textField>

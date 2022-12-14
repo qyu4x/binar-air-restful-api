@@ -41,7 +41,7 @@ public class TicketJasperServiceImpl implements TicketJasperService {
     @Override
     public byte[] createpdf(String lastName,String bookingReferenceNumber){
         log.info("create PDF Ticket");
-        BookingDetail pdfBookingDetail = bookingDetailRepository.findCheckInBookingDetail(bookingReferenceNumber,true,lastName);
+        BookingDetail pdfBookingDetail = bookingDetailRepository.findCheckInBookingDetail(bookingReferenceNumber,true,lastName.toUpperCase());
 
         if (pdfBookingDetail == null) {
             log.info("Booking Detail not secured");
