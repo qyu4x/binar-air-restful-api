@@ -29,24 +29,24 @@
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="26" isBold="true"/>
+					<font fontName="Arial Black" size="26" isBold="true"/>
 				</textElement>
 				<text><![CDATA[BOARDING PASS]]></text>
 			</staticText>
 			<staticText>
-				<reportElement x="52" y="57" width="196" height="19" forecolor="#004AAD" uuid="88ac47a7-de81-4b7b-8c61-58492a7db35c"/>
+				<reportElement x="42" y="52" width="206" height="23" forecolor="#004AAD" uuid="88ac47a7-de81-4b7b-8c61-58492a7db35c"/>
 				<box>
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="14" isBold="true"/>
+					<font fontName="Arial Black" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NAME OF PASSENGER :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="100" y="77" width="182" height="40" isPrintWhenDetailOverflows="true" forecolor="#46B3E6" uuid="ef23d66c-4846-4803-8362-c8b150ac5c5a"/>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="20" isBold="false"/>
+					<font fontName="Arial Black" size="20" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{firstName}]]></textFieldExpression>
 			</textField>
@@ -56,14 +56,14 @@
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="14" isBold="true"/>
+					<font fontName="Arial Black" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DATE OF FLIGHT :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="290" y="77" width="169" height="54" forecolor="#46B3E6" uuid="a30fc59c-6734-4970-934f-b7173356a684"/>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="20" isBold="false"/>
+					<font fontName="Arial Black" size="20" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{departureDate}]]></textFieldExpression>
 			</textField>
@@ -73,7 +73,7 @@
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="14" isBold="true"/>
+					<font fontName="Arial Black" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FROM :]]></text>
 			</staticText>
@@ -83,38 +83,38 @@
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="14" isBold="true"/>
+					<font fontName="Arial Black" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TO       :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="110" y="131" width="100" height="30" isPrintWhenDetailOverflows="true" forecolor="#46B3E6" uuid="a0d970fa-9a5e-43cf-8221-214b1ea2e06a"/>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="18" isBold="false"/>
+					<font fontName="Arial Black" size="18" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fromCity}]]></textFieldExpression>
 			</textField>
 			<textField>
 				<reportElement x="110" y="167" width="138" height="30" isPrintWhenDetailOverflows="true" forecolor="#46B3E6" uuid="76d648b0-4608-4b6e-85b7-8fb298b50ef8"/>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="18" isBold="false"/>
+					<font fontName="Arial Black" size="18" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{destinationCity}]]></textFieldExpression>
 			</textField>
 			<staticText>
-				<reportElement x="282" y="133" width="120" height="19" forecolor="#004AAD" uuid="05c112e6-75ee-4e9b-8a5d-6a8cf732cb50"/>
+				<reportElement x="282" y="134" width="132" height="23" forecolor="#004AAD" uuid="05c112e6-75ee-4e9b-8a5d-6a8cf732cb50"/>
 				<box>
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Malgun Gothic" size="14" isBold="true"/>
+					<font fontName="Arial Black" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[CLASS TYPE : ]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="287" y="160" width="138" height="45" forecolor="#46B3E6" uuid="0c6f5387-cf08-4c3d-91a2-6024eb50156a"/>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="25" isBold="false"/>
+					<font fontName="Arial Black" size="25" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{classType}]]></textFieldExpression>
 			</textField>
@@ -127,14 +127,14 @@
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="10" isBold="true"/>
+					<font fontName="Arial Black" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[BOARDING TIME :]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="60" y="238" width="169" height="40" forecolor="#46B3E6" uuid="1525fe90-7f2a-4946-80a2-4080d8d673ca"/>
+				<reportElement x="60" y="237" width="180" height="52" forecolor="#46B3E6" uuid="1525fe90-7f2a-4946-80a2-4080d8d673ca"/>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="25" isBold="false"/>
+					<font fontName="Arial Black" size="25" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{departureTime}]]></textFieldExpression>
 			</textField>
@@ -147,14 +147,14 @@
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="10" isBold="true"/>
+					<font fontName="Arial Black" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[SEAT CODE:]]></text>
 			</staticText>
 			<textField>
-				<reportElement x="290" y="238" width="148" height="35" forecolor="#46B3E6" uuid="dabaf011-8952-432d-ad6d-887cb46802d1"/>
+				<reportElement x="290" y="238" width="164" height="44" forecolor="#46B3E6" uuid="dabaf011-8952-432d-ad6d-887cb46802d1"/>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="25" isBold="false"/>
+					<font fontName="Arial Black" size="25" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{seatCode}]]></textFieldExpression>
 			</textField>
@@ -167,7 +167,7 @@
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement rotation="Left">
-					<font fontName="Montserrat ExtraBold" size="26" isBold="true"/>
+					<font fontName="Arial Black" size="26" isBold="true"/>
 				</textElement>
 				<text><![CDATA[BINAR  AIR]]></text>
 			</staticText>
@@ -177,7 +177,7 @@
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="26" isBold="true"/>
+					<font fontName="Arial Black" size="26" isBold="true"/>
 				</textElement>
 				<text><![CDATA[BOARDING PASS]]></text>
 			</staticText>
@@ -194,14 +194,14 @@
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="9" isBold="true"/>
+					<font fontName="Arial Black" size="9" isBold="true"/>
 				</textElement>
 				<text><![CDATA[NAME OF PASSENGER :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="480" y="112" width="159" height="40" forecolor="#FFFFFF" uuid="3302fd9e-714c-4ffd-a3eb-4fceab6f8a7f"/>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="14" isBold="false"/>
+					<font fontName="Arial Black" size="14" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{firstName}]]></textFieldExpression>
 			</textField>
@@ -211,14 +211,14 @@
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="10" isBold="true"/>
+					<font fontName="Arial Black" size="10" isBold="true"/>
 				</textElement>
 				<text><![CDATA[BOARDING TIME :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="660" y="112" width="140" height="40" forecolor="#FFFFFF" uuid="860e0341-c46a-4743-b6a3-f56de1f4056b"/>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="20" isBold="false"/>
+					<font fontName="Arial Black" size="20" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{departureTime}]]></textFieldExpression>
 			</textField>
@@ -231,14 +231,14 @@
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="8" isBold="true"/>
+					<font fontName="Arial Black" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[FROM :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="500" y="186" width="100" height="30" forecolor="#FFFFFF" uuid="0cde9dc9-8580-4cdb-b887-4b2a4d65bec5"/>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="15" isBold="false"/>
+					<font fontName="Arial Black" size="15" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{fromCity}]]></textFieldExpression>
 			</textField>
@@ -248,14 +248,14 @@
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="8" isBold="true"/>
+					<font fontName="Arial Black" size="8" isBold="true"/>
 				</textElement>
 				<text><![CDATA[TO :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="660" y="186" width="128" height="30" forecolor="#FFFFFF" uuid="5dc7ef07-bb5f-4dd0-afe0-e29dc8d0943e"/>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="15" isBold="false"/>
+					<font fontName="Arial Black" size="15" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{destinationCity}]]></textFieldExpression>
 			</textField>
@@ -265,14 +265,14 @@
 					<pen lineWidth="0.0"/>
 				</box>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="14" isBold="true"/>
+					<font fontName="Arial Black" size="14" isBold="true"/>
 				</textElement>
 				<text><![CDATA[DATE OF FLIGHT :]]></text>
 			</staticText>
 			<textField>
 				<reportElement x="480" y="249" width="169" height="34" forecolor="#FFFFFF" uuid="f52f12a5-c8d6-471a-b05c-9ab067027d5b"/>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="20" isBold="false"/>
+					<font fontName="Arial Black" size="20" isBold="false"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{departureDate}]]></textFieldExpression>
 			</textField>
@@ -285,7 +285,7 @@
 			<textField>
 				<reportElement x="56" y="77" width="50" height="40" isPrintWhenDetailOverflows="true" forecolor="#46B3E6" uuid="0012d26d-40be-4cdf-8b06-3f7bb4d663cb"/>
 				<textElement>
-					<font fontName="Montserrat ExtraBold" size="20"/>
+					<font fontName="Arial Black" size="20"/>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{titel}]]></textFieldExpression>
 			</textField>
