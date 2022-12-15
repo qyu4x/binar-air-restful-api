@@ -8,6 +8,7 @@ import io.swagger.v3.oas.annotations.Operation;
 import net.sf.jasperreports.engine.JRException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
@@ -26,6 +27,7 @@ public class TicketJasperController {
     private final TicketJasperService ticketJasperService;
     private final ETicketService eTicketService;
 
+    @Autowired
     public TicketJasperController(TicketJasperService ticketJasperService, ETicketService eTicketService) {
         this.ticketJasperService = ticketJasperService;
         this.eTicketService = eTicketService;

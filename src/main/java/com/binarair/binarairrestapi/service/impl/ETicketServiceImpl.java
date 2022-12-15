@@ -12,6 +12,7 @@ import net.sf.jasperreports.engine.*;
 import net.sf.jasperreports.engine.data.JRBeanCollectionDataSource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.ResourceUtils;
 
@@ -26,38 +27,11 @@ public class ETicketServiceImpl implements ETicketService {
 
     private final BookingRepository bookingRepository;
 
-    private final BookingDetailRepository bookingDetailRepository;
 
-    private final ScheduleRepository scheduleRepository;
-
-    public ETicketServiceImpl(BookingRepository bookingRepository, BookingDetailRepository bookingDetailRepository, ScheduleRepository scheduleRepository) {
+    @Autowired
+    public ETicketServiceImpl(BookingRepository bookingRepository) {
         this.bookingRepository = bookingRepository;
-        this.bookingDetailRepository = bookingDetailRepository;
-        this.scheduleRepository = scheduleRepository;
     }
-
-
-//    @Override
-//    public byte[] createticketinfo(String bookingId) throws JRException, FileNotFoundException {
-//        log.info("Started creation of E-Ticket");
-//        Booking pdfBookingDetail = bookingRepository.findBookingDetailsById(bookingId);
-//        if (pdfBookingDetail == null) {
-//            log.info("Booking Detail not secured");
-//            throw new DataNotFoundException("No booking has been retrieved. Please check your input details.");
-//        }
-//        log.info("Created E-Ticket with user name {}",pdfBookingDetail.getUser().getFullName());
-//        List<BookingDetail> bookingDetails = pdfBookingDetail.getBookingDetails();
-//        List<ETicketResponse> eTicketResponses = new ArrayList<>();
-//        bookingDetails.stream().forEach(bookingDetail -> {
-//            ETicketResponse eTicketResponse = ETicketResponse.builder();
-//        .DestinationCity(bookingDetail.getSchedule().getDestIataAirportCode().getCity().getName())
-//        .departureDate(bookingDetail.getSchedule().getDepartureDate())
-//        .arrivalTime(bookingDetail.getSchedule().getArrivalTime())
-//        .departureTime(bookingDetail.getSchedule().getDepartureTime())
-//        .FromCity(bookingDetail.getSchedule().getOriginIataAirportCode().getCity().getName())
-//            return null;
-//    }
-
 
     @Override
     public byte[] createticket(String bookingId) throws JRException, FileNotFoundException {

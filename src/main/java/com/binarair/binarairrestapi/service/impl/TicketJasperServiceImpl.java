@@ -41,7 +41,10 @@ public class TicketJasperServiceImpl implements TicketJasperService {
     @Override
     public byte[] createpdf(String lastName,String bookingReferenceNumber){
         log.info("create PDF Ticket");
-        BookingDetail pdfBookingDetail = bookingDetailRepository.findCheckInBookingDetail(bookingReferenceNumber,true,lastName);
+        BookingDetail pdfBookingDetail = bookingDetailRepository.findCheckInBookingDetail(bookingReferenceNumber,true,lastName.toUpperCase());
+
+        String passengerFirstName = pdfBookingDetail.getPassenger().getFirstName();
+        passengerFirstName = passengerFirstName.substring(0,1).toUpperCase() + passengerFirstName.substring(1).toLowerCase();
 
         if (pdfBookingDetail == null) {
             log.info("Booking Detail not secured");
@@ -55,7 +58,7 @@ public class TicketJasperServiceImpl implements TicketJasperService {
             TicketJasperResponse jasperInformation = TicketJasperResponse.builder()
                     .id(pdfBookingDetail.getPassenger().getId())
                     .titel(pdfBookingDetail.getPassenger().getTitel().getTitelName())
-                    .firstName(pdfBookingDetail.getPassenger().getFirstName())
+                    .firstName(passengerFirstName)
                     .FromCity(schedule.getOriginIataAirportCode().getCity().getName())
                     .classType(schedule.getAircraft().getTravelClass().getName())
                     .DestinationCity(schedule.getDestIataAirportCode().getCity().getName())
