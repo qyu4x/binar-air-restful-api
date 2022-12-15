@@ -165,12 +165,18 @@ public class HistoryServiceImpl implements HistoryService {
                                 .orElseThrow(() -> new DataNotFoundException("Schedule not found"));
                         Bagage baggage = bagageRepository.findByAircraftIdAndBaggageWeight(schedule.getAircraft().getId(), bookingDetail.getExtraBagage());
 
+                        String firstName = bookingDetail.getPassenger().getFirstName();
+                        firstName = firstName.substring(0,1).toUpperCase() + firstName.substring(1).toLowerCase();
+
+                        String lastName = bookingDetail.getPassenger().getLastName();
+                        lastName = lastName.substring(0,1).toUpperCase() + lastName.substring(1).toLowerCase();
+
                         PassengerBookingResponse returnsBookingResponse = PassengerBookingResponse.builder()
                                 .passengerId(bookingDetail.getPassenger().getId())
                                 .titel(bookingDetail.getPassenger().getTitel().getTitelName())
                                 .ageCategory(bookingDetail.getPassenger().getAgeCategory().getCategoryName())
-                                .firstName(bookingDetail.getPassenger().getFirstName())
-                                .lastName(bookingDetail.getPassenger().getLastName())
+                                .firstName(firstName)
+                                .lastName(lastName)
                                 .bookingReferenceNumber(bookingDetail.getBookingReferenceNumber())
                                 .checkInStatus(bookingDetail.isCheckInStatus())
                                 .citizenship(bookingDetail.getPassenger().getCityzenship().getName())
