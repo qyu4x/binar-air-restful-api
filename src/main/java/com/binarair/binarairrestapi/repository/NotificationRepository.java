@@ -15,7 +15,7 @@ public interface NotificationRepository extends JpaRepository<Notification, Stri
     List<Notification> findAllNotificationByUserId(@Param("userId")String userId);
 
     @Query(nativeQuery = true,
-            value = "SELECT count(*) FROM notification WHERE is_read = false")
-    Integer findUnreadNotification();
+            value = "SELECT count(*) FROM notification WHERE is_read = false AND user_unique_id = :userId ")
+    Integer findUnreadNotification(@Param("userId")String userId);
 
 }

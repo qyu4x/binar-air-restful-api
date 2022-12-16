@@ -49,7 +49,7 @@ public class NotificationServiceImpl implements NotificationService {
                     .notifications(notificationResponses)
                     .build();
         }
-        Integer unreadNotification = notificationRepository.findUnreadNotification();
+        Integer unreadNotification = notificationRepository.findUnreadNotification(userId);
         notifications.stream().forEach(notification -> {
             NotificationResponse notificationResponse = NotificationResponse.builder()
                     .id(notification.getId())
