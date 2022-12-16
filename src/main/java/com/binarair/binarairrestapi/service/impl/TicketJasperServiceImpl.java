@@ -43,13 +43,14 @@ public class TicketJasperServiceImpl implements TicketJasperService {
         log.info("create PDF Ticket");
         BookingDetail pdfBookingDetail = bookingDetailRepository.findCheckInBookingDetail(bookingReferenceNumber,true,lastName.toUpperCase());
 
-        String passengerFirstName = pdfBookingDetail.getPassenger().getFirstName();
-        passengerFirstName = passengerFirstName.substring(0,1).toUpperCase() + passengerFirstName.substring(1).toLowerCase();
-
         if (pdfBookingDetail == null) {
             log.info("Booking Detail not secured");
             throw new DataNotFoundException("No booking has been retrieved. Please check your input details.");
         }
+
+        String passengerFirstName = pdfBookingDetail.getPassenger().getFirstName();
+        passengerFirstName = passengerFirstName.substring(0,1).toUpperCase() + passengerFirstName.substring(1).toLowerCase();
+
         log.info("Created PDF name {}",pdfBookingDetail.getPassenger().getFirstName());
         log.info("Booking Detail is secured with name {}",pdfBookingDetail.getPassenger().getFirstName());
         Schedule schedule = scheduleRepository.findById(pdfBookingDetail.getSchedule().getId())
