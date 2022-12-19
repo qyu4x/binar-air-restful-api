@@ -1,8 +1,12 @@
 package com.binarair.binarairrestapi.model.entity;
 
+import com.google.auth.oauth2.GoogleCredentials;
 import lombok.*;
 import org.hibernate.annotations.SQLDelete;
 import org.hibernate.annotations.Where;
+import org.springframework.security.oauth2.client.OAuth2AuthorizedClientProvider;
+import org.springframework.security.oauth2.client.authentication.OAuth2AuthenticationToken;
+import org.springframework.security.oauth2.client.authentication.OAuth2LoginAuthenticationProvider;
 
 import javax.persistence.*;
 import java.time.LocalDate;
@@ -36,6 +40,9 @@ public class User {
     private String gender;
 
     private boolean active = Boolean.TRUE;
+
+    private String provider;
+
 
     @ManyToOne
     @JoinColumn(name = "city_code_id", referencedColumnName = "codeId")

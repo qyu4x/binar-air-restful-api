@@ -159,6 +159,27 @@ public class UserServiceImpl implements UserService {
                 .createdAt(user.getCreatedAt())
                 .updatedAt(user.getUpdatedAt())
                 .build();
+
+    }
+
+    public void processOAuthPostLogin(String email, String name) {
+        Role buyerRole = roleRepository.findById(RoleType.BUYER)
+                .orElseThrow(() -> new DataNotFoundException("Role buyers are not available"));
+        User existUser = userRepository.findUserByEmail(email);
+
+        if (existUser==null) {
+            User user = User.builder()
+                    .id(String.format("ur-%s", UUID.randomUUID().toString()))
+                    .fullName(name)
+                    .email(email)
+                    .password("1234")
+                    .role(buyerRole)
+                    .active(true)
+                    .createdAt(LocalDateTime.now())
+                    .build();
+            userRepository.save(user);
+        }
+
     }
 
 }
