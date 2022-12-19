@@ -11,19 +11,19 @@ public interface AircraftSeatRepository extends JpaRepository<AircraftSeat, Stri
 
     @Query(value = "SELECT * FROM aircraft_seat ai\n" +
             "LEFT JOIN seat_schedule_booking ssb on (ai.id = ssb.unique_aircraft_seat_id)\n" +
-            "WHERE ssb.id IS NULL AND ai.aircraft_unique_id =:id",
+            "WHERE ssb.id IS NULL AND ai.aircraft_unique_id =:id ORDER BY ai.price DESC, ai.seat_code ASC",
             nativeQuery = true
     )
     List<AircraftSeat> findAllAvailableSeatByAircraftId(@Param("id") String id);
 
     @Query(value = "SELECT * FROM aircraft_seat ai\n" +
             "LEFT JOIN seat_schedule_booking ssb on (ai.id = ssb.unique_aircraft_seat_id)\n" +
-            "WHERE ssb.id IS NOT NULL AND ai.aircraft_unique_id =:id",
+            "WHERE ssb.id IS NOT NULL AND ai.aircraft_unique_id =:id ORDER BY ai.price DESC, ai.seat_code ASC",
             nativeQuery = true)
     List<AircraftSeat> findAllReservedSeatByAircraftId(@Param("id") String id);
 
     @Query(value = "SELECT * FROM aircraft_seat ai\n" +
-            "LEFT JOIN seat_schedule_booking ssb on (ai.id = ssb.unique_aircraft_seat_id)",
+            "LEFT JOIN seat_schedule_booking ssb on (ai.id = ssb.unique_aircraft_seat_id) WHERE aircraft_unique_id = :id ORDER BY ai.price DESC, ai.seat_code ASC",
             nativeQuery = true)
     List<AircraftSeat> findAllByAircraftId(@Param("id") String id);
 
