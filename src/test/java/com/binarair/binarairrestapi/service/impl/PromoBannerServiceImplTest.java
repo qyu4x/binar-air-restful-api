@@ -170,7 +170,7 @@ class PromoBannerServiceImplTest {
     }
 
     @Test
-    void testPromoBannerSuccess() {
+    void testDeletePromoBannerSuccess() {
         String promoBannerId = "random-promobanner";
         Mockito.when(promoBannerRepository.existsById(promoBannerId))
                 .thenReturn(true);
