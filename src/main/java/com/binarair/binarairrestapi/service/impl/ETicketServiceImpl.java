@@ -19,6 +19,7 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 @Service
@@ -69,17 +70,19 @@ public class ETicketServiceImpl implements ETicketService {
         log.info("Total data EticketResponseList : {}",eTicketResponseList.size());
         log.info("successful input to the jasper");
         try {
-            File files = ResourceUtils.getFile("classpath:jasper/ETicket.jrxml");
-            if (files == null) {
-                log.info("Jasper is not readable");
-                throw new DataNotFoundException("No JRXML has been detected");
-            }
+              InputStream inputStream = getClass().getClassLoader().getResourceAsStream("jasper/ETicket.jrxml");
+
+//            File files = ResourceUtils.getFile("classpath:jasper/ETicket.jrxml");
+//            if (files == null) {
+//                log.info("Jasper is not readable");
+//                throw new DataNotFoundException("No JRXML has been detected");
+//            }
             log.info("Jasper information get");
-            JasperReport jasperReport = JasperCompileManager.compileReport(files.getAbsolutePath());
+            JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, buildParametersMap(), new JRBeanCollectionDataSource(eTicketResponseList));
             log.info("Successfully export report to pdf");
             return JasperExportManager.exportReportToPdf(jasperPrint);
-        } catch (IOException | JRException exception) {
+        } catch (JRException exception) {
             log.error("Unfortunately an error has been occurred at {}", exception.getMessage());
         }
 

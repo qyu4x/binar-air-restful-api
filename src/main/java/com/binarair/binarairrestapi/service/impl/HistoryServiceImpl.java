@@ -44,6 +44,7 @@ public class HistoryServiceImpl implements HistoryService {
     @Override
     public List<HistoryResponse> findHistoryBookingByUserId(String userId, String sort) {
         boolean isExists = userRepository.existsById(userId);
+        log.info("status {} ", isExists);
         if (!isExists) {
             throw new DataNotFoundException(String.format("User with id %s not found", userId));
         }
