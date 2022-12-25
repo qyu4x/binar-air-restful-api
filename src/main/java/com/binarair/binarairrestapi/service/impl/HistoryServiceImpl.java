@@ -68,7 +68,11 @@ public class HistoryServiceImpl implements HistoryService {
 
             List<HistoryResponse> historyResponses = new ArrayList<>();
             log.info("size  {} ", userBookingHistories.size());
+            BigDecimal totalAmount = BigDecimal.valueOf(0);
             userBookingHistories.forEach(booking -> {
+                log.info("booking id {} ", booking.getId());
+                log.info("total booking {} ", booking.getTotal());
+                log.info("booking type{} ", booking.getBookingType());
                 List<PassengerBookingResponse> departures = new ArrayList<>();
                 List<PassengerBookingResponse> returns = new ArrayList<>();
                 booking.getBookingDetails().stream().forEach(bookingDetail -> {
@@ -254,6 +258,7 @@ public class HistoryServiceImpl implements HistoryService {
                 });
 
                 log.info("Success get booking response");
+                log.info("total amount {} ", booking.getTotal());
                 HistoryResponse historyResponse = HistoryResponse.builder()
                         .totalAmount(PriceResponse.builder()
                                 .currencyCode(getIndonesiaCurrencyCode())
@@ -284,10 +289,13 @@ public class HistoryServiceImpl implements HistoryService {
 
     private String convertToDisplayCurrency(BigDecimal amount) {
         Locale indonesia = new Locale("id", "ID");
+        log.info("total amount {} ", amount);
+        if (amount == null) {
+            log.info("Opps amount is null");
+            amount = BigDecimal.valueOf(0);
+        }
         NumberFormat numberFormat = NumberFormat.getCurrencyInstance(indonesia);
-
-        String rupiah = numberFormat.format(amount.doubleValue());
-        return rupiah;
+        return numberFormat.format(amount.doubleValue());
     }
 
     private String getIndonesiaCurrencyCode() {
