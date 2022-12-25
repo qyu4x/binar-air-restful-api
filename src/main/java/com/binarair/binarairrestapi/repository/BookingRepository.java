@@ -20,16 +20,15 @@ public interface BookingRepository extends JpaRepository<Booking, String> {
 
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM booking bk\n" +
-                    "WHERE bk.user_unique_id = :userId ORDER BY bk.created_at ASC"
+            value = "SELECT * FROM booking bk INNER JOIN booking_detail bd ON bk.id = bd.booking_unique_id WHERE bk.user_unique_id = :userId ORDER BY bk.created_at ASC"
     )
     List<Booking> findHistoryBookingByUserIdAsc(@Param("userId") String userId);
 
     @Query(
             nativeQuery = true,
-            value = "SELECT * FROM booking bk\n" +
-                    "WHERE bk.user_unique_id = :userId ORDER BY bk.created_at DESC "
+            value = "SELECT * FROM booking bk INNER JOIN booking_detail bd ON bk.id = bd.booking_unique_id WHERE bk.user_unique_id = :userId ORDER BY bk.created_at DESC"
     )
     List<Booking> findHistoryBookingByUserIdDesc(@Param("userId") String userId);
 
 }
+
