@@ -304,4 +304,5 @@ public class HistoryServiceImpl implements HistoryService {
 
         return currency.getCurrencyCode();
     }
+
 }
