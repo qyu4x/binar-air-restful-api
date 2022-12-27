@@ -46,7 +46,7 @@ public class NotificationController {
     @Operation(summary = "update notification read status based on user id and notification id")
     @ResponseBody
     @PutMapping("/{userid}/{notificationid}")
-    @PreAuthorize("hasAnyRole('ROLE_ADMIN', 'ROLE_BUYER')")
+    @PreAuthorize("hasAnyRole('ROLE_ADMIN')")
     public ResponseEntity<WebResponse<NotificationResponse>> updateReadStatus(@PathVariable("userid") String userid,@PathVariable("notificationid") String notificationid) {
         log.info("Calling controller getAll - notification detail response");
         NotificationResponse notificationDetailResponse = notificationService.updateIsRead(userid, notificationid);
