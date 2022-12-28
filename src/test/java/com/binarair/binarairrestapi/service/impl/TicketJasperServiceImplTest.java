@@ -55,7 +55,6 @@ class TicketJasperServiceImplTest {
     void testCreatePdfJreNotFound() {
         String lastname = "Shinomiya";
         String referenceNumber = "I9890I";
-
         Airlines airlines = Airlines.builder()
                 .name("Neko Air")
                 .logoURL("https://nekoair.com?media=jpg")
