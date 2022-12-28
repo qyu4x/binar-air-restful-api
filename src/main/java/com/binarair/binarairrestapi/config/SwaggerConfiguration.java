@@ -46,10 +46,15 @@ public class SwaggerConfiguration {
 
         Server serverProduction = new Server();
         serverProduction.setUrl("https://binar-air-rest-api-production.up.railway.app/");
-        serverProduction.setDescription("Main server for Production");
+        serverProduction.setDescription("Main server for Production[railway]");
+
+        Server azure = new Server();
+        serverProduction.setUrl("https://binar-air.azurewebsites.net/");
+        serverProduction.setDescription("Main server for Production[azure]");
 
         servers.add(serverDevelopment);
         servers.add(serverProduction);
+        servers.add(azure);
         return servers;
     }
 

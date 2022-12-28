@@ -20,6 +20,7 @@ import org.springframework.util.ResourceUtils;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 @Service
@@ -74,16 +75,17 @@ public class TicketJasperServiceImpl implements TicketJasperService {
         ticketJasperResponseList.add(jasperInformation);
         log.info("Building of the jasperInformation success");
         try {
-            File file = ResourceUtils.getFile("classpath:jasper/BoardingPass.jrxml");
-            if (file == null) {
-                log.info("Jasper is not readable");
-                throw new DataNotFoundException("No JRXML has been detected");
-            }
-            JasperReport jasperReport = JasperCompileManager.compileReport(file.getAbsolutePath());
+            InputStream inputStream = getClass().getClassLoader().getResourceAsStream("jasper/BoardingPass.jrxml");
+//            File file = ResourceUtils.getFile("classpath:jasper/BoardingPass.jrxml");
+//            if (file == null) {
+//                log.info("Jasper is not readable");
+//                throw new DataNotFoundException("No JRXML has been detected");
+//            }
+            JasperReport jasperReport = JasperCompileManager.compileReport(inputStream);
             JasperPrint jasperPrint = JasperFillManager.fillReport(jasperReport, buildParametersMap(), new JRBeanCollectionDataSource(ticketJasperResponseList));
             log.info("Successfully export report to pdf");
             return JasperExportManager.exportReportToPdf(jasperPrint);
-        } catch (IOException | JRException exception) {
+        } catch (JRException exception) {
             log.error("Unfortunately an error has occured at {}", exception.getMessage());
         }
         return null;
