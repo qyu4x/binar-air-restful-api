@@ -1,23 +1,0 @@
-
-P
-java:S3416":Update this logger to use "TicketJasperServiceImpl.class".(ÆüÃÏ
-[
-java:S1124"EReorder the modifiers to comply with the Java Language Specification.(ÆüÃÏ
-Q	java:S125O"<This block of commented-out lines of code should be removed.(š–äñ
-<
-java:S1168["&Return an empty array instead of null.(¥¹ï
-u
-java:S1128"ZRemove this unused import 'com.binarair.binarairrestapi.config.NotificationConfiguration'.(½Ô÷úÿÿÿÿ
-v
-java:S1128"[Remove this unused import 'com.binarair.binarairrestapi.model.request.TicketJasperRequest'.(Ì¸Îçùÿÿÿÿ
-k
-java:S1128
-"URemove this unused import 'com.binarair.binarairrestapi.service.NotificationService'.(¿ì£Ô
-^
-java:S1128"CRemove this unused import 'org.springframework.util.ResourceUtils'.(Š’Ğ¦úÿÿÿÿ
-?
-java:S1128")Remove this unused import 'java.io.File'.(†Ğ¥Å
-U
-java:S1128":Remove this unused import 'java.io.FileNotFoundException'.(·î™ùÿÿÿÿ
-K
-java:S1128"0Remove this unused import 'java.io.IOException'.(ªº»Úıÿÿÿÿ
