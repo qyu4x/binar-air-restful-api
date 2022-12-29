@@ -48,8 +48,6 @@ class CountryServiceImplTest {
                 .countryCode(countryRequest.getCountryCodeId())
                 .name(countryRequest.getName())
                 .build();
-//        Mockito.when(countryRepository.existsById(country.getCountryCode()))
-//                .thenReturn(false);
         Mockito.when(countryRepository.save(ArgumentMatchers.any(Country.class)))
                 .thenReturn(country);
         CountryResponse countryResponse = countryService.save(countryRequest);
@@ -117,19 +115,6 @@ class CountryServiceImplTest {
         Mockito.verify(cityRepository).findAllByCountry(country1.getCountryCode());
         Mockito.verify(countryRepository).findAll();
     }
-
-//    @Test
-//    void testGetallCountrySuccessButEmpty(){
-//        String countryCode="IDN";
-//        List<City>cityList = new ArrayList<>();
-//        Mockito.when(cityRepository.findAllByCountry(countryCode))
-//                .thenReturn(cityList);
-//
-//        List<CountryDetailResponse> countryDetailResponse=countryService.getAll();
-//        Assertions.assertEquals(0,countryDetailResponse.size());
-//
-//        Mockito.verify(countryRepository).findAll();
-//    }
 
     @Test
     void testFindCountryByCodeIdSuccess(){
