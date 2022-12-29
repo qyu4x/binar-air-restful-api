@@ -1,0 +1,295 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.20.0.final using JasperReports Library version 6.20.0-2bc7ab61c56f459e8176eb05c7705e145cd400ad  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="Final" pageWidth="842" pageHeight="340" orientation="Landscape" whenNoDataType="AllSectionsNoDetail" columnWidth="802" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" whenResourceMissingType="Empty" uuid="1e07301a-bc09-49fc-aaf2-492a180a0f90">
+	<property name="net.sf.jasperreports.default.font.name" value="DejaVu Sans"/>
+	<property name="com.jaspersoft.studio.data.sql.tables" value=""/>
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="New Data Adapter (2)"/>
+	<field name="titel" class="java.lang.String"/>
+	<field name="firstName" class="java.lang.String"/>
+	<field name="departureDate" class="java.time.LocalDate"/>
+	<field name="fromCity" class="java.lang.String"/>
+	<field name="destinationCity" class="java.lang.String"/>
+	<field name="classType" class="java.lang.String"/>
+	<field name="departureTime" class="java.time.LocalTime"/>
+	<field name="seatCode" class="java.lang.String"/>
+	<title>
+		<band height="292" splitType="Stretch">
+			<property name="com.jaspersoft.studio.layout"/>
+			<line direction="BottomUp">
+				<reportElement x="30" y="20" width="1" height="251" forecolor="#46B3E6" uuid="c5ffd16a-848d-411a-864c-1d7cc3eaffa8"/>
+			</line>
+			<line direction="BottomUp">
+				<reportElement x="480" y="20" width="1" height="251" forecolor="#46B3E6" uuid="a70e0de1-597f-4461-a3ed-b968e40f1f01"/>
+			</line>
+			<line>
+				<reportElement x="34" y="47" width="420" height="1" forecolor="#46B3E6" uuid="9c8d4ee3-65b8-4f22-b446-421e7dbf57f9"/>
+			</line>
+			<staticText>
+				<reportElement x="42" y="12" width="270" height="40" forecolor="#004AAD" uuid="31a899fc-d78f-4c5a-a01b-3ff9b587ed5a"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BOARDING PASS]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="52" y="57" width="196" height="19" forecolor="#004AAD" uuid="88ac47a7-de81-4b7b-8c61-58492a7db35c"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAME OF PASSENGER :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="100" y="77" width="182" height="40" isPrintWhenDetailOverflows="true" forecolor="#46B3E6" uuid="ef23d66c-4846-4803-8362-c8b150ac5c5a"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="20" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firstName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="282" y="52" width="171" height="24" forecolor="#004AAD" uuid="e174fdae-11ba-458a-ba5c-1fd8178ad766"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE OF FLIGHT :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="290" y="77" width="169" height="54" forecolor="#46B3E6" uuid="a30fc59c-6734-4970-934f-b7173356a684"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="20" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{departureDate}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="52" y="131" width="58" height="30" forecolor="#004AAD" uuid="fcee6995-6623-4148-97b0-a89f99c7fba4"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FROM :]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="52" y="167" width="58" height="30" forecolor="#004AAD" uuid="0933e8fc-1c2a-4478-981d-e8ea9f290182"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TO      :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="110" y="131" width="100" height="30" isPrintWhenDetailOverflows="true" forecolor="#46B3E6" uuid="a0d970fa-9a5e-43cf-8221-214b1ea2e06a"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="18" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fromCity}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="110" y="167" width="138" height="30" isPrintWhenDetailOverflows="true" forecolor="#46B3E6" uuid="76d648b0-4608-4b6e-85b7-8fb298b50ef8"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="18" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{destinationCity}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="282" y="133" width="120" height="19" forecolor="#004AAD" uuid="05c112e6-75ee-4e9b-8a5d-6a8cf732cb50"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[CLASS TYPE : ]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="287" y="160" width="138" height="45" forecolor="#46B3E6" uuid="0c6f5387-cf08-4c3d-91a2-6024eb50156a"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="25" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{classType}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement x="34" y="208" width="420" height="1" forecolor="#46B3E6" uuid="3004b0fc-7290-445f-82b2-096c95edaa92"/>
+			</line>
+			<staticText>
+				<reportElement x="52" y="219" width="120" height="19" forecolor="#004AAD" uuid="fe4e1e2a-9289-4da6-888d-6b5a705f0e40"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BOARDING TIME :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="60" y="238" width="169" height="40" forecolor="#46B3E6" uuid="1525fe90-7f2a-4946-80a2-4080d8d673ca"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="25" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{departureTime}]]></textFieldExpression>
+			</textField>
+			<line direction="BottomUp">
+				<reportElement x="256" y="218" width="1" height="61" forecolor="#46B3E6" uuid="faea917c-abcd-41e0-beff-6cd11cdbd70f"/>
+			</line>
+			<staticText>
+				<reportElement x="282" y="219" width="120" height="19" forecolor="#004AAD" uuid="a9808278-8a08-48b7-bad4-5518c63a2ce4"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[SEAT CODE:]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="290" y="238" width="148" height="35" forecolor="#46B3E6" uuid="dabaf011-8952-432d-ad6d-887cb46802d1"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="25" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{seatCode}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="470" y="0" width="340" height="291" forecolor="#46B3E6" backcolor="#46B3E6" uuid="b84be2c0-a586-4358-ba21-343c69376871"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="-11" y="7" width="40" height="264" forecolor="#004AAD" uuid="6b450551-36f7-435f-83cf-bb4d4b3718b6"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement rotation="Left">
+					<font fontName="DejaVu Sans" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BINAR  AIR]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="533" y="17" width="246" height="40" forecolor="#FFFFFF" uuid="5c5f8cc9-c3bb-456b-852b-b0f0bbbc2d60"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans" size="26" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BOARDING PASS]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="597" y="57" width="119" height="30" forecolor="#FFFFFF" uuid="27249073-e58f-4207-bca1-e75dacddc4f0"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="16" isBold="true"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{classType}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="480" y="87" width="120" height="19" forecolor="#FFFFFF" uuid="3578c55b-77d6-436b-b877-b61d8892b85b"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans" size="9" isBold="true"/>
+				</textElement>
+				<text><![CDATA[NAME OF PASSENGER :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="480" y="112" width="159" height="40" forecolor="#FFFFFF" uuid="3302fd9e-714c-4ffd-a3eb-4fceab6f8a7f"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="14" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{firstName}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="660" y="88" width="120" height="19" forecolor="#FFFFFF" uuid="281e5046-bd1d-45a1-93ff-001c208a46ae"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans" size="10" isBold="true"/>
+				</textElement>
+				<text><![CDATA[BOARDING TIME :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="660" y="112" width="140" height="40" forecolor="#FFFFFF" uuid="860e0341-c46a-4743-b6a3-f56de1f4056b"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="20" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{departureTime}]]></textFieldExpression>
+			</textField>
+			<rectangle>
+				<reportElement x="492" y="161" width="297" height="56" forecolor="#FFFFFF" backcolor="#46B3E6" uuid="95247bad-b3d4-47b4-9f69-3afcb62ee886"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="500" y="167" width="42" height="19" forecolor="#FFFFFF" uuid="f7e19f25-d8d2-46e0-8725-442e69a869ca"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[FROM :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="500" y="186" width="100" height="30" forecolor="#FFFFFF" uuid="0cde9dc9-8580-4cdb-b887-4b2a4d65bec5"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="15" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{fromCity}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="660" y="167" width="42" height="19" forecolor="#FFFFFF" uuid="9cf55cdc-0e87-4cdf-8e31-47b9dc56ee67"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans" size="8" isBold="true"/>
+				</textElement>
+				<text><![CDATA[TO :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="660" y="186" width="128" height="30" forecolor="#FFFFFF" uuid="5dc7ef07-bb5f-4dd0-afe0-e29dc8d0943e"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="15" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{destinationCity}]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="481" y="218" width="179" height="28" forecolor="#FFFFFF" uuid="ecfd1128-5f3b-40d8-8d98-77ac6b62307c"/>
+				<box>
+					<pen lineWidth="0.0"/>
+				</box>
+				<textElement>
+					<font fontName="DejaVu Sans" size="14" isBold="true"/>
+				</textElement>
+				<text><![CDATA[DATE OF FLIGHT :]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="480" y="249" width="169" height="34" forecolor="#FFFFFF" uuid="f52f12a5-c8d6-471a-b05c-9ab067027d5b"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="20" isBold="false"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{departureDate}]]></textFieldExpression>
+			</textField>
+			<line>
+				<reportElement positionType="FixRelativeToBottom" x="33" y="290" width="420" height="1" forecolor="#46B3E6" uuid="10710a82-a04f-4a37-9247-302c7c44234f"/>
+			</line>
+			<line>
+				<reportElement x="34" y="0" width="420" height="1" forecolor="#46B3E6" uuid="550bd5a3-897e-47a8-acbd-590dd14de2d0"/>
+			</line>
+			<textField>
+				<reportElement x="56" y="77" width="50" height="40" isPrintWhenDetailOverflows="true" forecolor="#46B3E6" uuid="0012d26d-40be-4cdf-8b06-3f7bb4d663cb"/>
+				<textElement>
+					<font fontName="DejaVu Sans" size="20"/>
+				</textElement>
+				<textFieldExpression><![CDATA[$F{titel}]]></textFieldExpression>
+			</textField>
+		</band>
+	</title>
+</jasperReport>
