@@ -547,7 +547,7 @@ public class ScheduleServiceImpl implements ScheduleService {
         return value.split(Pattern.quote("."));
     }
 
-    public LocalDate convertToLocalDate(String departureDate) {
+    private LocalDate convertToLocalDate(String departureDate) {
         if (departureDate.split("-")[0].length() == 1) {
             departureDate = String.format("0%s", departureDate);
         }
