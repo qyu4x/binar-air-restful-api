@@ -22,6 +22,7 @@ import org.threeten.bp.LocalDate;
 import java.math.BigDecimal;
 import java.text.NumberFormat;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
@@ -97,13 +98,14 @@ public class BookingDetailServiceImpl implements BookingDetailService {
         log.info("Do push notifications");
         User userAccount = userRepository.findById(userId)
                 .orElseThrow(() -> new DataNotFoundException("User account not found"));
+        log.info("Successull transaction for user id %s {} ", userId);
+        BookingResponse bookingResponse = getBookingResponse(booking.getId());
         NotificationRequest notification = NotificationRequest.builder()
-                .title(String.format(notificationConfiguration.getTitle()))
-                .description(String.format(notificationConfiguration.getDescription(), userAccount.getFullName().split(" ")[0]))
+                .title(String.format(notificationConfiguration.getTitle(), DateTimeFormatter.ofPattern("MM-dd-yyyy", Locale.ENGLISH).format(bookingResponse.getDeparture().getData().get(0).getSchedule().getDepartureDate())))
+                .description(String.format(notificationConfiguration.getDescription(), DateTimeFormatter.ofPattern("MM-dd-yyyy", Locale.ENGLISH).format(bookingResponse.getDeparture().getData().get(0).getSchedule().getDepartureDate()), bookingResponse.getDeparture().getData().get(0).getSchedule().getDepartureTime().toString(),userAccount.getFullName().split(" ")[0]))
                 .build();
         notificationService.pushNotification(notification, userId);
-        log.info("Successull transaction for user id %s {} ", userId);
-        return getBookingResponse(booking.getId());
+        return bookingResponse;
     }
 
     @Override
@@ -226,7 +228,7 @@ public class BookingDetailServiceImpl implements BookingDetailService {
     public AircraftSeatResponse insertSeatBooking(BookingAircraftSeatRequest bookingAircraftSeatRequest, String scheduleId) {
         SeatScheduleBooking isExists = seatScheduleBookingRepository.checkSeatStatus(scheduleId, bookingAircraftSeatRequest.getId());
         if (isExists != null) {
-            throw new ValidationException(String.format("Seat with id %s and schedule id %s has been booked",bookingAircraftSeatRequest.getId(), scheduleId ));
+            throw new ValidationException(String.format("Seat with id %s has been booked",bookingAircraftSeatRequest.getId()));
         }
 
         AircraftSeat aircraftSeat = aircraftSeatRepository.findById(bookingAircraftSeatRequest.getId())
