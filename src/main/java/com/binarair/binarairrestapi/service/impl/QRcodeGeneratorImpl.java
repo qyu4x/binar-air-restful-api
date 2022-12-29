@@ -35,7 +35,7 @@ public class QRcodeGeneratorImpl implements QRcodeGeneratorService {
         BitMatrix bitMatrix = qrCodeWriter.encode(text, BarcodeFormat.QR_CODE, with, height);
 
         ByteArrayOutputStream pngOutputStream = new ByteArrayOutputStream();
-        MatrixToImageConfig config = new MatrixToImageConfig( 	0x000000, 0xffffff);
+        MatrixToImageConfig config = new MatrixToImageConfig();
 
         MatrixToImageWriter.writeToStream(bitMatrix, "PNG", pngOutputStream, config);
         byte[] pngData = pngOutputStream.toByteArray();
