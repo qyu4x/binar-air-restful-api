@@ -43,7 +43,6 @@ public class BookingDetailServiceImpl implements BookingDetailService {
 
     private final UserRepository userRepository;
 
-
     private final AircraftSeatRepository aircraftSeatRepository;
 
     private final SeatScheduleBookingRepository seatScheduleBookingRepository;
