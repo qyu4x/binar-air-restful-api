@@ -1,0 +1,13 @@
+
+y
+java:S1192*"^Define a constant instead of duplicating this literal "Aircraft with id %s not found" 4 times.(Àª¾æúÿÿÿÿ
+u
+java:S1488¶"^Immediately return this expression instead of assigning it to the temporary variable "rupiah".(§Þ¤ö
+[
+java:S1124"EReorder the modifiers to comply with the Java Language Specification.(ÞÒõÙ
+J
+java:S2201*"/The return value of "orElseThrow" must be used.(Àª¾æúÿÿÿÿ
+J
+java:S2201G"/The return value of "orElseThrow" must be used.(Àª¾æúÿÿÿÿ
+J
+java:S2201d"/The return value of "orElseThrow" must be used.(Àª¾æúÿÿÿÿ
