@@ -18,11 +18,11 @@ public class SeatScheduleBooking {
     @Id
     private String id;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "unique_schedule_id", referencedColumnName = "id")
     private Schedule schedule;
 
-    @ManyToOne(cascade = CascadeType.ALL)
+    @ManyToOne
     @JoinColumn(name = "unique_aircraft_seat_id", referencedColumnName = "id")
     private AircraftSeat aircraftSeat;
 

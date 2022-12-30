@@ -22,8 +22,12 @@ public interface AircraftSeatRepository extends JpaRepository<AircraftSeat, Stri
             nativeQuery = true)
     List<AircraftSeat> findAllReservedSeatByAircraftId(@Param("id") String id);
 
-    @Query(value = "SELECT * FROM aircraft_seat ai\n" +
-            "LEFT JOIN seat_schedule_booking ssb on (ai.id = ssb.unique_aircraft_seat_id) WHERE aircraft_unique_id = :id ORDER BY ai.price DESC, ai.seat_code ASC",
+    @Query(value = "SELECT ai.id, ai.seat_code, ai.aircraft_unique_id, ai.created_at, ai.updated_at, ai.price\n" +
+            "FROM aircraft_seat ai\n" +
+            "    LEFT OUTER JOIN seat_schedule_booking ssb ON ai.id = ssb.unique_aircraft_seat_id\n" +
+            "WHERE ai.aircraft_unique_id = :id\n" +
+            "GROUP BY ai.seat_code, ai.id, ai.price\n" +
+            "ORDER BY ai.price DESC, ai.seat_code ASC",
             nativeQuery = true)
     List<AircraftSeat> findAllByAircraftId(@Param("id") String id);
 
