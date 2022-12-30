@@ -50,8 +50,8 @@ public class QRcodeController {
                 .build();
 
         WebResponse webResponse = new WebResponse(
-                HttpStatus.CREATED.value(),
-                HttpStatus.CREATED.getReasonPhrase(),
+                HttpStatus.OK.value(),
+                HttpStatus.OK.getReasonPhrase(),
                 qrCodeResponse
         );
         return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
