@@ -15,6 +15,7 @@ import com.binarair.binarairrestapi.service.NotificationService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.parameters.P;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.threeten.bp.LocalDate;
@@ -88,7 +89,13 @@ public class BookingDetailServiceImpl implements BookingDetailService {
             saveBookingDetail(processPassengerResponse, booking);
             updateScheduleStock(processPassengerResponse.getScheduleId());
         });
-        String total = getTotalPayment(booking.getId()).toString().split(Pattern.quote("."))[0];
+        String total = "0";
+        if (bookingDetailRequest.equals("ROUND TRIP")) {
+            total = getTotalPaymentRoundTrip(booking.getId()).toString().split(Pattern.quote("."))[0];
+        } else {
+            total = getTotalPayment(booking.getId()).toString().split(Pattern.quote("."))[0];
+        }
+
         boolean isSame = total.equals(bookingDetailRequest.getAmount().toString());
         if (!isSame) {
             throw new ValidationException(String.format("Total price of the backend and front end is not the same BACKEND : Rp. %s FRONTEND : Rp. %s ", total, bookingDetailRequest.getAmount()));
@@ -342,6 +349,25 @@ public class BookingDetailServiceImpl implements BookingDetailService {
             BigDecimal seatPrice = bookingDetail.getSeatPrice();
 
             BigDecimal bagagePrice = bookingDetail.getBagagePrice();
+
+            totalAmount = totalAmount.add(ticketPrice);
+            totalAmount = totalAmount.add(seatPrice);
+            totalAmount = totalAmount.add(bagagePrice);
+
+        }
+        return totalAmount;
+    }
+
+    @Override
+    public BigDecimal getTotalPaymentRoundTrip(String bookingId) {
+        log.info("Do calculate total amount");
+        Booking booking = bookingRepository.findBookingDetailsById(bookingId);
+        BigDecimal totalAmount = new BigDecimal(0);
+        for (BookingDetail bookingDetail : booking.getBookingDetails()) {
+            BigDecimal ticketPrice = bookingDetail.getAircraftPrice().multiply(BigDecimal.valueOf(2));
+            BigDecimal seatPrice = bookingDetail.getSeatPrice().multiply(BigDecimal.valueOf(2));
+
+            BigDecimal bagagePrice = bookingDetail.getBagagePrice().multiply(BigDecimal.valueOf(2));
 
             totalAmount = totalAmount.add(ticketPrice);
             totalAmount = totalAmount.add(seatPrice);
