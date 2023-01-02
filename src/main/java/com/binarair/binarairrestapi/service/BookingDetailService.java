@@ -29,6 +29,8 @@ public interface BookingDetailService {
 
     BigDecimal getTotalPayment(String bookingId);
 
+    BigDecimal getTotalPaymentRoundTrip(String bookingId);
+
     BookingResponse getBookingResponse(String bookingId);
 
 

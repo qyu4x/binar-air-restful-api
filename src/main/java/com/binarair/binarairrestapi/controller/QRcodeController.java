@@ -54,6 +54,6 @@ public class QRcodeController {
                 HttpStatus.OK.getReasonPhrase(),
                 qrCodeResponse
         );
-        return new ResponseEntity<>(webResponse, HttpStatus.CREATED);
+        return new ResponseEntity<>(webResponse, HttpStatus.OK);
     }
 }
